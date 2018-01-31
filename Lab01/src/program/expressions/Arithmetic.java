@@ -1,6 +1,7 @@
-package expressions;
+package program.expressions;
 
 import ast.AbstractASTNode;
+import program.Expression;
 
 public class Arithmetic extends AbstractASTNode implements Expression {
 	
@@ -15,6 +16,12 @@ public class Arithmetic extends AbstractASTNode implements Expression {
 		this.expressionRight = expressionRight;
 		this.expressionLeft = expressionLeft;
 		this.operand = operand;
+	}
+
+	@Override
+	public String toString() {
+		return "Arithmetic [expressionLeft=" + expressionLeft + ",operand=" + operand + ", expressionRight="
+				+ expressionRight + "]";
 	}
 	
 	

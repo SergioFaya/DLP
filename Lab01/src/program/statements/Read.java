@@ -1,9 +1,10 @@
-package statement;
+package program.statements;
 
 
 
 import ast.AbstractASTNode;
-import expressions.Expression;
+import program.Expression;
+import program.Statement;
 
 public class Read extends AbstractASTNode implements Statement {
 
@@ -13,8 +14,14 @@ public class Read extends AbstractASTNode implements Statement {
 		this.line = line;
 		this.column = column;
 		this.expression = expression;
+	}
+
+	@Override
+	public String toString() {
+		return "Read [expression=" + expression + "]";
 	}	
 
+	
 	
 
 }

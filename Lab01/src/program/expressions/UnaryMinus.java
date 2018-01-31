@@ -1,6 +1,7 @@
-package expressions;
+package program.expressions;
 
 import ast.AbstractASTNode;
+import program.Expression;
 
 public class UnaryMinus extends AbstractASTNode implements Expression{
 
@@ -11,4 +12,11 @@ public class UnaryMinus extends AbstractASTNode implements Expression{
 		this.column = column;
 		this.expression = expression;
 	}
+
+	@Override
+	public String toString() {
+		return "UnaryMinus [expression=" + expression + "]";
+	}
+	
+	
 }

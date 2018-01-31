@@ -1,9 +1,9 @@
-package ast;
+package program;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import statement.Statement;
+import ast.AbstractASTNode;
 
 public class Program extends AbstractASTNode{
 	
@@ -15,6 +15,13 @@ public class Program extends AbstractASTNode{
 		this.column = column;
 		this.statements = statements;
 	}
+
+	@Override
+	public String toString() {
+		return "Program [line=" + line + ", column=" + column + "]";
+	}
+	
+	
 
 	
 }

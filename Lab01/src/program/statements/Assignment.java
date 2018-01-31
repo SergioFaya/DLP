@@ -1,8 +1,9 @@
-package statement;
+package program.statements;
 
 import ast.AbstractASTNode;
-import expressions.Expression;
-import expressions.Variable;
+import program.Expression;
+import program.Statement;
+import program.expressions.Variable;
 
 public class Assignment extends AbstractASTNode implements Statement {
 
@@ -16,4 +17,10 @@ public class Assignment extends AbstractASTNode implements Statement {
 		this.exp = exp;
 	}
 
+	@Override
+	public String toString() {
+		return "Assignment [exp=" + exp + ", variable=" + variable + "]";
+	}
+
+	
 }

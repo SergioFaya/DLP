@@ -1,9 +1,10 @@
-package statement;
+package program.statements;
 
 
 
 import ast.AbstractASTNode;
-import expressions.Expression;
+import program.Expression;
+import program.Statement;
 
 public class Write extends AbstractASTNode implements Statement  {
 
@@ -15,4 +16,10 @@ public class Write extends AbstractASTNode implements Statement  {
 		this.expression = expression;
 	}
 
+	@Override
+	public String toString() {
+		return "Write [expression=" + expression + "]";
+	}
+
+	
 }

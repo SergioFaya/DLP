@@ -1,4 +1,4 @@
-package statement;
+package program;
 
 import ast.ASTNode;
 
