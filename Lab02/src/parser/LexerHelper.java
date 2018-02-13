@@ -21,25 +21,24 @@ public class LexerHelper {
 				return array[1];
 			}
 		}
-
 		if (text.length() == 4) {
 			char[] array = text.toCharArray();
-			if (array[0] == '\'' && array[3] == '\'') {
+			if (array[0] == '\'' && array[array.length - 1] == '\'') {
 				if (array[1] == '\\') {
 					char c = array[2];
 					if (c == 'n') {
 						return '\n';
-					}else if (c == 't')
+					} else if (c == 't')
 						return '\t';
-					else if ( instanceof Number) {
-						
+					else {
+						String character = null;
+						for (int i = 2; i < array.length - 1; i++) {
+							character += array[i];
+						}
+						return (char) Integer.parseInt(character);
 					}
 				}
 			}
-		}
-		
-		if(text.length() >= 3) {
-			
 		}
 		return 0;
 	}
