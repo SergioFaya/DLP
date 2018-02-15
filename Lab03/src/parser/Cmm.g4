@@ -2,8 +2,7 @@ grammar Cmm;
 
 program: definitions main 
        ;
-
-
+       
 /*FRAGMENTS*/
 fragment DIGIT: [0-9];
 
@@ -22,15 +21,23 @@ fragment SPECIAL_CHAR:
 			;
 fragment ASCII:  '\\'DIGIT+
 			;
+			
+			
 /* SINTAX RULES */ 
 
 definitions: (varDef | funcDef)*
-			;
+		;
 			
-varDef: type idList ';'
+varDef: primitiveType idList ';'
 		;
 		
 idList: ID (',' ID)*
+		;
+		
+arrayDef: primitiveType expression ';'
+		;	
+		
+record: 'struct' '{' varDef* '}' ID ';'
 		;
 
 primitiveType: 'int'
@@ -38,53 +45,87 @@ primitiveType: 'int'
 			|  'double'
 			;
 
-type: primitiveType
-		| arrayDef
-		| struct
+structDef:arrayDef
+		| record
 		;
 		
-arrayDef: primitiveType dimSize
-		;	
-dimSize: ('[' INT_CONSTANT ']')+
+funcDef: (primitiveType|'void') ID '(' paramList? ')' funcBody 
 		;
 		
-struct: 'struct' '{' '}'
-	;
-	
-funcDef: (primitiveType|'void') ID '(' paramList? ')' '{' '}' 
+funcBody: '{' varDef*  statement*  '}'
 		;
 		
-main: 'void' 'main''(' ')' '{'varDef statements'}'
+main: 'void' 'main''(' ')'  mainBody
 		;
 
-statements:
+mainBody: '{'  varDef* (structDef | statement)* '}'
+		;
+
+statement:    loop
+			| ifstmnt
+			| oneLineStmt
+			;
+			
+oneLineStmt: (funcInvocation 
+			| returnStmnt 
+			| assignment 
+			| io) ';'
+			;
+
+loop: 'while' '('expression')' '{' statement* '}'
+		;
+
+ifstmnt:   ifword (statement* | '{' statement* '}')
+		|  ifword (statement* | '{' statement* '}') 'else' (statement* | '{' statement*'}') 
+		;
+		
+ifword: 'if' '(' expression ')'
+		;
+
+returnStmnt: 'return' expression
+		;
+		
+funcInvocation: ID '(' exprList? ')' 
 		;
 		
 paramList: param ( ',' param)*
 		;
 
-param: type ID
-	;	 		
-
-statement: assingment
-		 ;
-		 /*ARTIHMETIC SHOULD BE A EXPRESSION*/
-expression:  unaryMinus
-			| ID
-			| INT_CONSTANT
-			; 
-			
-assingment: expression '=' expression ';'
-			;
-
-arithmetic:   expression '*' expression
-			| expression '/' expression
-			| expression '+' expression
-			| expression '-' expression
-			| ID
+param: primitiveType ID
+		;	 		
+		 
+expression:   expression.expression
+			| cast expression
+			| '-' expression
+			| '!' expression
+			| expression ('*' | '/' | '%') expression
+			| expression ('+' | '-' ) expression
+			| expression ('>' | '>=' | '<' | '<=' | '!=' | '==') expression   
 			| INT_CONSTANT
 			| REAL_CONSTANT
+			| CHAR_CONSTANT
+			| ID
+			; 
+			
+exprList: expression ( ',' expression)*
+		;
+			
+io:   read
+	| write
+	;
+	
+read: 'read' exprList 
+	;
+	
+write: 'write' exprList
+	;
+	
+assignment: ID '=' expression
 			;
+
+cast: '(' primitiveType ')' 
+	;
+
 			
 unaryMinus: '-' INT_CONSTANT
 			;
@@ -97,7 +138,7 @@ unaryMinus: '-' INT_CONSTANT
 
 
 INT_CONSTANT: '0'
-			|[1-9]DIGIT+
+			|[1-9]DIGIT*
             ;
             
 REAL_CONSTANT:
@@ -108,10 +149,8 @@ REAL_CONSTANT:
 ID: ((LETTER|'_'|'-')+[0-9]*)+
 			;
 			
-CHAR_CONSTANT:'\'' LETTER '\''
-			| '\'' DIGIT '\''
-			| '\'' SPECIAL_CHAR '\''
-			| '\'' ASCII '\''
+CHAR_CONSTANT:'\'' ( LETTER | DIGIT | SPECIAL_CHAR | ASCII) '\''
+			
 			;
 
 COMMENT: '//'~[\n\r]*  ->skip;
