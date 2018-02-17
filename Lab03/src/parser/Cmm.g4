@@ -19,119 +19,103 @@ fragment SPECIAL_CHAR:
 			| '~'
 			| '-'
 			;
+			
 fragment ASCII:  '\\'DIGIT+
 			;
 			
-			
-/* SINTAX RULES */ 
+/************************ SINTAX RULES ***************************/ 
 
-definitions: (varDef | funcDef)*
+definitions: (variable | function)*
+			;
+
+variable: type idList ';'
 		;
-			
-varDef: primitiveType idList ';'
-		;
-		
-idList: ID (',' ID)*
-		;
-		
-arrayDef: primitiveType expression ';'
+
+type:	primitiveType
+		| arrayType
+		| recordType
 		;	
-		
-record: 'struct' '{' varDef* '}' ID ';'
-		;
 
 primitiveType: 'int'
-			|  'char'
-			|  'double'
+			| 'double'
+			| 'char'
 			;
 
-structDef:arrayDef
-		| record
+arrayType: primitiveType ('['INT_CONSTANT']')+
+		;
+	
+recordType: 'struct''{' variable* '}'
+		;
+	
+idList:   ID 
+		| ID (',' ID)+
 		;
 		
-funcDef: (primitiveType|'void') ID '(' paramList? ')' funcBody 
+function: ('void'|primitiveType) ID '(' paramList? ')' block
 		;
 		
-funcBody: '{' varDef*  statement*  '}'
-		;
-		
-main: 'void' 'main''(' ')'  mainBody
-		;
-
-mainBody: '{'  varDef* (structDef | statement)* '}'
-		;
-
-statement:    loop
-			| ifstmnt
-			| oneLineStmt
+paramList:  param
+			| param (',' param)+
 			;
-			
-oneLineStmt: (funcInvocation 
-			| returnStmnt 
-			| assignment 
-			| io) ';'
-			;
-
-loop: 'while' '('expression')' '{' statement* '}'
+param:  primitiveType ID
 		;
-
-ifstmnt:   ifword (statement* | '{' statement* '}')
-		|  ifword (statement* | '{' statement* '}') 'else' (statement* | '{' statement*'}') 
-		;
-		
-ifword: 'if' '(' expression ')'
-		;
-
-returnStmnt: 'return' expression
-		;
-		
-funcInvocation: ID '(' exprList? ')' 
-		;
-		
-paramList: param ( ',' param)*
-		;
-
-param: primitiveType ID
-		;	 		
-		 
-expression:   expression.expression
-			| cast expression
-			| '-' expression
-			| '!' expression
-			| expression ('*' | '/' | '%') expression
-			| expression ('+' | '-' ) expression
-			| expression ('>' | '>=' | '<' | '<=' | '!=' | '==') expression   
-			| INT_CONSTANT
-			| REAL_CONSTANT
-			| CHAR_CONSTANT
-			| ID
-			; 
-			
-exprList: expression ( ',' expression)*
+block: '{' variable* stmnt* '}' 
 		;
 			
-io:   read
-	| write
+stmnt:    ioStmnt
+		| assignmentStmnt
+		| returnStmnt 
+		| ifStmnt
+		| whileStmnt
+		| functInvocation ';'
+		;
+		
+ioStmnt: ('write'|'read') exp (',' exp)* ';'
 	;
 	
-read: 'read' exprList 
+assignmentStmnt: exp '=' exp ';'
 	;
 	
-write: 'write' exprList
+returnStmnt: 'return' exp ';'
 	;
 	
-assignment: ID '=' expression
+ifStmnt:  'if' '(' exp ')' block
+		| 'if' '(' exp ')' block 'else' block
+		| 'if' '(' exp ')' variable* stmnt*
+		| 'if' '(' exp ')' variable* stmnt* 'else' variable* stmnt*
+		;
+	
+whileStmnt: 'while' '('exp')' block
 			;
-
-cast: '(' primitiveType ')' 
+	
+exp:  exp '['exp']'
+	| exp '('exp')'
+	| exp '.' exp
+	| cast exp
+	| '-' exp
+	| '!' exp
+	| exp ('*' | '/' | '%') exp
+	| exp ('+' | '-' ) exp
+	| exp ('>' | '>=' | '<' | '<=' | '!=' | '==') exp 
+	| exp ( '&&' | '||' ) exp 
+	| functInvocation
+	| ID
+	| INT_CONSTANT
+	| REAL_CONSTANT
+	| CHAR_CONSTANT
 	;
 
-			
-unaryMinus: '-' INT_CONSTANT
-			;
+cast: '('primitiveType')'
+	;
 
+functInvocation: ID '(' expList? ')'
+				;
 
-			
+expList: exp (',' exp)*
+		;
+
+main: 'void' 'main' '(' ')' block
+	;
 	
 /* LEXICAL RULES */
 

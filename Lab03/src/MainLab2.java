@@ -18,7 +18,7 @@ public class MainLab2 {
 
 		// shows the info of tokens read
 		Token token;
-		while ((token = lexer.nextToken()).getType() != CmmLexer.EOF) {
+		while ((token = lexer.nextToken()).getType() != Recognizer.EOF) {
 			// We get the semantic value of the token
 			Object semanticValue = null;
 			switch (token.getType()) {			
