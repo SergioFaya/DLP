@@ -1,19 +1,8 @@
-package ast.program.types;
+package ast.program;
 
 import ast.ASTNode;
 
-public class Type implements ASTNode{
+public interface Type extends ASTNode{
 
-	@Override
-	public int getLine() {
-
-		return 0;
-	}
-
-	@Override
-	public int getColumn() {
-
-		return 0;
-	}
 
 }

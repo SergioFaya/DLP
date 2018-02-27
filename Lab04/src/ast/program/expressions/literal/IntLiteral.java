@@ -1,21 +1,21 @@
-package ast.program.expressions;
+package ast.program.expressions.literal;
 
 import ast.AbstractASTNode;
 import ast.program.Expression;
 
 public class IntLiteral extends AbstractASTNode implements Expression{
 	
-	public IntLiteral(int i, int j, int value) {
+	public int value;
+	
+	public IntLiteral(int line, int column, int value) {
+		super(line,column);
 		this.value = value;
 	}
 
-	public int value;
-
 	@Override
 	public String toString() {
-		return "IntLiteral [value=" + value + "]";
+		return "IntLiteral [value=" + value + ", line=" + line + ", column=" + column + "]";
 	}
-
 	
 	
 }

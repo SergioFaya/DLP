@@ -1,8 +1,8 @@
 package ast.program;
 
-import ast.program.types.Type;
+import ast.ASTNode;
 
-public interface Definition {
+public interface Definition extends ASTNode{
 	
 	Type getType();
 	

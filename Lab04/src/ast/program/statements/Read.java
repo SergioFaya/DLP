@@ -11,14 +11,13 @@ public class Read extends AbstractASTNode implements Statement {
 	public Expression expression;
 	
 	public Read(int line, int column, Expression expression) {
-		this.line = line;
-		this.column = column;
+		super(line,column);
 		this.expression = expression;
 	}
 
 	@Override
 	public String toString() {
-		return "Read [expression=" + expression + "]";
+		return "Read [expression=" + expression + ", line=" + line + ", column=" + column + "]";
 	}	
 
 	
