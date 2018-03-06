@@ -64,7 +64,6 @@ primitiveType returns [Type ast ]:
 
 arrayType returns [ArrayType ast]:
 		primitiveType arrayDim
-		/*CONSIDERAR TIPO NEW PRIMITICETYPE EN LUGAR DE TYPE GENERICO*/
 		{$ast = new ArrayType($start.getLine(),$start.getCharPositionInLine()+1,$primitiveType.ast,$arrayDim.ast);}
 		;
 
@@ -72,29 +71,14 @@ arrayDim returns [List<Integer> ast = new ArrayList<>();]:
 		 ('['INT_CONSTANT']'{$ast.add(Integer.parseInt($INT_CONSTANT.getText()));})+
 		;
 	
-structType returns [Type ast]
-			locals[List<RecordDef> defs = new ArrayList<RecordDef>();
-			boolean isRight = false;]:
-		 'struct''{' (recordDef{
-		 	if(!$defs.contains($recordDef.ast)){
-		 		$defs.add($recordDef.ast);
-		 	}else{
-		 		isRight = false;
-		 	}
-		 
-		 })* '}'
-		 {
-		 	if(isRight){
-		 		$ast = new StructType($start.getLine(),$start.getCharPositionInLine()+1,$defs);
-		 	}
-		 	else{
-		 		$ast = new ErrorType($start.getLine(),$start.getCharPositionInLine()+1,"The struct has repeated recordDef");
-		 	}
-		 }
+structType returns [StructType ast]
+			locals[List<Field> fields = new ArrayList<Field>();]:
+		 'struct''{' (field{$fields.add($field.ast);})* '}'
+		 {$ast = new StructType($start.getLine(),$start.getCharPositionInLine()+1,$fields);}
 		;
 	
-recordDef returns [RecordDef ast ]: 
-		type ID ';' {$ast = new RecordDef($start.getLine(),$start.getCharPositionInLine()+1,$type.ast,$ID.getText());}
+field returns [Field ast ]: 
+		type ID ';' {$ast = new Field($start.getLine(),$start.getCharPositionInLine()+1,$type.ast,$ID.getText());}
 		;
 
 idList returns [List<String> ast=new ArrayList<String>()]:
@@ -104,13 +88,13 @@ idList returns [List<String> ast=new ArrayList<String>()]:
 
 		
 funcDef returns [FuncDefinition ast]: primitiveType ID '(' paramList ')' block
-		{$ast = new FuncDefinition($start.getLine(),$start.getCharPositionInLine()+1,$primitiveType.ast,$ID.text,$paramList.ast,$block.ast);}
+		{$ast = new FuncDefinition($start.getLine(),$start.getCharPositionInLine()+1,new FuncType($start.getLine(),$start.getCharPositionInLine()+1,$primitiveType.ast,$paramList.ast),$ID.text,$block.ast);}
 		| 'void' ID '(' paramList ')' block
-		{$ast = new FuncDefinition($start.getLine(),$start.getCharPositionInLine()+1,VoidType.getInstance(),$ID.text,$paramList.ast,$block.ast);}
+		{$ast = new FuncDefinition($start.getLine(),$start.getCharPositionInLine()+1,new FuncType($start.getLine(),$start.getCharPositionInLine()+1,VoidType.getInstance(),$paramList.ast),$ID.text,$block.ast);}
 		| primitiveType ID '('')' block
-		{$ast = new FuncDefinition($start.getLine(),$start.getCharPositionInLine()+1,$primitiveType.ast,$ID.text,(List)new ArrayList<Statement>(),$block.ast);}
+		{$ast = new FuncDefinition($start.getLine(),$start.getCharPositionInLine()+1,new FuncType($start.getLine(),$start.getCharPositionInLine()+1,$primitiveType.ast,(List)new ArrayList<Statement>()),$ID.text,$block.ast);}
 		| 'void' ID '('')' block
-		{$ast = new FuncDefinition($start.getLine(),$start.getCharPositionInLine()+1,VoidType.getInstance(),$ID.text,(List)new ArrayList<Statement>(),$block.ast);}
+		{$ast = new FuncDefinition($start.getLine(),$start.getCharPositionInLine()+1,new FuncType($start.getLine(),$start.getCharPositionInLine()+1,VoidType.getInstance(),(List)new ArrayList<Statement>()),$ID.text,$block.ast);}
 		;
 		
 paramList returns [List<VarDefinition> ast = new ArrayList<>();]: 
@@ -193,7 +177,7 @@ whileStmnt returns [WhileStmnt ast]:
 exp returns [Expression ast]:
 	  exp1 = exp '['exp2 = exp']' {$ast = new IndexAccessExpr($start.getLine(),$start.getCharPositionInLine()+1,$exp1.text,$exp2.ast);}
 	| '('exp')' {$ast = $exp.ast;}
-	| exp1 = exp '.' exp2 = exp {$ast = new FieldAccessExpr($start.getLine(),$start.getCharPositionInLine()+1,$exp1.text,$exp2.ast);}
+	| exp1 = exp '.' exp2 = exp {$ast = new FieldAccessExpr($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$exp2.ast);}
 	| cast exp { $ast = new Cast($start.getLine(),$start.getCharPositionInLine()+1,$cast.ast, $exp.ast);}
 	| '-' exp {$ast = new UnaryMinus($start.getLine(),$start.getCharPositionInLine()+1,$exp.ast);}
 	| '!' exp {$ast = new UnaryNegation($start.getLine(),$start.getCharPositionInLine()+1,$exp.ast);}
@@ -225,13 +209,10 @@ expList returns [List<Expression> ast = new ArrayList<>()]:
 main returns [FuncDefinition ast]:
 	void1='void' main1= 'main' '(' ')' block
 	{
-		$ast = new FuncDefinition($main1.getLine(),$main1.getCharPositionInLine()+1,(Type)VoidType.getInstance(),$main1.text,(List) new ArrayList<>(),$block.ast);
+		$ast = new FuncDefinition($main1.getLine(),$main1.getCharPositionInLine()+1,new FuncType($start.getLine(),$start.getCharPositionInLine()+1,VoidType.getInstance(),(List)new ArrayList<Statement>()),$main1.text,$block.ast);
 	}
-	;
 	
-errorType :
-		{ErrorHandler.getInstance().addError(new ErrorType("ERROR ON BUILD"));}
-		;
+	;
 	       
 /*************************** FRAGMENTS ***************************/
 fragment DIGIT: [0-9];

@@ -5,18 +5,19 @@ import ast.program.Expression;
 
 public class FieldAccessExpr extends AbstractASTNode implements Expression {
 
-	public String name;
-	public Expression exp;
+	public Expression exprLeft;
+	public Expression exprRight;
 
-	public FieldAccessExpr(int line, int column,String name,Expression exp) {
+	public FieldAccessExpr(int line, int column,Expression exprLeft,Expression exprRight) {
 		super(line, column);
-		this.name = name;
-		this.exp = exp;
+		this.exprLeft = exprLeft;
+		this.exprRight = exprRight;
 	}
 
 	@Override
 	public String toString() {
-		return "FieldAccessExpr [name=" + name + ", exp=" + exp + ", line=" + line + ", column=" + column + "]";
+		return "FieldAccessExpr [exprLeft=" + exprLeft + ", exprRight=" + exprRight + ", line=" + line + ", column="
+				+ column + "]";
 	}
 	
 	

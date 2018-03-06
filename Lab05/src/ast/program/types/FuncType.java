@@ -8,18 +8,18 @@ import ast.program.definitions.VarDefinition;
 
 public class FuncType extends AbstractASTNode implements Type {
 
-	public Type type;
-	public List<VarDefinition> defs;
+	public Type returnType;
+	public List<VarDefinition> params;
 
-	public FuncType(int line, int column, Type type, List<VarDefinition> defs) {
+	public FuncType(int line, int column, Type returnType, List<VarDefinition> params) {
 		super(line, column);
-		this.type =type;
-		this.defs=defs;
+		this.returnType =returnType;
+		this.params=params;
 	}
 
 	@Override
 	public String toString() {
-		return "FuncType [type=" + type + ", defs=" + defs + ", line=" + line + ", column=" + column + "]";
+		return "FuncType [returnType=" + returnType + ", params=" + params + ", line=" + line + ", column=" + column + "]";
 	}
 
 	

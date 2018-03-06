@@ -4,13 +4,13 @@ import java.util.List;
 
 import ast.AbstractASTNode;
 import ast.program.Type;
-import ast.program.definitions.RecordDef;
+import ast.program.definitions.Field;
 
 public class StructType extends AbstractASTNode implements Type {
 
-	public List<RecordDef> rdefs;
+	public List<Field> rdefs;
 
-	public StructType(int line, int column,List<RecordDef> rdefs) {
+	public StructType(int line, int column,List<Field> rdefs) {
 		super(line, column);
 		this.rdefs =rdefs;
 	}
