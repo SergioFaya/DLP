@@ -14,6 +14,7 @@ package parser;
 	import ast.program.definitions.*;
 	import java.util.*;
 	import parser.LexerHelper;
+	import errorHandler.ErrorHandler;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -497,8 +498,9 @@ public class CmmParser extends Parser {
 	}
 
 	public static class StructTypeContext extends ParserRuleContext {
-		public StructType ast;
-		public List<Field> fields = new ArrayList<Field>();;
+		public Type ast;
+		public List<Field> fields = new ArrayList<Field>();
+		public boolean isRight = false;;
 		public FieldContext field;
 		public List<FieldContext> field() {
 			return getRuleContexts(FieldContext.class);
@@ -531,7 +533,14 @@ public class CmmParser extends Parser {
 				{
 				setState(105);
 				((StructTypeContext)_localctx).field = field();
-				_localctx.fields.add(((StructTypeContext)_localctx).field.ast);
+
+						 	if(!_localctx.fields.contains(((StructTypeContext)_localctx).field.ast)){
+						 		_localctx.fields.add(((StructTypeContext)_localctx).field.ast);
+						 	}else{
+						 		((StructTypeContext)_localctx).isRight =  false;
+						 	}
+						 
+						 
 				}
 				}
 				setState(112);
@@ -540,7 +549,15 @@ public class CmmParser extends Parser {
 			}
 			setState(113);
 			match(T__8);
-			((StructTypeContext)_localctx).ast =  new StructType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,_localctx.fields);
+
+					 	if(_localctx.isRight){
+					 		((StructTypeContext)_localctx).ast =  new StructType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,_localctx.fields);
+					 	}
+					 	else{
+					 		((StructTypeContext)_localctx).ast =  new ErrorType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,"The struct has repeated recordDef");
+							 ErrorHandler.getInstance().addError((ErrorType)_localctx.ast);
+					 	}
+					 
 			}
 		}
 		catch (RecognitionException re) {

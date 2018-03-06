@@ -14,6 +14,7 @@ package parser;
 	import ast.program.definitions.*;
 	import java.util.*;
 	import parser.LexerHelper;
+	import errorHandler.ErrorHandler;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

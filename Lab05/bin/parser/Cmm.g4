@@ -14,6 +14,7 @@ grammar Cmm;
 	import ast.program.definitions.*;
 	import java.util.*;
 	import parser.LexerHelper;
+	import errorHandler.ErrorHandler;
 }
 
 program returns [Program ast]: definitions main 
@@ -71,10 +72,26 @@ arrayDim returns [List<Integer> ast = new ArrayList<>();]:
 		 ('['INT_CONSTANT']'{$ast.add(Integer.parseInt($INT_CONSTANT.getText()));})+
 		;
 	
-structType returns [StructType ast]
-			locals[List<Field> fields = new ArrayList<Field>();]:
-		 'struct''{' (field{$fields.add($field.ast);})* '}'
-		 {$ast = new StructType($start.getLine(),$start.getCharPositionInLine()+1,$fields);}
+structType returns [Type ast]
+			locals[List<Field> fields = new ArrayList<Field>(),
+			boolean isRight = false;]:
+		 'struct''{' (field{
+		 	if(!$fields.contains($field.ast)){
+		 		$fields.add($field.ast);
+		 	}else{
+		 		$isRight = false;
+		 	}
+		 
+		 })* '}'
+		 {
+		 	if($isRight){
+		 		$ast = new StructType($start.getLine(),$start.getCharPositionInLine()+1,$fields);
+		 	}
+		 	else{
+		 		$ast = new ErrorType($start.getLine(),$start.getCharPositionInLine()+1,"The struct has repeated recordDef");
+				 ErrorHandler.getInstance().addError((ErrorType)$ast);
+		 	}
+		 }
 		;
 	
 field returns [Field ast ]: 
