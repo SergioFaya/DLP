@@ -555,7 +555,6 @@ public class CmmParser extends Parser {
 					 	}
 					 	else{
 					 		((StructTypeContext)_localctx).ast =  new ErrorType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,"The struct has repeated recordDef");
-							 ErrorHandler.getInstance().addError((ErrorType)_localctx.ast);
 					 	}
 					 
 			}

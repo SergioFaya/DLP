@@ -3,6 +3,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import ast.Program;
+import errorHandler.ErrorHandler;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import parser.CmmLexer;
@@ -26,6 +27,7 @@ public class Main {
 		Program p = parser.program().ast;
 		IntrospectorModel model = new IntrospectorModel("Program",p);
 		new IntrospectorTree("Introspector",model);
+		ErrorHandler.getInstance().showError(System.err);
 	}
 	
 

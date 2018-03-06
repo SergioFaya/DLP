@@ -89,7 +89,6 @@ structType returns [Type ast]
 		 	}
 		 	else{
 		 		$ast = new ErrorType($start.getLine(),$start.getCharPositionInLine()+1,"The struct has repeated recordDef");
-				 ErrorHandler.getInstance().addError((ErrorType)$ast);
 		 	}
 		 }
 		;
