@@ -11,17 +11,18 @@ import visitor.Visitor;
 public class FunctionInvocation extends AbstractExpression implements Statement {
 
 	public Variable variable;
-	public List<Expression> exps;
+	public List<Expression> params;
 	
-	public FunctionInvocation(int line, int column, Variable variable,List<Expression> exps) {
+	public FunctionInvocation(int line, int column, Variable variable,List<Expression> params) {
 		super(line, column);
 		this.variable = variable;
-		this.exps = exps;
+		this.params = params;
 	}
 
 	@Override
 	public String toString() {
-		return "FunctionInvocation [variable=" + variable + ", line=" + line + ", column=" + column + "]";
+		return "FunctionInvocation [variable=" + variable + ", params=" + params + ", lValue=" + lValue + ", line="
+				+ line + ", column=" + column + "]";
 	}
 
 	@Override

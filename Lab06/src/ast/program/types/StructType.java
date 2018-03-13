@@ -9,16 +9,16 @@ import visitor.Visitor;
 
 public class StructType extends AbstractASTNode implements Type {
 
-	public List<Field> rdefs;
+	public List<Field> fields;
 
-	public StructType(int line, int column,List<Field> rdefs) {
+	public StructType(int line, int column,List<Field> fields) {
 		super(line, column);
-		this.rdefs =rdefs;
+		this.fields =fields;
 	}
 
 	@Override
 	public String toString() {
-		return "StructType [rdefs=" + rdefs + ", line=" + line + ", column=" + column + "]";
+		return "StructType [fields=" + fields + ", line=" + line + ", column=" + column + "]";
 	}
 
 	@Override

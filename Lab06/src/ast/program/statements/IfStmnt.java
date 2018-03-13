@@ -9,21 +9,21 @@ import visitor.Visitor;
 
 public class IfStmnt extends AbstractASTNode implements Statement {
 
-	public List<Statement> elseExp;
-	public List<Statement> ifExp;
+	public List<Statement> elseStmnts;
+	public List<Statement> ifStmnts;
 	public Expression exp;
 	
-	public IfStmnt(int line, int column,Expression exp,List<Statement> ifExp, List<Statement> elseExp) {
+	public IfStmnt(int line, int column,Expression exp,List<Statement> ifStmnts, List<Statement> elseStmnts) {
 		super(line, column);
 		this.exp = exp;
-		this.ifExp = ifExp;
-		this.elseExp = elseExp;
+		this.ifStmnts = ifStmnts;
+		this.elseStmnts = elseStmnts;
 	}
 
 	@Override
 	public String toString() {
-		return "IfStmnt [elseExp=" + elseExp + ", ifExp=" + ifExp + ", exp=" + exp + ", line=" + line + ", column="
-				+ column + "]";
+		return "IfStmnt [elseStmnts=" + elseStmnts + ", ifStmnts=" + ifStmnts + ", exp=" + exp + ", line=" + line
+				+ ", column=" + column + "]";
 	}
 	
 	@Override

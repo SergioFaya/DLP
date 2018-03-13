@@ -6,8 +6,8 @@ import ast.program.expressions.AbstractExpression;
 
 public abstract class AbstractDefinition extends AbstractExpression implements Definition{
 
-	protected Type type;
-	protected String name;
+	public Type type;
+	public String name;
 
 	public AbstractDefinition(int line, int column,Type type, String name) {
 		super(line, column);

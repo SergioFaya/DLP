@@ -9,16 +9,16 @@ import visitor.Visitor;
 
 public class Read extends AbstractASTNode implements Statement {
 
-	public Expression expression;
+	public Expression exp;
 	
 	public Read(int line, int column, Expression expression) {
 		super(line,column);
-		this.expression = expression;
+		this.exp = expression;
 	}
 
 	@Override
 	public String toString() {
-		return "Read [expression=" + expression + ", line=" + line + ", column=" + column + "]";
+		return "Read [expression=" + exp + ", line=" + line + ", column=" + column + "]";
 	}	
 
 	

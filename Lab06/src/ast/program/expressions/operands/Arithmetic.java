@@ -8,20 +8,20 @@ public class Arithmetic extends AbstractExpression implements Expression {
 	
 	
 	public String operand;
-	public Expression expressionLeft;
-	public Expression expressionRight;
+	public Expression exprLeft;
+	public Expression exprRight;
 	
-	public Arithmetic(int line, int column, Expression expressionLeft, String operand, Expression expressionRight) {
+	public Arithmetic(int line, int column, Expression exprLeft, String operand, Expression exprRight) {
 		super(line,column);
-		this.expressionRight = expressionRight;
-		this.expressionLeft = expressionLeft;
+		this.exprLeft = exprLeft;
+		this.exprRight = exprRight;
 		this.operand = operand;
 	}
 
 	@Override
 	public String toString() {
-		return "Arithmetic [operand=" + operand + ", expressionLeft=" + expressionLeft + ", expressionRight="
-				+ expressionRight + ", line=" + line + ", column=" + column + "]";
+		return "Arithmetic [operand=" + operand + ", exprLeft=" + exprLeft + ", exprRight=" + exprRight + ", lValue="
+				+ lValue + ", line=" + line + ", column=" + column + "]";
 	}
 	
 	@Override

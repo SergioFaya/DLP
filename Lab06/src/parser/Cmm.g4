@@ -17,7 +17,7 @@ grammar Cmm;
 	import errorHandler.ErrorHandler;
 }
 
-program returns [Program ast]: definitions main 
+program returns [Program ast]: definitions main EOF
 		{	
 			List<Definition> defs = $definitions.ast;
 			defs.add($main.ast);
@@ -53,7 +53,7 @@ varDef returns [List<VarDefinition> ast = new ArrayList<>()]:
 
 type returns [Type ast]:
 		  primitiveType {$ast = $primitiveType.ast;}
-		| arrayType  	{$ast = $arrayType.ast;}
+		| t=type arrayDim {$ast = new ArrayType($start.getLine(),$start.getCharPositionInLine()+1,$t.ast,$arrayDim.ast);}
 		| structType	{$ast = $structType.ast;}
 		;	
 
@@ -63,33 +63,27 @@ primitiveType returns [Type ast ]:
 			| 'char'	{$ast = CharType.getInstance();}
 			;
 
-arrayType returns [ArrayType ast]:
-		primitiveType arrayDim
-		{$ast = new ArrayType($start.getLine(),$start.getCharPositionInLine()+1,$primitiveType.ast,$arrayDim.ast);}
-		;
-
-arrayDim returns [List<Integer> ast = new ArrayList<>();]:
-		 ('['INT_CONSTANT']'{$ast.add(Integer.parseInt($INT_CONSTANT.getText()));})+
+arrayDim returns [Integer ast ]:
+		 ('['INT_CONSTANT']'{$ast = Integer.parseInt($INT_CONSTANT.getText());})+
 		;
 	
 structType returns [Type ast]
 			locals[List<Field> fields = new ArrayList<Field>(),
-			boolean isRight = false;]:
-		 'struct''{' (field{
-		 	if(!$fields.contains($field.ast)){
-		 		$fields.add($field.ast);
-		 	}else{
-		 		$isRight = false;
-		 	}
-		 
-		 })* '}'
+			boolean areRepeated = false;]:
+		 'struct''{' (field  
 		 {
-		 	if($isRight){
-		 		$ast = new StructType($start.getLine(),$start.getCharPositionInLine()+1,$fields);
+		 	if($fields.contains($field.ast)){
+		 		$areRepeated = true;
 		 	}
 		 	else{
-		 		$ast = new ErrorType($start.getLine(),$start.getCharPositionInLine()+1,"The struct has repeated recordDef");
+		 		$fields.add($field.ast);
 		 	}
+		 })* '}'
+		 {
+		 	if($areRepeated){
+		 		new ErrorType($start.getLine(),$start.getCharPositionInLine()+1,"The struct has repeated recordDef");
+		 	}		 		
+		 	$ast = new StructType($start.getLine(),$start.getCharPositionInLine()+1,$fields);
 		 }
 		;
 	

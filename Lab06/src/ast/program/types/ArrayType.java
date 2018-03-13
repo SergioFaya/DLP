@@ -1,7 +1,5 @@
 package ast.program.types;
 
-import java.util.List;
-
 import ast.AbstractASTNode;
 import ast.program.Type;
 import visitor.Visitor;
@@ -9,17 +7,17 @@ import visitor.Visitor;
 public class ArrayType extends AbstractASTNode implements Type {
 
 	public Type type;
-	public int dimension;
+	public int size;
 	
-	public ArrayType(int line, int column, Type type, List<Integer> dimensions) {
+	public ArrayType(int line, int column, Type type, Integer size) {
 		super(line, column);
-		this.dimension = dimensions.get(dimensions.size()-1);
+		this.size = size;
 		this.type = type;
 	}
 
 	@Override
 	public String toString() {
-		return "ArrayType [type=" + type + ", dimension=" + dimension + ", line=" + line + ", column=" + column + "]";
+		return "ArrayType [type=" + type + ", size=" + size + ", line=" + line + ", column=" + column + "]";
 	}
 
 	
