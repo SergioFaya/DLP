@@ -12,6 +12,7 @@ import ast.program.expressions.operands.Logical;
 import ast.program.expressions.unary.Cast;
 import ast.program.expressions.unary.UnaryMinus;
 import ast.program.expressions.unary.UnaryNegation;
+import ast.program.statements.Assignment;
 
 public class TypeCheckingVisitor extends AbstractVisitor<Void, Void>{
 
@@ -29,63 +30,62 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void>{
 	
 	@Override
 	public Void visit(RealLiteral realLit, Void param) {
-		// TODO Auto-generated method stub
-		return super.visit(realLit, param);
+		realLit.setLvalue(false);
+		return null;
 	}
 	
 	@Override
 	public Void visit(Arithmetic arith, Void param) {
-		// TODO Auto-generated method stub
-		return super.visit(arith, param);
+		arith.setLvalue(false);
+		return null;
 	}
 	
 	@Override
 	public Void visit(Comparison comp, Void param) {
-		// TODO Auto-generated method stub
-		return super.visit(comp, param);
+		comp.setLvalue(false);
+		return null;
 	}
 	
 	@Override
 	public Void visit(Logical logic, Void param) {
 		// TODO Auto-generated method stub
-		return super.visit(logic, param);
+		return null;
 	}
 	
 	@Override
 	public Void visit(Cast cast, Void param) {
-		// TODO Auto-generated method stub
-		return super.visit(cast, param);
+		cast.setLvalue(false);
+		return null;
 	}
 	
 	@Override
 	public Void visit(UnaryMinus uminus, Void param) {
 		// TODO Auto-generated method stub
-		return super.visit(uminus, param);
+		return null;
 	}
 	
 	@Override
 	public Void visit(UnaryNegation unegation, Void param) {
 		// TODO Auto-generated method stub
-		return super.visit(unegation, param);
+		return null;
 	}
 	
 	@Override
 	public Void visit(FieldAccessExpr fieldExpr, Void param) {
 		// TODO Auto-generated method stub
-		return super.visit(fieldExpr, param);
+		return null;
 	}
 	
 	@Override
 	public Void visit(IndexAccessExpr indexing, Void param) {
-		// TODO Auto-generated method stub
-		return super.visit(indexing, param);
+		
+		return null;
 	}
 	
 	@Override
 	public Void visit(Variable var, Void param) {
-		// TODO Auto-generated method stub
-		return super.visit(var, param);
+		var.setLvalue(false);
+		return null;
 	}
-	
 	
 }

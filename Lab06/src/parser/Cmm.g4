@@ -64,7 +64,7 @@ primitiveType returns [Type ast ]:
 			;
 
 arrayDim returns [Integer ast ]:
-		 ('['INT_CONSTANT']'{$ast = Integer.parseInt($INT_CONSTANT.getText());})+
+		 ('['INT_CONSTANT']'{$ast = Integer.parseInt($INT_CONSTANT.getText());})
 		;
 	
 structType returns [Type ast]
@@ -239,6 +239,14 @@ fragment SPECIAL_CHAR:
 			| '.'
 			| '~'
 			| '-'
+			| '('
+			| ')'
+			| '='
+			| ','
+			| '!'
+			| '¡'
+			| '?'
+			| '¿'
 			;
 			
 fragment ASCII:  '\\'DIGIT+
