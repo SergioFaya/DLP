@@ -27,4 +27,11 @@ public class FuncType extends AbstractASTNode implements Type {
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
 	}
+
+	@Override
+	public Type getType() {
+		return returnType;
+	}
+	
+	
 }

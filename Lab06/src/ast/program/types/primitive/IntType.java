@@ -25,4 +25,6 @@ public static IntType instance = new IntType();
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
 	}
+	@Override
+	public Type getType() {		return null;	}
 }

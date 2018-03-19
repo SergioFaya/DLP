@@ -13,6 +13,7 @@ public class ArrayType extends AbstractASTNode implements Type {
 		super(line, column);
 		this.size = size;
 		this.type = type;
+		orderTypes();
 	}
 
 	@Override
@@ -24,5 +25,18 @@ public class ArrayType extends AbstractASTNode implements Type {
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
+	}
+	
+	@Override
+	public Type getType() {
+		return type;
+	}
+	
+	private void orderTypes() {
+		Type aux = this.type;
+		while (aux.getType()!=null) {
+			aux= aux.getType();
+		}
+		this.type = aux;
 	}
 }

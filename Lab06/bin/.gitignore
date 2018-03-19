@@ -1,4 +1,3 @@
-/parser/
 /visitor/
 /ast/
-/test/
+/parser/

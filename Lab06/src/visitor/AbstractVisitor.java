@@ -5,7 +5,7 @@ import ast.program.definitions.Field;
 import ast.program.definitions.FuncDefinition;
 import ast.program.definitions.VarDefinition;
 import ast.program.expressions.FieldAccessExpr;
-import ast.program.expressions.IndexAccessExpr;
+import ast.program.expressions.Indexing;
 import ast.program.expressions.Variable;
 import ast.program.expressions.literal.CharLiteral;
 import ast.program.expressions.literal.IntLiteral;
@@ -61,8 +61,9 @@ public class AbstractVisitor<TP,TR> implements Visitor<TP, TR>{
 	}
 
 	@Override
-	public TR visit(IndexAccessExpr indexing, TP param) {
-		indexing.exp.accept(this, param);
+	public TR visit(Indexing indexing, TP param) {
+		indexing.exprLeft.accept(this, param);
+		indexing.expBrackets.accept(this, param);
 		return null;
 	}
 

@@ -368,7 +368,12 @@ public class CmmParser extends Parser {
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 					setState(81);
 					((TypeContext)_localctx).arrayDim = arrayDim();
-					((TypeContext)_localctx).ast =  new ArrayType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,((TypeContext)_localctx).t.ast,((TypeContext)_localctx).arrayDim.ast);
+
+					          							//ArrayList<ArrayType> types = new ArrayList<>();
+					          							//Bucle de todo,guardarlas sin tipo, despues coger de atras adelante y ir metiendo tipos con el valor público
+					          							//retornar solo el ultimo que tendra arraytype-arratype-arraytype-type(el que se llama t)
+					          							((TypeContext)_localctx).ast =  new ArrayType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,((TypeContext)_localctx).t.ast,((TypeContext)_localctx).arrayDim.ast);
+					          							
 					}
 					} 
 				}
@@ -1157,7 +1162,7 @@ public class CmmParser extends Parser {
 				match(T__0);
 
 								for(Expression exp: ((IoStmntContext)_localctx).expList.ast){
-									_localctx.ast.add(new Write(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,exp));
+									_localctx.ast.add(new Read(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,exp));
 								}
 							
 				}
@@ -1646,7 +1651,7 @@ public class CmmParser extends Parser {
 						((ExpContext)_localctx).exp2 = ((ExpContext)_localctx).exp = exp(0);
 						setState(341);
 						match(T__5);
-						((ExpContext)_localctx).ast =  new IndexAccessExpr(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,(((ExpContext)_localctx).exp1!=null?_input.getText(((ExpContext)_localctx).exp1.start,((ExpContext)_localctx).exp1.stop):null),((ExpContext)_localctx).exp2.ast);
+						((ExpContext)_localctx).ast =  new Indexing(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,((ExpContext)_localctx).exp1.ast,((ExpContext)_localctx).exp2.ast);
 						}
 						break;
 					}

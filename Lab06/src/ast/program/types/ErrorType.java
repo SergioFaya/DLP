@@ -25,4 +25,9 @@ public class ErrorType extends AbstractASTNode implements Type{
 		return visitor.visit(this, p);
 	}
 
+	@Override
+	public Type getType() {
+		return null;
+	}
+
 }

@@ -53,7 +53,12 @@ varDef returns [List<VarDefinition> ast = new ArrayList<>()]:
 
 type returns [Type ast]:
 		  primitiveType {$ast = $primitiveType.ast;}
-		| t=type arrayDim {$ast = new ArrayType($start.getLine(),$start.getCharPositionInLine()+1,$t.ast,$arrayDim.ast);}
+		| t=type arrayDim {
+							//ArrayList<ArrayType> types = new ArrayList<>();
+							//Bucle de todo,guardarlas sin tipo, despues coger de atras adelante y ir metiendo tipos con el valor público
+							//retornar solo el ultimo que tendra arraytype-arratype-arraytype-type(el que se llama t)
+							$ast = new ArrayType($start.getLine(),$start.getCharPositionInLine()+1,$t.ast,$arrayDim.ast);
+							}
 		| structType	{$ast = $structType.ast;}
 		;	
 
@@ -157,7 +162,7 @@ ioStmnt returns [List<Statement> ast = new ArrayList<>()]:
 		| 'read' expList ';' 
 			{
 				for(Expression exp: $expList.ast){
-					$ast.add(new Write($start.getLine(),$start.getCharPositionInLine()+1,exp));
+					$ast.add(new Read($start.getLine(),$start.getCharPositionInLine()+1,exp));
 				}
 			}
 	;
@@ -185,7 +190,7 @@ whileStmnt returns [WhileStmnt ast]:
 			;
 	
 exp returns [Expression ast]:
-	  exp1 = exp '['exp2 = exp']' {$ast = new IndexAccessExpr($start.getLine(),$start.getCharPositionInLine()+1,$exp1.text,$exp2.ast);}
+	  exp1 = exp '['exp2 = exp']' {$ast = new Indexing($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$exp2.ast);}
 	| '('exp')' {$ast = $exp.ast;}
 	| exp1 = exp '.' exp2 = exp {$ast = new FieldAccessExpr($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$exp2.ast);}
 	| cast exp { $ast = new Cast($start.getLine(),$start.getCharPositionInLine()+1,$cast.ast, $exp.ast);}

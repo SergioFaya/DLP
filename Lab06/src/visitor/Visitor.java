@@ -5,7 +5,7 @@ import ast.program.definitions.Field;
 import ast.program.definitions.FuncDefinition;
 import ast.program.definitions.VarDefinition;
 import ast.program.expressions.FieldAccessExpr;
-import ast.program.expressions.IndexAccessExpr;
+import ast.program.expressions.Indexing;
 import ast.program.expressions.Variable;
 import ast.program.expressions.literal.CharLiteral;
 import ast.program.expressions.literal.IntLiteral;
@@ -45,7 +45,7 @@ public interface Visitor<TP,TR> {
 	//Expressions
 	TR visit(FieldAccessExpr fieldExpr, TP param);
 	
-	TR visit(IndexAccessExpr indexing, TP param);
+	TR visit(Indexing indexing, TP param);
 	
 	TR visit(Variable var, TP param);
 		//operands
