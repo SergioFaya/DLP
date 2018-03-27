@@ -5,9 +5,9 @@ import visitor.Visitor;
 
 public class Field extends AbstractDefinition{
 
-	private Type type;
-	private String name;
-	private int scope;
+	public Type type;
+	public String name;
+	public int scope;
 	
 	public Field(int line, int column,Type type, String name) {
 		super(line, column,type,name);

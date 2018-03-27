@@ -1,10 +1,9 @@
 package ast.program.types.primitive;
 
-import ast.AbstractASTNode;
-import ast.program.Type;
+import ast.program.types.AbstractType;
 import visitor.Visitor;
 
-public class CharType extends AbstractASTNode implements Type{
+public class CharType extends AbstractType{
 
 	public static CharType instance = new CharType(); 
 	
@@ -26,9 +25,4 @@ public class CharType extends AbstractASTNode implements Type{
 		return visitor.visit(this, p);
 	}
 
-	@Override
-	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

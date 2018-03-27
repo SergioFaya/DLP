@@ -1,10 +1,9 @@
 package ast.program.types.primitive;
 
-import ast.AbstractASTNode;
-import ast.program.Type;
+import ast.program.types.AbstractType;
 import visitor.Visitor;
 
-public class IntType extends AbstractASTNode implements Type {
+public class IntType extends AbstractType {
 
 public static IntType instance = new IntType(); 
 	
@@ -25,6 +24,9 @@ public static IntType instance = new IntType();
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
 	}
+	
 	@Override
-	public Type getType() {		return null;	}
+	public boolean isLogical() {
+		return true;
+	}
 }

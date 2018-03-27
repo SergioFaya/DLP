@@ -1,10 +1,9 @@
 package ast.program.types.primitive;
 
-import ast.AbstractASTNode;
-import ast.program.Type;
+import ast.program.types.AbstractType;
 import visitor.Visitor;
 
-public class VoidType extends AbstractASTNode implements Type {
+public class VoidType extends AbstractType {
 
 	public static VoidType instance = new VoidType();
 
@@ -26,7 +25,4 @@ public class VoidType extends AbstractASTNode implements Type {
 		return visitor.visit(this, p);
 	}
 	
-	@Override
-	public Type getType() {		return null;	}
-
 }

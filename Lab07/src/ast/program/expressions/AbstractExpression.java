@@ -2,6 +2,7 @@ package ast.program.expressions;
 
 import ast.AbstractASTNode;
 import ast.program.Expression;
+import ast.program.Type;
 
 public abstract class AbstractExpression  extends AbstractASTNode implements Expression{
 
@@ -10,6 +11,7 @@ public abstract class AbstractExpression  extends AbstractASTNode implements Exp
 	}
 
 	protected boolean lValue;
+	protected Type type;
 	
 	@Override
 	public boolean getLvalue() {
@@ -19,5 +21,15 @@ public abstract class AbstractExpression  extends AbstractASTNode implements Exp
 	@Override
 	public void setLvalue(boolean lValue) {
 		this.lValue = lValue;
+	}
+	
+	@Override
+	public Type getType() {
+		return type;
+	}
+	
+	@Override
+	public Type setType(Type type) {
+		return this.type = type;
 	}
 }

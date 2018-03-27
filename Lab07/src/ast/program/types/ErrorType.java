@@ -1,11 +1,9 @@
 package ast.program.types;
 
-import ast.AbstractASTNode;
-import ast.program.Type;
 import errorHandler.ErrorHandler;
 import visitor.Visitor;
 
-public class ErrorType extends AbstractASTNode implements Type{
+public class ErrorType extends AbstractType{
 	
 	private String msg;
 
@@ -25,9 +23,5 @@ public class ErrorType extends AbstractASTNode implements Type{
 		return visitor.visit(this, p);
 	}
 
-	@Override
-	public Type getType() {
-		return null;
-	}
 
 }

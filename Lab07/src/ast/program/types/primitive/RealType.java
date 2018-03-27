@@ -1,10 +1,9 @@
 package ast.program.types.primitive;
 
-import ast.AbstractASTNode;
-import ast.program.Type;
+import ast.program.types.AbstractType;
 import visitor.Visitor;
 
-public class RealType extends AbstractASTNode implements Type {
+public class RealType extends AbstractType {
 
 	public static RealType instance = new RealType();
 
@@ -25,8 +24,4 @@ public class RealType extends AbstractASTNode implements Type {
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
 	}
-	
-	@Override
-	public Type getType() {		return null;	}
-
 }

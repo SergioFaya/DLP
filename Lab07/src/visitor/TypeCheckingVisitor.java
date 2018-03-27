@@ -1,5 +1,6 @@
 package visitor;
 
+import ast.program.Type;
 import ast.program.expressions.Indexing;
 import ast.program.expressions.Variable;
 import ast.program.expressions.operands.Arithmetic;
@@ -20,6 +21,11 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 		arithmetic.exprLeft.accept(this, param);
 		arithmetic.exprRight.accept(this, param);
 		arithmetic.setLvalue(false);
+		Type t = arithmetic.setType(arithmetic.exprLeft.getType().arithmetic(arithmetic.exprRight.getType()));
+		if(t == null) {
+			arithmetic.setType(new ErrorType(arithmetic.getLine(), arithmetic.getColumn(), "Error in artihmetic expression"));
+		}
+		
 		return null;
 	}
 

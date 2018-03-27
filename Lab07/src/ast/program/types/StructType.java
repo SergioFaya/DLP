@@ -2,18 +2,17 @@ package ast.program.types;
 
 import java.util.List;
 
-import ast.AbstractASTNode;
 import ast.program.Type;
 import ast.program.definitions.Field;
 import visitor.Visitor;
 
-public class StructType extends AbstractASTNode implements Type {
+public class StructType extends AbstractType {
 
 	public List<Field> fields;
 
-	public StructType(int line, int column,List<Field> fields) {
+	public StructType(int line, int column, List<Field> fields) {
 		super(line, column);
-		this.fields =fields;
+		this.fields = fields;
 	}
 
 	@Override
@@ -27,7 +26,21 @@ public class StructType extends AbstractASTNode implements Type {
 	}
 
 	@Override
-	public Type getType() {
-		return null;
+	public Type dot(String str) {
+		Field f = null;
+		boolean isContained = false;
+		for (Field field : fields) {
+			if(field.name.equals(str)) {
+				f = field;
+				isContained = true;
+				break;
+			}
+		}
+		if (isContained) {
+			return f.type;
+		} else {
+			return super.dot(str);
+		}
 	}
+
 }

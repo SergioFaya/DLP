@@ -14,12 +14,7 @@ public abstract class AbstractDefinition extends AbstractExpression implements D
 		this.type = type;
 		this.name = name;
 	}
-
-	@Override
-	public Type getType() {
-		return type;
-	}
-
+	
 	@Override
 	public String getName() {
 		return name;

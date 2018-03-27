@@ -2,12 +2,11 @@ package ast.program.types;
 
 import java.util.List;
 
-import ast.AbstractASTNode;
 import ast.program.Type;
 import ast.program.definitions.VarDefinition;
 import visitor.Visitor;
 
-public class FuncType extends AbstractASTNode implements Type {
+public class FuncType extends AbstractType {
 
 	public Type returnType;
 	public List<VarDefinition> params;
@@ -29,9 +28,13 @@ public class FuncType extends AbstractASTNode implements Type {
 	}
 
 	@Override
-	public Type getType() {
+	public Type parenthesis(List<String> str) {		
+		for (VarDefinition vdef : params) {
+			if(!str.contains(vdef.name)) {
+				return super.parenthesis(str);
+			}
+		}
 		return returnType;
 	}
-	
 	
 }

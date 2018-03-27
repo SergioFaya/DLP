@@ -6,17 +6,17 @@ import visitor.Visitor;
 public class FieldAccessExpr extends AbstractExpression implements Expression {
 
 	public Expression exprLeft;
-	public Expression exprRight;
+	public String field;
 
-	public FieldAccessExpr(int line, int column,Expression exprLeft,Expression exprRight) {
+	public FieldAccessExpr(int line, int column,Expression exprLeft,String field) {
 		super(line, column);
 		this.exprLeft = exprLeft;
-		this.exprRight = exprRight;
+		this.field = field;
 	}
 
 	@Override
 	public String toString() {
-		return "FieldAccessExpr [exprLeft=" + exprLeft + ", exprRight=" + exprRight + ", line=" + line + ", column="
+		return "FieldAccessExpr [exprLeft=" + exprLeft + ", exprRight=" + field + ", line=" + line + ", column="
 				+ column + "]";
 	}
 	

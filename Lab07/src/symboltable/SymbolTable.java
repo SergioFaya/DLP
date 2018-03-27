@@ -12,8 +12,6 @@ public class SymbolTable {
 	private int scope=0;
 	private List<Map<String,Definition>> table;
 	
-	private int lastMapIndex = -1;
-	
 	public SymbolTable()  {
 		table = new LinkedList<Map<String, Definition>>();
 	}
@@ -25,11 +23,9 @@ public class SymbolTable {
 	public void set() {
 		this.table.add(new HashMap<String,Definition>());
 		this.scope++;
-		this.lastMapIndex++;
 	}
 	
 	public void reset() {
-		this.lastMapIndex--;
 		this.scope--;
 		this.table.remove(table.size()-1);
 	}
@@ -38,14 +34,20 @@ public class SymbolTable {
 		if(definition == null) {
 			return false;
 		}
-		return this.table.get(lastMapIndex).put(definition.getName(), definition) == null;
+		return this.table.get(scope).put(definition.getName(), definition) == null;
 	}
 	
 	public Definition find(String id) {
-		return this.table.get(lastMapIndex).get(id);
+		Definition def = null;
+		for (Map<String, Definition> map : table) {
+			if((def = map.get(id)) != null) {
+				return def;
+			}
+		}
+		return def;
 	}
 
 	public Definition findInCurrentScope(String id) {
-		
+		return this.table.get(scope).get(id);
 	}
 }

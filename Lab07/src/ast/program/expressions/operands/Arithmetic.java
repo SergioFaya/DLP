@@ -1,6 +1,7 @@
 package ast.program.expressions.operands;
 
 import ast.program.Expression;
+import ast.program.Type;
 import ast.program.expressions.AbstractExpression;
 import visitor.Visitor;
 
@@ -10,6 +11,8 @@ public class Arithmetic extends AbstractExpression implements Expression {
 	public String operand;
 	public Expression exprLeft;
 	public Expression exprRight;
+	
+	private Type type;
 	
 	public Arithmetic(int line, int column, Expression exprLeft, String operand, Expression exprRight) {
 		super(line,column);
@@ -27,6 +30,17 @@ public class Arithmetic extends AbstractExpression implements Expression {
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
+	}
+
+	@Override
+	public Type setType(Type type) {
+		return this.type = type;
+		
+	}
+
+	@Override
+	public Type getType() {
+		return type;
 	}
 	
 }

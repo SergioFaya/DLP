@@ -1,10 +1,10 @@
 package ast.program.types;
 
-import ast.AbstractASTNode;
 import ast.program.Type;
+import ast.program.types.primitive.IntType;
 import visitor.Visitor;
 
-public class ArrayType extends AbstractASTNode implements Type {
+public class ArrayType extends AbstractType {
 
 	public Type type;
 	public int size;
@@ -13,7 +13,6 @@ public class ArrayType extends AbstractASTNode implements Type {
 		super(line, column);
 		this.size = size;
 		this.type = type;
-		orderTypes();
 	}
 
 	@Override
@@ -28,15 +27,12 @@ public class ArrayType extends AbstractASTNode implements Type {
 	}
 	
 	@Override
-	public Type getType() {
-		return type;
+	public Type squareBrackets(Type t) {
+		if(t instanceof IntType) {
+			return this;
+		}else {
+			return super.squareBrackets(t);
+		}
 	}
 	
-	private void orderTypes() {
-		Type aux = this.type;
-		while (aux.getType()!=null) {
-			aux= aux.getType();
-		}
-		this.type = aux;
-	}
 }
