@@ -11,16 +11,11 @@ public class SymbolTable {
 	
 	private int scope=0;
 	private List<Map<String,Definition>> table;
-	private static SymbolTable instance = new SymbolTable();
 	
 	//TEST
 	public SymbolTable()  {
 		table = new LinkedList<Map<String, Definition>>();
 		this.table.add(new HashMap<String,Definition>());
-	}
-
-	public static SymbolTable getInstance() {
-		return instance;
 	}
 	
 	//only 2 scopes in our language

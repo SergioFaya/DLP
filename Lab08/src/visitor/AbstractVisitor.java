@@ -42,14 +42,14 @@ public class AbstractVisitor<TP,TR> implements Visitor<TP, TR>{
 
 	@Override
 	public TR visit(FuncDefinition funcDef, TP param) {
-		funcDef.type.accept(this, param);
+		funcDef.getType().accept(this, param);
 		funcDef.body.forEach(st -> st.accept(this, param));
 		return null;
 	}
 
 	@Override
 	public TR visit(VarDefinition varDef, TP param) {
-		varDef.type.accept(this, param);
+		varDef.getType().accept(this, param);
 		return null;
 	}
 
@@ -142,6 +142,7 @@ public class AbstractVisitor<TP,TR> implements Visitor<TP, TR>{
 
 	@Override
 	public TR visit(IfStmnt ifStmnt, TP param) {
+		ifStmnt.exp.accept(this, param);
 		ifStmnt.elseStmnts.forEach(st-> st.accept(this, param));
 		ifStmnt.ifStmnts.forEach(st-> st.accept(this, param));
 		return null;

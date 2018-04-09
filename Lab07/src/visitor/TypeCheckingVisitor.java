@@ -23,7 +23,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 		arithmetic.setLvalue(false);
 		Type t = arithmetic.setType(arithmetic.exprLeft.getType().arithmetic(arithmetic.exprRight.getType()));
 		if(t == null) {
-			arithmetic.setType(new ErrorType(arithmetic.getLine(), arithmetic.getColumn(), "Error in artihmetic expression"));
+			arithmetic.setType(new ErrorType(arithmetic.getLine(), arithmetic.getColumn(), "Error in arithmetic expression"));
 		}
 		
 		return null;

@@ -1,9 +1,6 @@
-/ast/
-/errorHandler/
 /parser/
-/test/
+/util/
 /visitor/
-/input-wrong.txt
-/input.txt
-/objective.txt
+/test/
 /symboltable/
+/ast/
