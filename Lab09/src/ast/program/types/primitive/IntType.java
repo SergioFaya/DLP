@@ -76,19 +76,8 @@ public class IntType extends AbstractType {
 	}
 	
 	@Override
-	public int getSize() {
+	public int numberOfBytes() {
 		return 2;
 	}
-	
-	@Override
-	public int getOffset() {
-		return this.offset;
-	}
-
-	@Override
-	public void setOffset(int offset) {
-		this.offset=offset;
-	}
-
 	
 }

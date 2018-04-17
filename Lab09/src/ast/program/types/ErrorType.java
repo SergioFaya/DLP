@@ -24,16 +24,4 @@ public class ErrorType extends AbstractType{
 		return visitor.visit(this, p);
 	}
 
-	@Override
-	public int getOffset() {
-		return this.offset;
-	}
-
-	@Override
-	public void setOffset(int offset) {
-		this.offset=offset;
-	}
-
-	
-
 }

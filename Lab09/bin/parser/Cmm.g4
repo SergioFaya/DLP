@@ -57,7 +57,7 @@ type returns [Type ast]:
 		| t=type arrayDim {
 			$ast = ArrayTypeSorter.sort($start.getLine(),$start.getCharPositionInLine()+1,$t.ast,$arrayDim.ast);
 		}
-		| structType	{$ast = $structType.ast;}
+		| recordType	{$ast = $recordType.ast;}
 		;	
 
 primitiveType returns [Type ast ]:
@@ -70,7 +70,7 @@ arrayDim returns [List<Integer> ast  = new ArrayList<Integer>()]:
 		 ('['INT_CONSTANT']'{$ast.add(Integer.parseInt($INT_CONSTANT.getText()));})+
 		;
 	
-structType returns [Type ast]
+recordType returns [Type ast]
 			locals[List<Field> fields = new ArrayList<Field>(),
 			boolean areRepeated = false;]:
 		 'struct''{' (field  
@@ -86,7 +86,7 @@ structType returns [Type ast]
 		 	if($areRepeated){
 		 		new ErrorType($start.getLine(),$start.getCharPositionInLine()+1,"The struct has repeated recordDef");
 		 	}		 		
-		 	$ast = new StructType($start.getLine(),$start.getCharPositionInLine()+1,$fields);
+		 	$ast = new RecordType($start.getLine(),$start.getCharPositionInLine()+1,$fields);
 		 }
 		;
 	

@@ -34,7 +34,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 		}
 		symbolTable.set();
 		funcDef.getType().accept(this, param);
-		funcDef.stmntsº	.forEach(st -> st.accept(this, param));
+		funcDef.stmnts.forEach(st -> st.accept(this, param));
 		symbolTable.reset();
 		return null;
 	}

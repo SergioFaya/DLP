@@ -10,7 +10,6 @@ public class FuncType extends AbstractType {
 
 	public Type returnType;
 	public List<VarDefinition> params;
-	private int offset;
 
 	public FuncType(int line, int column, Type returnType, List<VarDefinition> params) {
 		super(line, column);
@@ -40,16 +39,6 @@ public class FuncType extends AbstractType {
 			}
 		}
 		return returnType;
-	}
-
-	@Override
-	public int getOffset() {
-		return this.offset;
-	}
-
-	@Override
-	public void setOffset(int offset) {
-		this.offset=offset;
 	}
 
 }

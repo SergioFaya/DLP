@@ -26,7 +26,7 @@ import ast.program.statements.Write;
 import ast.program.types.ArrayType;
 import ast.program.types.ErrorType;
 import ast.program.types.FuncType;
-import ast.program.types.StructType;
+import ast.program.types.RecordType;
 import ast.program.types.primitive.CharType;
 import ast.program.types.primitive.IntType;
 import ast.program.types.primitive.RealType;
@@ -91,7 +91,7 @@ public interface Visitor<TP,TR> {
 	
 	TR visit(FuncType funcType, TP param);
 	
-	TR visit(StructType structType, TP param);
+	TR visit(RecordType structType, TP param);
 		//primitive type
 	TR visit(CharType charType, TP param);
 	

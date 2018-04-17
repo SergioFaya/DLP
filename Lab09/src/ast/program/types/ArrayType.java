@@ -36,18 +36,4 @@ public class ArrayType extends AbstractType {
 		}
 	}
 
-	@Override
-	public int getOffset() {
-		return this.offset;
-	}
-
-	@Override
-	public void setOffset(int offset) {
-		this.offset=offset;
-	}
-
-	
-
-	
-	
 }

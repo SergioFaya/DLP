@@ -78,19 +78,8 @@ public class RealType extends AbstractType {
 	}
 
 	@Override
-	public int getSize() {
+	public int numberOfBytes() {
 		return 4;
 	}
-	
-	@Override
-	public int getOffset() {
-		return this.offset;
-	}
-
-	@Override
-	public void setOffset(int offset) {
-		this.offset=offset;
-	}
-
 	
 }

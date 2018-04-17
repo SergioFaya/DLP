@@ -79,7 +79,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	}
 	
 	@Override
-	public int getSize() {
-		return 0;
+	public int numberOfBytes() {
+		throw new RuntimeException("Impleementation not created");
 	}
 }

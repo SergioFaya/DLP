@@ -10,7 +10,6 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 
 	public List<Statement> body;
 	private int scope;
-	private int offset;
 
 	public FuncDefinition(int line, int column,Type type,String name, List<Statement> body) {
 		super(line, column,type,name);
@@ -36,15 +35,5 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 	@Override
 	public void setScope(int scope) {
 		this.scope = scope;		
-	}
-
-	@Override
-	public int getOffset() {
-		return this.offset;
-	}
-
-	@Override
-	public void setOffset(int offset) {
-		this.offset = offset;		
 	}
 }

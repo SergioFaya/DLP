@@ -1,86 +1,58 @@
 package codegenerator;
 
-import ast.Program;
+import ast.program.Statement;
 import ast.program.definitions.Field;
 import ast.program.definitions.FuncDefinition;
 import ast.program.definitions.VarDefinition;
-import ast.program.types.ArrayType;
 import ast.program.types.FuncType;
-import ast.program.types.StructType;
-import ast.program.types.primitive.CharType;
-import ast.program.types.primitive.IntType;
-import ast.program.types.primitive.RealType;
-import ast.program.types.primitive.VoidType;
+import ast.program.types.RecordType;
 import visitor.AbstractVisitor;
 
-public class OffsetVisitor extends AbstractVisitor<Void, Void>{
+public class OffsetVisitor extends AbstractVisitor<Void, Void> {
+
+	private int localVarOffset = 0;
+	private int globalVarOffset = 0;
 
 	@Override
-	public Void visit(Program program, Void param) {
-		program.definitions.forEach(def->def.accept(this, param));
+	public Void visit(RecordType structType, Void param) {
+		int bytesFieldSum = 0;
+		for (Field f : structType.fields) {
+			f.setOffset(bytesFieldSum);
+			bytesFieldSum -= f.getType().numberOfBytes();
+		}
 		return null;
 	}
-	
+
 	@Override
 	public Void visit(VarDefinition varDef, Void param) {
-		varDef.getType().accept(this, param);
+		if (varDef.getScope() == 0) {
+			varDef.setOffset(globalVarOffset);
+			globalVarOffset += varDef.getType().numberOfBytes();
+		} else {
+			varDef.setOffset(localVarOffset);
+			localVarOffset -= varDef.getType().numberOfBytes();
+		}
 		return null;
 	}
-	
+
 	@Override
-	public Void visit(CharType charType, Void param) {
+	public Void visit(FuncDefinition funcDef, Void param) {
+
+		for (Statement stmnt : funcDef.body) {
+
+		}
 		return null;
 	}
-	
-	@Override
-	public Void visit(ArrayType arrayType, Void param) {
-		arrayType.setOffset(arrayType.getSize()*arrayType.type.getOffset());
-		arrayType.type.accept(this, param);
-		return null;
-	}
-	
+
 	@Override
 	public Void visit(FuncType funcType, Void param) {
 		funcType.returnType.accept(this, param);
-		int count = 0;
-		for ( VarDefinition vd : funcType.params) {
-			// NOT PROPAGATE TO CHILDREN
-			count += vd.getOffset();
+		int bytesFieldSum = 0;
+		for (int i = funcType.params.size() -1; i >= 0; i++) {
+			vd.setOffset(bytesFieldSum);
+			bytesFieldSum -= vd.getType().numberOfBytes();
 		}
-		funcType.setOffset(count);
 		return null;
 	}
-	
-	@Override
-	public Void visit(IntType intType, Void param) {
-		return null;
-	}
-	
-	@Override
-	public Void visit(VoidType voidType, Void param) {
-		return null;
-	}
-	
-	@Override
-	public Void visit(RealType real, Void param) {
-		return null;
-	}
-	
-	@Override
-	public Void visit(StructType structType, Void param) {
-		int offset = 0;
-		for (Field f : structType.fields) {
-			offset += f.getOffset();
-			f.accept(this, param);
-		}
-		structType.setOffset(offset);
-		return null;
-	}
-	
-	@Override
-	public Void visit(FuncDefinition funcDef, Void param) {
-		funcDef.getType().accept(this, param);
-		funcDef.body.forEach(st -> st.accept(this, param));
-		return null;
-	}
+
 }

@@ -26,7 +26,7 @@ import ast.program.statements.Write;
 import ast.program.types.ArrayType;
 import ast.program.types.ErrorType;
 import ast.program.types.FuncType;
-import ast.program.types.StructType;
+import ast.program.types.RecordType;
 import ast.program.types.primitive.CharType;
 import ast.program.types.primitive.IntType;
 import ast.program.types.primitive.RealType;
@@ -192,7 +192,7 @@ public class AbstractVisitor<TP,TR> implements Visitor<TP, TR>{
 	}
 
 	@Override
-	public TR visit(StructType structType, TP param) {
+	public TR visit(RecordType structType, TP param) {
 		structType.fields.forEach(p -> p.accept(this, param));
 		return null;
 	}
