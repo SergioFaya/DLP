@@ -8,7 +8,7 @@ public class ArrayType extends AbstractType {
 
 	public Type type;
 	public int size;
-	private int offset;
+	private int numberOfBytes;
 	
 	public ArrayType(int line, int column, Type type, Integer size) {
 		super(line, column);
@@ -18,7 +18,7 @@ public class ArrayType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "ArrayType [type=" + type + ", size=" + size + ", offset=" + offset + "]";
+		return "ArrayType [type=" + type + ", size=" + size + "]";
 	}
 
 	
@@ -34,6 +34,16 @@ public class ArrayType extends AbstractType {
 		}else {
 			return super.squareBrackets(t);
 		}
+	}
+	
+	@Override
+	public int getNumberOfBytes() {
+		return numberOfBytes;
+	}
+	
+	@Override
+	public void setNumberOfBytes(int bytes) {
+		this.numberOfBytes = bytes;
 	}
 
 }

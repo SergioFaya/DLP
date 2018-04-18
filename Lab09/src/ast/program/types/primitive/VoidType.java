@@ -6,7 +6,6 @@ import visitor.Visitor;
 public class VoidType extends AbstractType {
 
 	public static VoidType instance = new VoidType();
-	private int offset;
 	
 	private VoidType() {
 		super(-1,-1);
@@ -18,7 +17,7 @@ public class VoidType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "VoidType [offset=" + offset + "]";
+		return "VoidType [line=" + line + ", column=" + column + "]";
 	}
 	
 	@Override

@@ -7,7 +7,6 @@ import visitor.Visitor;
 public class IntType extends AbstractType {
 
 	public static IntType instance = new IntType();
-	private int offset;
 	
 	private IntType() {
 		super(-1, -1);
@@ -19,7 +18,7 @@ public class IntType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "IntType [offset=" + offset + "]";
+		return "IntType [line=" + line + ", column=" + column + "]";
 	}
 
 	@Override
@@ -76,7 +75,7 @@ public class IntType extends AbstractType {
 	}
 	
 	@Override
-	public int numberOfBytes() {
+	public int getNumberOfBytes() {
 		return 2;
 	}
 	

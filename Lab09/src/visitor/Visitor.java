@@ -32,76 +32,78 @@ import ast.program.types.primitive.IntType;
 import ast.program.types.primitive.RealType;
 import ast.program.types.primitive.VoidType;
 
-public interface Visitor<TP,TR> {
+public interface Visitor<TP, TR> {
 
-	//Definitions
+	// Definitions
 	TR visit(Field field, TP param);
-	
+
 	TR visit(FuncDefinition funcDef, TP param);
-	
+
 	TR visit(VarDefinition varDef, TP param);
-	
-	
-	//Expressions
+
+	// Expressions
 	TR visit(FieldAccessExpr fieldExpr, TP param);
-	
+
 	TR visit(Indexing indexing, TP param);
-	
+
 	TR visit(Variable var, TP param);
-		//operands
+
+	// operands
 	TR visit(Arithmetic arith, TP param);
-	
+
 	TR visit(Logical logic, TP param);
-	
+
 	TR visit(Comparison comp, TP param);
-	
-		//literals
+
+	// literals
 	TR visit(IntLiteral intLit, TP param);
-	
+
 	TR visit(RealLiteral realLit, TP param);
-	
+
 	TR visit(CharLiteral charlit, TP param);
-		//unary
+
+	// unary
 	TR visit(Cast cast, TP param);
-	
+
 	TR visit(UnaryMinus uminus, TP param);
-	
+
 	TR visit(UnaryNegation unegation, TP param);
 
-	//Expression and Statement
-	TR visit(FunctionInvocation functType,TP param);
-	
-	//Statements
+	// Expression and Statement
+	TR visit(FunctionInvocation functType, TP param);
+
+	// Statements
 	TR visit(Assignment assign, TP param);
-	
+
 	TR visit(IfStmnt ifStmnt, TP param);
-	
+
 	TR visit(Read readStmnt, TP param);
-	
+
 	TR visit(ReturnStmnt retStmnt, TP param);
-	
+
 	TR visit(WhileStmnt whileStmnt, TP param);
-	
+
 	TR visit(Write writeStmnt, TP param);
-	
-	//Types
+
+	// Types
 	TR visit(ArrayType arrayType, TP param);
-	
+
 	TR visit(ErrorType errType, TP param);
-	
+
 	TR visit(FuncType funcType, TP param);
-	
+
 	TR visit(RecordType structType, TP param);
-		//primitive type
+
+	// primitive type
 	TR visit(CharType charType, TP param);
-	
+
 	TR visit(IntType intType, TP param);
-	
+
 	TR visit(RealType real, TP param);
-	
+
 	TR visit(VoidType voidType, TP param);
 
-	//PROGRAM
+	// PROGRAM
 	TR visit(Program program, TP p);
 
 }

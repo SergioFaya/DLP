@@ -42,14 +42,14 @@ public class CmmParser extends Parser {
 		ID=39, CHAR_CONSTANT=40, COMMENT=41, MULTILINE_COMMENT=42, BLANK=43;
 	public static final int
 		RULE_program = 0, RULE_definitions = 1, RULE_varDef = 2, RULE_type = 3, 
-		RULE_primitiveType = 4, RULE_arrayDim = 5, RULE_structType = 6, RULE_field = 7, 
+		RULE_primitiveType = 4, RULE_arrayDim = 5, RULE_recordType = 6, RULE_field = 7, 
 		RULE_idList = 8, RULE_funcDef = 9, RULE_paramList = 10, RULE_param = 11, 
 		RULE_block = 12, RULE_stmnt = 13, RULE_ioStmnt = 14, RULE_assignmentStmnt = 15, 
 		RULE_returnStmnt = 16, RULE_ifStmnt = 17, RULE_whileStmnt = 18, RULE_exp = 19, 
 		RULE_cast = 20, RULE_functInvocation = 21, RULE_expList = 22, RULE_main = 23;
 	public static final String[] ruleNames = {
 		"program", "definitions", "varDef", "type", "primitiveType", "arrayDim", 
-		"structType", "field", "idList", "funcDef", "paramList", "param", "block", 
+		"recordType", "field", "idList", "funcDef", "paramList", "param", "block", 
 		"stmnt", "ioStmnt", "assignmentStmnt", "returnStmnt", "ifStmnt", "whileStmnt", 
 		"exp", "cast", "functInvocation", "expList", "main"
 	};
@@ -294,13 +294,13 @@ public class CmmParser extends Parser {
 		public Type ast;
 		public TypeContext t;
 		public PrimitiveTypeContext primitiveType;
-		public StructTypeContext structType;
+		public RecordTypeContext recordType;
 		public ArrayDimContext arrayDim;
 		public PrimitiveTypeContext primitiveType() {
 			return getRuleContext(PrimitiveTypeContext.class,0);
 		}
-		public StructTypeContext structType() {
-			return getRuleContext(StructTypeContext.class,0);
+		public RecordTypeContext recordType() {
+			return getRuleContext(RecordTypeContext.class,0);
 		}
 		public ArrayDimContext arrayDim() {
 			return getRuleContext(ArrayDimContext.class,0);
@@ -344,8 +344,8 @@ public class CmmParser extends Parser {
 			case T__6:
 				{
 				setState(75);
-				((TypeContext)_localctx).structType = structType();
-				((TypeContext)_localctx).ast =  ((TypeContext)_localctx).structType.ast;
+				((TypeContext)_localctx).recordType = recordType();
+				((TypeContext)_localctx).ast =  ((TypeContext)_localctx).recordType.ast;
 				}
 				break;
 			default:
@@ -370,11 +370,8 @@ public class CmmParser extends Parser {
 					setState(81);
 					((TypeContext)_localctx).arrayDim = arrayDim();
 
-					          							//ArrayList<ArrayType> types = new ArrayList<>();
-					          							//Bucle de todo,guardarlas sin tipo, despues coger de atras adelante y ir metiendo tipos con el valor público
-					          							//retornar solo el ultimo que tendra arraytype-arratype-arraytype-type(el que se llama t)
-					          							((TypeContext)_localctx).ast =  ArrayTypeSorter.sort(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,((TypeContext)_localctx).t.ast,((TypeContext)_localctx).arrayDim.ast);
-
+					          			((TypeContext)_localctx).ast =  ArrayTypeSorter.sort(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,((TypeContext)_localctx).t.ast,((TypeContext)_localctx).arrayDim.ast);
+					          		
 					}
 					} 
 				}
@@ -507,7 +504,7 @@ public class CmmParser extends Parser {
 		return _localctx;
 	}
 
-	public static class StructTypeContext extends ParserRuleContext {
+	public static class RecordTypeContext extends ParserRuleContext {
 		public Type ast;
 		public List<Field> fields = new ArrayList<Field>();
 		public boolean areRepeated = false;;
@@ -518,15 +515,15 @@ public class CmmParser extends Parser {
 		public FieldContext field(int i) {
 			return getRuleContext(FieldContext.class,i);
 		}
-		public StructTypeContext(ParserRuleContext parent, int invokingState) {
+		public RecordTypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_structType; }
+		@Override public int getRuleIndex() { return RULE_recordType; }
 	}
 
-	public final StructTypeContext structType() throws RecognitionException {
-		StructTypeContext _localctx = new StructTypeContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_structType);
+	public final RecordTypeContext recordType() throws RecognitionException {
+		RecordTypeContext _localctx = new RecordTypeContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_recordType);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -542,13 +539,13 @@ public class CmmParser extends Parser {
 				{
 				{
 				setState(107);
-				((StructTypeContext)_localctx).field = field();
+				((RecordTypeContext)_localctx).field = field();
 
-						 	if(_localctx.fields.contains(((StructTypeContext)_localctx).field.ast)){
-						 		((StructTypeContext)_localctx).areRepeated =  true;
+						 	if(_localctx.fields.contains(((RecordTypeContext)_localctx).field.ast)){
+						 		((RecordTypeContext)_localctx).areRepeated =  true;
 						 	}
 						 	else{
-						 		_localctx.fields.add(((StructTypeContext)_localctx).field.ast);
+						 		_localctx.fields.add(((RecordTypeContext)_localctx).field.ast);
 						 	}
 						 
 				}
@@ -563,7 +560,7 @@ public class CmmParser extends Parser {
 					 	if(_localctx.areRepeated){
 					 		new ErrorType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,"The struct has repeated recordDef");
 					 	}		 		
-					 	((StructTypeContext)_localctx).ast =  new RecordType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,_localctx.fields);
+					 	((RecordTypeContext)_localctx).ast =  new RecordType(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,_localctx.fields);
 					 
 			}
 		}

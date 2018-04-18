@@ -7,7 +7,7 @@ import visitor.Visitor;
 public class RealType extends AbstractType {
 
 	public static RealType instance = new RealType();
-	private int offset;
+
 	
 	private RealType() {
 		super(-1, -1);
@@ -19,7 +19,7 @@ public class RealType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "RealType [offset=" + offset + "]";
+		return "RealType [line=" + line + ", column=" + column + "]";
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class RealType extends AbstractType {
 	}
 
 	@Override
-	public int numberOfBytes() {
+	public int getNumberOfBytes() {
 		return 4;
 	}
 	

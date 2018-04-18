@@ -9,7 +9,7 @@ import visitor.Visitor;
 public class RecordType extends AbstractType {
 
 	public List<Field> fields;
-	private int offset;
+	private int numberOfBytes;
 	
 	public RecordType(int line, int column, List<Field> fields) {
 		super(line, column);
@@ -18,7 +18,7 @@ public class RecordType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "StructType [fields=" + fields + ", offset=" + offset + "]";
+		return "RecordType [fields=" + fields + "]";
 	}
 
 	@Override
@@ -34,6 +34,16 @@ public class RecordType extends AbstractType {
 			}
 		}
 			return super.dot(str);
+	}
+
+	@Override
+	public int getNumberOfBytes() {
+		return numberOfBytes;
+	}
+
+	@Override
+	public void setNumberOfBytes(int numberOfBytes) {
+		this.numberOfBytes = numberOfBytes;
 	}
 
 

@@ -33,6 +33,8 @@ public interface Type extends ASTNode{
 	//invoke
 	public Type parenthesis(List<Type> types);
 	
-	public int numberOfBytes();
+	public int getNumberOfBytes();
+	
+	public void setNumberOfBytes(int bytes);
 	
 }

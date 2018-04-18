@@ -7,12 +7,6 @@ import ast.program.Type;
 
 public abstract class AbstractType extends AbstractASTNode implements Type {
 
-	public final static String ERROR_COMPARISON = "Type error in comparison";
-	public final static String ERROR_DOT = "Type error in dot access";
-	public final static String ERROR_ARRAY = "Type error in square brackets";
-	public final static String ERROR_PARENTHESIS = "Type error in parenthesis";
-	public final static String ERROR_ARITHMETIC= "Type error in arithmetic";
-	
 	public AbstractType(int line, int column) {
 		super(line, column);
 	}
@@ -79,7 +73,17 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	}
 	
 	@Override
-	public int numberOfBytes() {
-		throw new RuntimeException("Impleementation not created");
+	public int getNumberOfBytes() {
+		throw new RuntimeException("Implementation not created");
+	}
+	
+	@Override
+	public void setNumberOfBytes(int bytes) {
+		throw new RuntimeException("Implementation not created");
+	}
+
+	@Override
+	public String toString() {
+		return "AbstractType [line=" + line + ", column=" + column + "]";
 	}
 }

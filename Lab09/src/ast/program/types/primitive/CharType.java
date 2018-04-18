@@ -7,7 +7,6 @@ import visitor.Visitor;
 public class CharType extends AbstractType {
 
 	public static CharType instance = new CharType();
-	private int offset;
 
 	private CharType() {
 		super(-1, -1);
@@ -19,7 +18,7 @@ public class CharType extends AbstractType {
 
 	@Override
 	public String toString() {
-		return "CharType [offset=" + offset + "]";
+		return "CharType [line=" + line + ", column=" + column + "]";
 	}
 
 	@Override
@@ -78,7 +77,7 @@ public class CharType extends AbstractType {
 	}
 
 	@Override
-	public int numberOfBytes() {
+	public int getNumberOfBytes() {
 		return 2;
 	}
 

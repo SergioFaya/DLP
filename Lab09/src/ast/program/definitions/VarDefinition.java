@@ -21,7 +21,8 @@ public class VarDefinition extends AbstractDefinition implements Statement{
 
 	@Override
 	public String toString() {
-		return "VarDefinition [type=" + type + ", name=" + name + ", line=" + line + ", column=" + column + "]";
+		return "VarDefinition [scope=" + scope + ", offset=" + offset + ", name=" + name + ", lValue=" + lValue
+				+ ", type=" + type + ", line=" + line + ", column=" + column + "]";
 	}
 	
 	@Override
