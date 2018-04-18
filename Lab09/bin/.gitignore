@@ -1,7 +1,8 @@
+/ast/
+/codegenerator/
+/errorHandler/
 /parser/
 /symboltable/
 /test/
 /util/
 /visitor/
-/codegenerator/
-/ast/
