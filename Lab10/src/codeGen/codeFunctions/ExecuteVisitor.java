@@ -7,6 +7,7 @@ import ast.program.statements.Assignment;
 import ast.program.statements.Read;
 import ast.program.statements.Write;
 import ast.program.types.primitive.VoidType;
+import visitor.AbstractCGVisitor;
 
 public class ExecuteVisitor extends AbstractCGVisitor<Void, Void> {
 

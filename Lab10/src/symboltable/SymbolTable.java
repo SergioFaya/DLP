@@ -42,7 +42,9 @@ public class SymbolTable {
 	
 	public Definition find(String id) {
 		Definition def = null;
-		for (Map<String, Definition> map : table) {
+		Map<String,Definition> map = null;
+		for (int i = table.size() -1; i >= 0; i-- ) {
+			map = table.get(i);
 			if((def = map.get(id)) != null) {
 				return def;
 			}

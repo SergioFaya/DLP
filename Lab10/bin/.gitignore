@@ -6,3 +6,6 @@
 /test/
 /util/
 /visitor/
+/semantic/
+/codeGen/
+/ast/

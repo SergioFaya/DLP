@@ -22,7 +22,8 @@ public class CodeGenerator {
 	}
 	
 	public void push(int i) {
-
+		out.print("pushi ");
+		out.println(i);
 	}
 	
 	public void push(char c) {

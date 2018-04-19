@@ -12,8 +12,8 @@ import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import parser.CmmLexer;
 import parser.CmmParser;
-import visitor.IdentificationVisitor;
-import visitor.TypeCheckingVisitor;
+import semantic.IdentificationVisitor;
+import semantic.TypeCheckingVisitor;
 
 public class Main {
 
@@ -35,10 +35,9 @@ public class Main {
 		if (ErrorHandler.getInstance().anyError()) {
 			ErrorHandler.getInstance().showError(System.err);
 		} else {
+			//generacion de codigo
 			p.accept(new OffsetVisitor(), null);
-			p.accept(new AddressVisitor(), null);
 			p.accept(new ExecuteVisitor(), null);
-			p.accept(new ValueVisitor(), null);
 			IntrospectorModel model = new IntrospectorModel("Program", p);
 			new IntrospectorTree("Introspector", model);
 		}

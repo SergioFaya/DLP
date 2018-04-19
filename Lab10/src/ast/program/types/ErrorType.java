@@ -15,7 +15,7 @@ public class ErrorType extends AbstractType{
 	
 	@Override
 	public String toString() {
-		return "ErrorType [msg=" + msg + "]";
+		return "ErrorType [msg=" + msg + ", line=" + line + ", column=" + column + "]";
 	}
 	
 	@Override
