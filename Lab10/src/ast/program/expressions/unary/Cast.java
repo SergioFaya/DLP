@@ -7,18 +7,18 @@ import visitor.Visitor;
 
 public class Cast extends AbstractExpression implements Expression {
 
-	public Type castType;
 	public Expression exp;
 
 	public Cast(int line, int column, Type castType, Expression exp) {
 		super(line, column);
-		this.castType = castType;
 		this.exp = exp;
+		super.type = castType;
 	}
 
 	@Override
 	public String toString() {
-		return "Cast [castType=" + castType + ", exp=" + exp + ", line=" + line + ", column=" + column + "]";
+		return "Cast [exp=" + exp + ", lValue=" + lValue + ", type=" + type + ", line=" + line + ", column=" + column
+				+ "]";
 	}
 	
 	@Override

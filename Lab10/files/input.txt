@@ -1,6 +1,7 @@
 // * Global variables
 int i,n;
 char c;
+
 struct {
   int intField;
   double realField;

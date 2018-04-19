@@ -9,8 +9,8 @@ import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import parser.CmmLexer;
 import parser.CmmParser;
-import visitor.IdentificationVisitor;
-import visitor.TypeCheckingVisitor;
+import semantic.IdentificationVisitor;
+import semantic.TypeCheckingVisitor;
 
 public class Main {
 

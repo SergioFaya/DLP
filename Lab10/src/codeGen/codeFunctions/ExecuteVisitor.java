@@ -5,6 +5,7 @@ import ast.program.definitions.FuncDefinition;
 import ast.program.statements.Assignment;
 import ast.program.statements.Read;
 import ast.program.statements.Write;
+import visitor.AbstractCGVisitor;
 
 public class ExecuteVisitor extends AbstractCGVisitor<Void, Void>{
 	

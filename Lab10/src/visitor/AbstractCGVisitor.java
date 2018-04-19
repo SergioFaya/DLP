@@ -1,4 +1,4 @@
-package codeGen.codeFunctions;
+package visitor;
 
 import ast.Program;
 import ast.program.definitions.Field;
@@ -32,7 +32,6 @@ import ast.program.types.primitive.IntType;
 import ast.program.types.primitive.RealType;
 import ast.program.types.primitive.VoidType;
 import codeGen.CodeGenerator;
-import visitor.Visitor;
 
 public abstract class AbstractCGVisitor<TP,TR> implements Visitor<TP, TR>{
 	
