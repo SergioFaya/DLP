@@ -58,8 +58,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	}
 	
 	@Override
-	public Type promotesTo(Type t) {
-		return null;
+	public boolean isEquivalent(Type t) {
+		return false;
 	}
 	
 	@Override

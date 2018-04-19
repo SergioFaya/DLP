@@ -48,10 +48,6 @@ public class RealType extends AbstractType {
 		return null;
 	}
 
-	@Override
-	public Type logical() {
-		return this;
-	}
 
 	@Override
 	public Type cast(Type t) {
@@ -62,11 +58,11 @@ public class RealType extends AbstractType {
 	}
 
 	@Override
-	public Type promotesTo(Type t) {
-		if (t == RealType.getInstance()) {
-			return this;
+	public boolean isEquivalent(Type t) {
+		if(t instanceof RealType) {
+			return true; 
 		}
-		return null;
+		return false;
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class FuncType extends AbstractType {
 			return null;
 		}
 		for (int i = 0; i < types.size(); i++) {
-			if (types.get(i).promotesTo(params.get(i).getType()) == null) {
+			if (!types.get(i).isEquivalent(params.get(i).getType())) {
 				return null;
 			}
 		}

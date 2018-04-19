@@ -32,7 +32,9 @@ public class Main {
 		if (ErrorHandler.getInstance().anyError()) {
 			ErrorHandler.getInstance().showError(System.err);
 		} else {
+			//generacion de codigo
 			p.accept(new OffsetVisitor(), null);
+			//executevisitor
 			IntrospectorModel model = new IntrospectorModel("Program", p);
 			new IntrospectorTree("Introspector", model);
 		}

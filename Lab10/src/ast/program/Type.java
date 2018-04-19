@@ -28,7 +28,7 @@ public interface Type extends ASTNode{
 	//indexing
 	public Type squareBrackets(Type t);
 	
-	public Type promotesTo(Type t);
+	public boolean isEquivalent(Type t);
 
 	//invoke
 	public Type parenthesis(List<Type> types);

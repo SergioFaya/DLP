@@ -67,11 +67,11 @@ public class IntType extends AbstractType {
 	}
 	
 	@Override
-	public Type promotesTo(Type t) {
-		if(t == IntType.getInstance()) {
-			return this;
+	public boolean isEquivalent(Type t) {
+		if(t instanceof IntType) {
+			return true; 
 		}
-		return null;
+		return false;
 	}
 	
 	@Override
