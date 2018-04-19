@@ -4,6 +4,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import ast.Program;
 import codeGen.OffsetVisitor;
+import codeGen.codeFunctions.AddressVisitor;
+import codeGen.codeFunctions.ExecuteVisitor;
+import codeGen.codeFunctions.ValueVisitor;
 import errorHandler.ErrorHandler;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
@@ -33,6 +36,9 @@ public class Main {
 			ErrorHandler.getInstance().showError(System.err);
 		} else {
 			p.accept(new OffsetVisitor(), null);
+			p.accept(new AddressVisitor(), null);
+			p.accept(new ExecuteVisitor(), null);
+			p.accept(new ValueVisitor(), null);
 			IntrospectorModel model = new IntrospectorModel("Program", p);
 			new IntrospectorTree("Introspector", model);
 		}

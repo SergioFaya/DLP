@@ -38,7 +38,16 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 	public Void visit(FuncDefinition funcDef, Void param) {
 		localVarOffset = 0;
 		funcDef.getType().accept(this, param);
-		funcDef.body.forEach(st -> st.accept(this, param));
+		funcDef.totalLocalBytes= 0;
+		funcDef.body.forEach(st ->{
+			st.accept(this, param);
+			if(st instanceof VarDefinition) {
+				funcDef.totalBytesParam += ((VarDefinition) st).getType().getNumberOfBytes();
+			} 
+		});
+		if (funcDef.getType() instanceof FuncType) {
+			funcDef.totalBytesParam=((FuncType)funcDef.getType()).getNumberOfBytes();
+		}
 		return null;
 	}
 

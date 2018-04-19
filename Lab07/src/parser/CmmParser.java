@@ -370,11 +370,8 @@ public class CmmParser extends Parser {
 					setState(81);
 					((TypeContext)_localctx).arrayDim = arrayDim();
 
-					          							//ArrayList<ArrayType> types = new ArrayList<>();
-					          							//Bucle de todo,guardarlas sin tipo, despues coger de atras adelante y ir metiendo tipos con el valor público
-					          							//retornar solo el ultimo que tendra arraytype-arratype-arraytype-type(el que se llama t)
-					          							((TypeContext)_localctx).ast =  ArrayTypeSorter.sort(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,((TypeContext)_localctx).t.ast,((TypeContext)_localctx).arrayDim.ast);
-
+					          			((TypeContext)_localctx).ast =  ArrayTypeSorter.sort(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,((TypeContext)_localctx).t.ast,((TypeContext)_localctx).arrayDim.ast);
+					          		
 					}
 					} 
 				}

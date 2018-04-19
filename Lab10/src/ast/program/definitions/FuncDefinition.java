@@ -10,6 +10,9 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 
 	public List<Statement> body;
 	private int scope;
+	//Accumulate the bytes of the parameters
+	public int totalLocalBytes;
+	public int totalBytesParam;
 
 	public FuncDefinition(int line, int column,Type type,String name, List<Statement> body) {
 		super(line, column,type,name);

@@ -10,7 +10,7 @@ import ast.program.expressions.operands.Logical;
 import ast.program.expressions.unary.Cast;
 import ast.program.statements.Assignment;
 
-public class AdressVisitor extends AbstractCGVisitor<Void, Void>{
+public class AddressVisitor extends AbstractCGVisitor<Void, Void>{
 
 	@Override
 	public Void visit(Assignment assign, Void param) {

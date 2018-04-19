@@ -54,4 +54,18 @@ public class CodeGenerator {
 		println("call main");
 		println("halt");
 	}
+
+	public void enter(int totalLocalBytes) {
+		out.println("enter "+totalLocalBytes);
+		
+	}
+
+	public void ret(int returnValue, int localVariableBytes, int parametersBytes) {
+		out.print("ret ");
+		out.print(returnValue);
+		out.print(",");
+		out.print(localVariableBytes);
+		out.print(",");
+		out.print(parametersBytes);
+	}
 }
