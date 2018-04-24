@@ -188,8 +188,8 @@ whileStmnt returns [WhileStmnt ast]:
 			;
 	
 exp returns [Expression ast]:
-	  exp1 = exp '['exp2 = exp']' {$ast = new Indexing($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$exp2.ast);}
-	| '('exp')' {$ast = $exp.ast;}
+	  '('exp')' {$ast = $exp.ast;}
+	| exp1 = exp '['exp2 = exp']' {$ast = new Indexing($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$exp2.ast);}
 	| exp1 = exp '.' exp2 = exp {$ast = new FieldAccessExpr($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$exp2.text);}
 	| cast exp { $ast = new Cast($start.getLine(),$start.getCharPositionInLine()+1,$cast.ast, $exp.ast);}
 	| '-' exp {$ast = new UnaryMinus($start.getLine(),$start.getCharPositionInLine()+1,$exp.ast);}
@@ -198,11 +198,11 @@ exp returns [Expression ast]:
 	| exp1 = exp op=('+' | '-' ) exp2 = exp {$ast = new Arithmetic($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$op.getText(),$exp2.ast);}
 	| exp1 = exp op=('>' | '>=' | '<' | '<=' | '!=' | '==') exp2 = exp {$ast = new Comparison($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$op.getText(),$exp2.ast);}
 	| exp1 = exp op=( '&&' | '||' ) exp2 = exp {$ast = new Logical($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$op.getText(),$exp2.ast);}
-	| functInvocation {$ast = $functInvocation.ast;}
-	| ID 			{ $ast = new Variable($start.getLine(),$start.getCharPositionInLine()+1,$ID.text); }
-	| INT_CONSTANT  { $ast = new IntLiteral($start.getLine(),$start.getCharPositionInLine()+1,LexerHelper.lexemeToInt($INT_CONSTANT.text)); }
 	| REAL_CONSTANT { $ast = new RealLiteral($start.getLine(),$start.getCharPositionInLine()+1,LexerHelper.lexemeToReal($REAL_CONSTANT.text)); }
+	| INT_CONSTANT  { $ast = new IntLiteral($start.getLine(),$start.getCharPositionInLine()+1,LexerHelper.lexemeToInt($INT_CONSTANT.text)); }
 	| CHAR_CONSTANT { $ast = new CharLiteral($start.getLine(),$start.getCharPositionInLine()+1,LexerHelper.lexemeToChar($CHAR_CONSTANT.text)); }
+	| ID 			{ $ast = new Variable($start.getLine(),$start.getCharPositionInLine()+1,$ID.text); }
+	| functInvocation {$ast = $functInvocation.ast;}
 	;
 
 cast returns [Type ast]: '('primitiveType')'
@@ -250,6 +250,7 @@ fragment SPECIAL_CHAR:
 			| '¡'
 			| '?'
 			| '¿'
+			| ' '
 			;
 			
 fragment ASCII:  '\\'DIGIT+
@@ -264,14 +265,15 @@ INT_CONSTANT: '0'
             ;
             
 REAL_CONSTANT:
-			 FIXED_POINT([eE]'-'?DIGIT+)?
+			 FIXED_POINT
+			|FIXED_POINT([eE]'-'?DIGIT+)
 			|DIGIT[eE]DIGIT+
 			;
  			
-ID: ((LETTER|'_'|'-')+[0-9]*)+
+ID: ((LETTER|'_')+[0-9]*)+
 			;
 			
-CHAR_CONSTANT:'\'' ( LETTER | DIGIT | SPECIAL_CHAR | ASCII) '\''
+CHAR_CONSTANT:'\'' ( LETTER | DIGIT | SPECIAL_CHAR | ASCII ) '\''
 			
 			;
 

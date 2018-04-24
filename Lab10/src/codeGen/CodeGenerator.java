@@ -39,7 +39,7 @@ public class CodeGenerator {
 	}
 	
 	public void load() {
-		
+
 	}
 	
 	public void println(String string) {

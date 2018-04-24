@@ -1410,11 +1410,11 @@ public class CmmParser extends Parser {
 		public ExpContext exp1;
 		public ExpContext exp;
 		public CastContext cast;
-		public FunctInvocationContext functInvocation;
-		public Token ID;
-		public Token INT_CONSTANT;
 		public Token REAL_CONSTANT;
+		public Token INT_CONSTANT;
 		public Token CHAR_CONSTANT;
+		public Token ID;
+		public FunctInvocationContext functInvocation;
 		public ExpContext exp2;
 		public Token op;
 		public List<ExpContext> exp() {
@@ -1426,13 +1426,13 @@ public class CmmParser extends Parser {
 		public CastContext cast() {
 			return getRuleContext(CastContext.class,0);
 		}
+		public TerminalNode REAL_CONSTANT() { return getToken(CmmParser.REAL_CONSTANT, 0); }
+		public TerminalNode INT_CONSTANT() { return getToken(CmmParser.INT_CONSTANT, 0); }
+		public TerminalNode CHAR_CONSTANT() { return getToken(CmmParser.CHAR_CONSTANT, 0); }
+		public TerminalNode ID() { return getToken(CmmParser.ID, 0); }
 		public FunctInvocationContext functInvocation() {
 			return getRuleContext(FunctInvocationContext.class,0);
 		}
-		public TerminalNode ID() { return getToken(CmmParser.ID, 0); }
-		public TerminalNode INT_CONSTANT() { return getToken(CmmParser.INT_CONSTANT, 0); }
-		public TerminalNode REAL_CONSTANT() { return getToken(CmmParser.REAL_CONSTANT, 0); }
-		public TerminalNode CHAR_CONSTANT() { return getToken(CmmParser.CHAR_CONSTANT, 0); }
 		public ExpContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1499,36 +1499,36 @@ public class CmmParser extends Parser {
 			case 5:
 				{
 				setState(303);
-				((ExpContext)_localctx).functInvocation = functInvocation();
-				((ExpContext)_localctx).ast =  ((ExpContext)_localctx).functInvocation.ast;
-				}
-				break;
-			case 6:
-				{
-				setState(306);
-				((ExpContext)_localctx).ID = match(ID);
-				 ((ExpContext)_localctx).ast =  new Variable(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,(((ExpContext)_localctx).ID!=null?((ExpContext)_localctx).ID.getText():null)); 
-				}
-				break;
-			case 7:
-				{
-				setState(308);
-				((ExpContext)_localctx).INT_CONSTANT = match(INT_CONSTANT);
-				 ((ExpContext)_localctx).ast =  new IntLiteral(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,LexerHelper.lexemeToInt((((ExpContext)_localctx).INT_CONSTANT!=null?((ExpContext)_localctx).INT_CONSTANT.getText():null))); 
-				}
-				break;
-			case 8:
-				{
-				setState(310);
 				((ExpContext)_localctx).REAL_CONSTANT = match(REAL_CONSTANT);
 				 ((ExpContext)_localctx).ast =  new RealLiteral(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,LexerHelper.lexemeToReal((((ExpContext)_localctx).REAL_CONSTANT!=null?((ExpContext)_localctx).REAL_CONSTANT.getText():null))); 
 				}
 				break;
-			case 9:
+			case 6:
 				{
-				setState(312);
+				setState(305);
+				((ExpContext)_localctx).INT_CONSTANT = match(INT_CONSTANT);
+				 ((ExpContext)_localctx).ast =  new IntLiteral(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,LexerHelper.lexemeToInt((((ExpContext)_localctx).INT_CONSTANT!=null?((ExpContext)_localctx).INT_CONSTANT.getText():null))); 
+				}
+				break;
+			case 7:
+				{
+				setState(307);
 				((ExpContext)_localctx).CHAR_CONSTANT = match(CHAR_CONSTANT);
 				 ((ExpContext)_localctx).ast =  new CharLiteral(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,LexerHelper.lexemeToChar((((ExpContext)_localctx).CHAR_CONSTANT!=null?((ExpContext)_localctx).CHAR_CONSTANT.getText():null))); 
+				}
+				break;
+			case 8:
+				{
+				setState(309);
+				((ExpContext)_localctx).ID = match(ID);
+				 ((ExpContext)_localctx).ast =  new Variable(_localctx.start.getLine(),_localctx.start.getCharPositionInLine()+1,(((ExpContext)_localctx).ID!=null?((ExpContext)_localctx).ID.getText():null)); 
+				}
+				break;
+			case 9:
+				{
+				setState(311);
+				((ExpContext)_localctx).functInvocation = functInvocation();
+				((ExpContext)_localctx).ast =  ((ExpContext)_localctx).functInvocation.ast;
 				}
 				break;
 			}
@@ -1662,7 +1662,7 @@ public class CmmParser extends Parser {
 						_localctx.exp1 = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_exp);
 						setState(341);
-						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
+						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
 						setState(342);
 						match(T__4);
 						setState(343);
@@ -1921,7 +1921,7 @@ public class CmmParser extends Parser {
 		case 5:
 			return precpred(_ctx, 6);
 		case 6:
-			return precpred(_ctx, 15);
+			return precpred(_ctx, 14);
 		}
 		return true;
 	}
@@ -2031,12 +2031,12 @@ public class CmmParser extends Parser {
 		"\u0126\5*\26\2\u0126\u0127\5(\25\16\u0127\u0128\b\25\1\2\u0128\u013d\3"+
 		"\2\2\2\u0129\u012a\7\30\2\2\u012a\u012b\5(\25\r\u012b\u012c\b\25\1\2\u012c"+
 		"\u013d\3\2\2\2\u012d\u012e\7\31\2\2\u012e\u012f\5(\25\f\u012f\u0130\b"+
-		"\25\1\2\u0130\u013d\3\2\2\2\u0131\u0132\5,\27\2\u0132\u0133\b\25\1\2\u0133"+
-		"\u013d\3\2\2\2\u0134\u0135\7)\2\2\u0135\u013d\b\25\1\2\u0136\u0137\7\'"+
-		"\2\2\u0137\u013d\b\25\1\2\u0138\u0139\7(\2\2\u0139\u013d\b\25\1\2\u013a"+
-		"\u013b\7*\2\2\u013b\u013d\b\25\1\2\u013c\u011f\3\2\2\2\u013c\u0125\3\2"+
-		"\2\2\u013c\u0129\3\2\2\2\u013c\u012d\3\2\2\2\u013c\u0131\3\2\2\2\u013c"+
-		"\u0134\3\2\2\2\u013c\u0136\3\2\2\2\u013c\u0138\3\2\2\2\u013c\u013a\3\2"+
+		"\25\1\2\u0130\u013d\3\2\2\2\u0131\u0132\7(\2\2\u0132\u013d\b\25\1\2\u0133"+
+		"\u0134\7\'\2\2\u0134\u013d\b\25\1\2\u0135\u0136\7*\2\2\u0136\u013d\b\25"+
+		"\1\2\u0137\u0138\7)\2\2\u0138\u013d\b\25\1\2\u0139\u013a\5,\27\2\u013a"+
+		"\u013b\b\25\1\2\u013b\u013d\3\2\2\2\u013c\u011f\3\2\2\2\u013c\u0125\3"+
+		"\2\2\2\u013c\u0129\3\2\2\2\u013c\u012d\3\2\2\2\u013c\u0131\3\2\2\2\u013c"+
+		"\u0133\3\2\2\2\u013c\u0135\3\2\2\2\u013c\u0137\3\2\2\2\u013c\u0139\3\2"+
 		"\2\2\u013d\u015f\3\2\2\2\u013e\u013f\f\17\2\2\u013f\u0140\7\27\2\2\u0140"+
 		"\u0141\5(\25\20\u0141\u0142\b\25\1\2\u0142\u015e\3\2\2\2\u0143\u0144\f"+
 		"\13\2\2\u0144\u0145\t\2\2\2\u0145\u0146\5(\25\f\u0146\u0147\b\25\1\2\u0147"+
@@ -2044,7 +2044,7 @@ public class CmmParser extends Parser {
 		"\25\13\u014b\u014c\b\25\1\2\u014c\u015e\3\2\2\2\u014d\u014e\f\t\2\2\u014e"+
 		"\u014f\t\4\2\2\u014f\u0150\5(\25\n\u0150\u0151\b\25\1\2\u0151\u015e\3"+
 		"\2\2\2\u0152\u0153\f\b\2\2\u0153\u0154\t\5\2\2\u0154\u0155\5(\25\t\u0155"+
-		"\u0156\b\25\1\2\u0156\u015e\3\2\2\2\u0157\u0158\f\21\2\2\u0158\u0159\7"+
+		"\u0156\b\25\1\2\u0156\u015e\3\2\2\2\u0157\u0158\f\20\2\2\u0158\u0159\7"+
 		"\7\2\2\u0159\u015a\5(\25\2\u015a\u015b\7\b\2\2\u015b\u015c\b\25\1\2\u015c"+
 		"\u015e\3\2\2\2\u015d\u013e\3\2\2\2\u015d\u0143\3\2\2\2\u015d\u0148\3\2"+
 		"\2\2\u015d\u014d\3\2\2\2\u015d\u0152\3\2\2\2\u015d\u0157\3\2\2\2\u015e"+

@@ -60,8 +60,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	@Override
 	public Void visit(Cast cast, Type param) {
 		cast.exp.accept(this, param);
-		cast.getType().accept(this, param);
 		Type previous =cast.getType();
+		cast.getType().accept(this, param);		
 		Type t = cast.setType(cast.getType().cast(cast.exp.getType()));
 		if (t == null) {
 			new ErrorType(cast.getLine(), cast.getColumn(), "Unable to perform the cast from "+cast.exp.getType().getClass().getSimpleName() + " to "+previous.getClass().getSimpleName());
@@ -148,7 +148,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		indexing.setLvalue(true);
 		Type t = indexing.setType(indexing.expBrackets.getType().squareBrackets(indexing.exprLeft.getType()));
 		if (t == null) {
-			new ErrorType(indexing.getLine(), indexing.getColumn(), "Indexing operation ");
+			new ErrorType(indexing.getLine(), indexing.getColumn(), "Indexing operation error");
 		}
 		return null;
 	}

@@ -62,6 +62,8 @@ public class IntType extends AbstractType {
 	public Type cast(Type t) {
 		if(t == IntType.getInstance()) {
 			return this;
+		}else if(t == CharType.getInstance()){
+			return this; 
 		}
 		return null;
 	}
