@@ -14,8 +14,8 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 	public int totalLocalBytes;
 	public int totalBytesParam;
 
-	public FuncDefinition(int line, int column,Type type,String name, List<Statement> body) {
-		super(line, column,type,name);
+	public FuncDefinition(int line, int column,Type functionType,String name, List<Statement> body) {
+		super(line, column,functionType,name);
 		this.body = body;
 	}
 

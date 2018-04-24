@@ -4,19 +4,20 @@ import ast.Program;
 import ast.program.definitions.FuncDefinition;
 import ast.program.definitions.VarDefinition;
 import ast.program.statements.Assignment;
+import ast.program.statements.IfStmnt;
 import ast.program.statements.Read;
+import ast.program.statements.ReturnStmnt;
+import ast.program.statements.WhileStmnt;
 import ast.program.statements.Write;
 import ast.program.types.primitive.VoidType;
 import visitor.AbstractCGVisitor;
 
-public class ExecuteVisitor extends AbstractCGVisitor<Void, Void> {
-
-	private AddressVisitor address = new AddressVisitor();
+public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 
 	@Override
-	public Void visit(Read readStmnt, Void param) {
+	public Void visit(Read readStmnt, FuncDefinition param) {
 		cg.println("'*Read stmnt");
-		readStmnt.accept(address, param);
+		readStmnt.accept(cg.address, null);
 		cg.print("in");
 		cg.println(readStmnt.exp.getType().getSuffix());
 		cg.print("store");
@@ -25,7 +26,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	@Override
-	public Void visit(Write writeStmnt, Void param) {
+	public Void visit(Write writeStmnt, FuncDefinition param) {
 		cg.println("'*Write stmnt");
 		// push implicit
 		writeStmnt.accept(this, param);
@@ -35,7 +36,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	@Override
-	public Void visit(Program program, Void param) {
+	public Void visit(Program program, FuncDefinition param) {
 		cg.invocationToMain();
 		cg.println("*Global variables");
 		program.definitions.stream().filter(def -> def instanceof FuncDefinition)
@@ -46,13 +47,13 @@ public class ExecuteVisitor extends AbstractCGVisitor<Void, Void> {
 	}
 
 	@Override
-	public Void visit(Assignment assign, Void param) {
+	public Void visit(Assignment assign, FuncDefinition param) {
 
 		return null;
 	}
 
 	@Override
-	public Void visit(FuncDefinition funcDef, Void param) {
+	public Void visit(FuncDefinition funcDef, FuncDefinition param) {
 		cg.println("'*Function Definition");
 		cg.print(funcDef.name);
 		cg.println(":");
@@ -61,10 +62,35 @@ public class ExecuteVisitor extends AbstractCGVisitor<Void, Void> {
 		cg.println("'Local Variables");
 		funcDef.body.stream().filter(fd -> fd instanceof VarDefinition).map(fd -> fd.accept(this, param));
 		cg.enter(funcDef.totalLocalBytes);
-		funcDef.body.stream().filter(fd -> !(fd instanceof VarDefinition)).map(fd -> fd.accept(this, param));
+		funcDef.body.stream().filter(fd -> !(fd instanceof VarDefinition)).map(fd -> fd.accept(this, funcDef));
 		if(funcDef.getType() instanceof VoidType) {
 			cg.ret(0,funcDef.totalLocalBytes,funcDef.totalBytesParam);
 		}
 		return null;
+	}
+	
+	@Override
+	public Void visit(ReturnStmnt retStmnt, FuncDefinition param) {
+		cg.print("ret ");
+		cg.print(retStmnt.exp.getType().getNumberOfBytes());
+		cg.print(",");
+		cg.print(param.totalLocalBytes);
+		cg.print(",");
+		cg.println(param.totalBytesParam);
+		return null;
+	}
+	
+	@Override
+	public Void visit(IfStmnt ifStmnt, FuncDefinition param) {
+		
+	}
+	
+	@Override
+	public Void visit(WhileStmnt whileStmnt, FuncDefinition param) {
+		int label = cg.getLabels(2);
+		cg.print("label ");
+		cg.print(label);
+		cg.print(":");
+		whileStmnt.accept(va, p)
 	}
 }

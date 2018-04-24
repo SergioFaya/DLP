@@ -251,6 +251,12 @@ fragment SPECIAL_CHAR:
 			| '?'
 			| '¿'
 			| ' '
+			| '+'
+			| '_'
+			| '#'
+			| '$'
+			| '·'
+			| '|'
 			;
 			
 fragment ASCII:  '\\'DIGIT+
