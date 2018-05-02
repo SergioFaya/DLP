@@ -60,16 +60,17 @@ public class IntType extends AbstractType {
 	
 	@Override
 	public Type cast(Type t) {
-		if(t == IntType.getInstance()) {
+		if(t instanceof IntType) {
 			return this;
-		}else if(t == CharType.getInstance()){
-			return this; 
+		}else if(t instanceof CharType){
+			return t; 
 		}
 		return null;
 	}
 	
 	@Override
 	public boolean isEquivalent(Type t) {
+		System.out.println("equivalent int");
 		if(t instanceof IntType) {
 			return true; 
 		}

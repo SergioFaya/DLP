@@ -4,7 +4,7 @@ import ast.program.Expression;
 import ast.program.expressions.AbstractExpression;
 import visitor.Visitor;
 
-public class UnaryNegation extends AbstractExpression implements Expression {
+public class UnaryNegation extends AbstractExpression {
 
 	public Expression exp;
 	

@@ -49,8 +49,10 @@ public class CharType extends AbstractType {
 
 	@Override
 	public Type cast(Type t) {
-		if (t == CharType.getInstance()) {
-			return this;
+		if(t instanceof IntType) {
+			return t;
+		}else if(t instanceof CharType){
+			return this; 
 		}
 		return null;
 	}

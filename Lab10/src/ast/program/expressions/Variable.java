@@ -1,9 +1,8 @@
 package ast.program.expressions;
 
-import ast.program.Expression;
 import visitor.Visitor;
 
-public class Variable extends AbstractExpression implements Expression{
+public class Variable extends AbstractExpression {
 		
 	public String name;
 	

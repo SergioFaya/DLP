@@ -1,10 +1,9 @@
 package ast.program.expressions.literal;
 
-import ast.program.Expression;
 import ast.program.expressions.AbstractExpression;
 import visitor.Visitor;
 
-public class CharLiteral extends AbstractExpression implements Expression {
+public class CharLiteral extends AbstractExpression {
 
 	public char value;
 	

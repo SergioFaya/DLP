@@ -5,14 +5,15 @@ import ast.program.Type;
 import ast.program.expressions.AbstractExpression;
 import visitor.Visitor;
 
-public class Cast extends AbstractExpression implements Expression {
+public class Cast extends AbstractExpression {
 
 	public Expression exp;
-
+	private Type dynamicType;
+	
 	public Cast(int line, int column, Type castType, Expression exp) {
 		super(line, column);
 		this.exp = exp;
-		super.type = castType;
+		this.dynamicType = castType;
 	}
 
 	@Override
@@ -24,6 +25,10 @@ public class Cast extends AbstractExpression implements Expression {
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
+	}
+	
+	public Type getDynamicType(){
+		return dynamicType;
 	}
 	
 	

@@ -82,7 +82,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	
 	@Override
 	public Void visit(IfStmnt ifStmnt, FuncDefinition param) {
-		
+		return null;
 	}
 	
 	@Override
@@ -91,6 +91,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 		cg.print("label ");
 		cg.print(label);
 		cg.print(":");
-		whileStmnt.accept(va, p)
+		//whileStmnt.accept(
+		return null;
 	}
 }

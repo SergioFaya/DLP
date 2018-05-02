@@ -4,7 +4,7 @@ import ast.program.Expression;
 import ast.program.expressions.AbstractExpression;
 import visitor.Visitor;
 
-public class UnaryMinus extends AbstractExpression implements Expression{
+public class UnaryMinus extends AbstractExpression {
 
 	public Expression expression;
 	

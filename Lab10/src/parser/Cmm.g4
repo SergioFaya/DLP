@@ -1,4 +1,4 @@
-grammar Cmm;	
+çgrammar Cmm;	
 
 @header{
 	import ast.*;
@@ -239,24 +239,7 @@ fragment FIXED_POINT: DIGIT*'.'DIGIT+
 fragment SPECIAL_CHAR:
 			 '\\n'
 			|'\\t'
-			| '.'
-			| '~'
-			| '-'
-			| '('
-			| ')'
-			| '='
-			| ','
-			| '!'
-			| '¡'
-			| '?'
-			| '¿'
-			| ' '
-			| '+'
-			| '_'
-			| '#'
-			| '$'
-			| '·'
-			| '|'
+			| .
 			;
 			
 fragment ASCII:  '\\'DIGIT+

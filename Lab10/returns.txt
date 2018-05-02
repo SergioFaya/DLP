@@ -1,0 +1,16 @@
+int a;
+char b;
+
+
+int f(){
+	if(a){
+		return a;	
+	}else{
+		return a;
+	}
+	return a;
+}
+
+void main(){
+}
+

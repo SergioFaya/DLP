@@ -1,10 +1,9 @@
 package ast.program.expressions.literal;
 
-import ast.program.Expression;
 import ast.program.expressions.AbstractExpression;
 import visitor.Visitor;
 
-public class RealLiteral extends AbstractExpression implements Expression{
+public class RealLiteral extends AbstractExpression {
 
 	public Double value;
 
@@ -17,7 +16,7 @@ public class RealLiteral extends AbstractExpression implements Expression{
 	public String toString() {
 		return "RealLiteral [value=" + value + ", line=" + line + ", column=" + column + "]";
 	}
-	
+
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);

@@ -3,7 +3,7 @@ package ast.program.expressions;
 import ast.program.Expression;
 import visitor.Visitor;
 
-public class Indexing extends AbstractExpression implements Expression{
+public class Indexing extends AbstractExpression {
 
 	public Expression exprLeft;
 	public Expression expBrackets;

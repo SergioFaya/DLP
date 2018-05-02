@@ -60,11 +60,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	@Override
 	public Void visit(Cast cast, Type param) {
 		cast.exp.accept(this, param);
-		Type previous =cast.getType();
-		cast.getType().accept(this, param);		
-		Type t = cast.setType(cast.getType().cast(cast.exp.getType()));
+		Type previous =cast.getDynamicType();
+		cast.getDynamicType().accept(this, param);		
+		Type t = cast.setType(cast.exp.getType().cast(cast.getDynamicType()));
 		if (t == null) {
-			new ErrorType(cast.getLine(), cast.getColumn(), "Unable to perform the cast from "+cast.exp.getType().getClass().getSimpleName() + " to "+previous.getClass().getSimpleName());
+			cast.setType(new ErrorType(cast.getLine(), cast.getColumn(), "Unable to perform the cast from "
+					+cast.exp.getType().getClass().getSimpleName() + " to "+previous.getClass().getSimpleName()));
 		}
 		return null;
 	}
@@ -110,7 +111,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		if (fieldExpr.exprLeft.getType() != null) {
 			Type t = fieldExpr.setType(fieldExpr.exprLeft.getType().dot(fieldExpr.field));
 			if (t == null) {
-				new ErrorType(fieldExpr.getLine(), fieldExpr.getColumn(), "Cannot get access to that field");
+				fieldExpr.setType(new ErrorType(fieldExpr.getLine(), fieldExpr.getColumn(), "Cannot get access to that field"));
 			}
 		}
 		if (fieldExpr.exprLeft.getLvalue()) {
@@ -128,8 +129,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
 		if (assignment.expLeft.getType() != null && assignment.expRight.getType() != null) {
 			if (!assignment.expRight.getType().isEquivalent(assignment.expLeft.getType())) {
-				System.out.println(assignment.expRight.getType().getClass().getName() + " AND "
-						+ assignment.expLeft.getType().getClass().getName());
 				new ErrorType(assignment.expLeft.getLine(), assignment.expLeft.getColumn(),
 						"Cannot assign values " + assignment.expLeft + " and " + assignment.expRight);
 			}
@@ -148,7 +147,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		indexing.setLvalue(true);
 		Type t = indexing.setType(indexing.expBrackets.getType().squareBrackets(indexing.exprLeft.getType()));
 		if (t == null) {
-			new ErrorType(indexing.getLine(), indexing.getColumn(), "Indexing operation error");
+			indexing.setType(new ErrorType(indexing.getLine(), indexing.getColumn(), "Indexing operation error"));
 		}
 		return null;
 	}
@@ -173,7 +172,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		}
 		Type t = func.setType(func.variable.getType().parenthesis(types));
 		if (t == null) {
-			new ErrorType(func.getLine(), func.getColumn(), "Wrong invocation signature of func "+func.variable.name);
+			func.setType(new ErrorType(func.getLine(), func.getColumn(), "Wrong invocation signature of func "+func.variable.name));
 		}
 		return null;
 	}
@@ -183,7 +182,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		unegation.exp.accept(this, param);
 		Type t = unegation.setType(unegation.exp.getType().logical());
 		if (t == null) {
-			new ErrorType(unegation.getLine(), unegation.getColumn(), "Expected integer type or valid promotion");
+			unegation.setType(new ErrorType(unegation.getLine(), unegation.getColumn(), "Expected integer type or valid promotion"));
 		}
 		return null;
 	}
@@ -193,7 +192,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		uminus.expression.accept(this, param);
 		Type t = uminus.setType(uminus.expression.getType().arithmetic());
 		if (t == null) {
-			new ErrorType(uminus.getLine(), uminus.getColumn(), "Expected integer type or valid promotion");
+			uminus.setType(new ErrorType(uminus.getLine(), uminus.getColumn(), "Expected integer type or valid promotion"));
 		}
 		return null;
 	}
@@ -202,13 +201,10 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	public Void visit(WhileStmnt whileStmnt, Type param) {
 		whileStmnt.exp.accept(this, param);
 		whileStmnt.stmnts.forEach(s -> s.accept(this, param));
-		if (whileStmnt.exp.getType() != null) {
 			if (!whileStmnt.exp.getType().isLogical()) {
-				System.out.println(whileStmnt.exp.getType().getClass().getName());
 				new ErrorType(whileStmnt.getLine(), whileStmnt.getColumn(),
 						"Not valid logical expression in while stmnt condition");
 			}
-		}
 		return null;
 	}
 

@@ -3,7 +3,7 @@ package ast.program.expressions;
 import ast.program.Expression;
 import visitor.Visitor;
 
-public class FieldAccessExpr extends AbstractExpression implements Expression {
+public class FieldAccessExpr extends AbstractExpression {
 
 	public Expression exprLeft;
 	public String field;
