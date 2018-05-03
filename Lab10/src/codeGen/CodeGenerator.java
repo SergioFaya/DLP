@@ -44,18 +44,46 @@ public class CodeGenerator {
 	}
 
 	public void push(char c) {
-
+		int i = (int)c;
+		out.print("pushb ");
+		out.println(i);
 	}
 
+	public void push(float f) {
+		out.print("pushf ");
+		out.println(f);
+	}
+	
+	public void pusha(int a) {
+		out.print("pusha ");
+		out.println(a);
+	}
+	
+	public void pushBp() {
+		out.println("pusha bp");
+	}
+	
+	public void load() {
+		out.println("load");
+	}
+	
+	public void loadi() {
+		out.println("loadi");
+	}
+	
+	public void loadb() {
+		out.println("loadb");
+	}
+	
+	public void loadf() {
+		out.println("loadf");
+	}
+	
 	public void arith(String op, Type t) {
-
+		
 	}
 
 	public void store(Type t) {
-
-	}
-
-	public void load() {
 
 	}
 

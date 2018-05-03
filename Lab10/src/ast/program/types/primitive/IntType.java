@@ -64,13 +64,22 @@ public class IntType extends AbstractType {
 			return this;
 		}else if(t instanceof CharType){
 			return t; 
+		}else if (t instanceof RealType){
+			return t;
+		}
+		return null;
+	}
+
+	@Override
+	public Type comparison(Type t) {
+		if(t instanceof IntType) {
+			return t;
 		}
 		return null;
 	}
 	
 	@Override
 	public boolean isEquivalent(Type t) {
-		System.out.println("equivalent int");
 		if(t instanceof IntType) {
 			return true; 
 		}
@@ -86,4 +95,5 @@ public class IntType extends AbstractType {
 	public String getSuffix() {
 		return "i";
 	}
+	
 }

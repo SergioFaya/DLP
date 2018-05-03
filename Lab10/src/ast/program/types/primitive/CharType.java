@@ -53,6 +53,8 @@ public class CharType extends AbstractType {
 			return t;
 		}else if(t instanceof CharType){
 			return this; 
+		}else if(t instanceof RealType){
+			return t; 
 		}
 		return null;
 	}

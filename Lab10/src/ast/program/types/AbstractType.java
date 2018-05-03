@@ -59,7 +59,6 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	
 	@Override
 	public boolean isEquivalent(Type t) {
-		System.out.println("equivalent abs");
 		return false;
 	}
 	
