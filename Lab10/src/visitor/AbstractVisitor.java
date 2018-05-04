@@ -32,7 +32,7 @@ import ast.program.types.primitive.IntType;
 import ast.program.types.primitive.RealType;
 import ast.program.types.primitive.VoidType;
 
-public class AbstractVisitor<TP,TR> implements Visitor<TP, TR>{
+public abstract class AbstractVisitor<TP,TR> implements Visitor<TP, TR>{
 
 	@Override
 	public TR visit(Field field, TP param) {

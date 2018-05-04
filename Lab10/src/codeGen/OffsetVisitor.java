@@ -17,7 +17,7 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 		int bytesFieldSum = 0;
 		for (Field f : structType.fields) {
 			f.setOffset(bytesFieldSum);
-			bytesFieldSum -= f.getType().getNumberOfBytes();
+			bytesFieldSum += f.getType().getNumberOfBytes();
 		}
 		return null;
 	}
@@ -27,9 +27,9 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 		if (varDef.getScope() == 0) {
 			varDef.setOffset(globalVarOffset);
 			globalVarOffset += varDef.getType().getNumberOfBytes();
-		} else {
-			varDef.setOffset(localVarOffset);
+		}   else {
 			localVarOffset -= varDef.getType().getNumberOfBytes();
+			varDef.setOffset(localVarOffset);
 		}
 		return null;
 	}
@@ -40,9 +40,8 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 		funcDef.getType().accept(this, param);
 		funcDef.totalLocalBytes= 0;
 		funcDef.body.forEach(st ->{
-			st.accept(this, param);
 			if(st instanceof VarDefinition) {
-				funcDef.totalBytesParam += ((VarDefinition) st).getType().getNumberOfBytes();
+st.accept(this, param);
 			} 
 		});
 		if (funcDef.getType() instanceof FuncType) {
@@ -53,13 +52,12 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 
 	@Override
 	public Void visit(FuncType funcType, Void param) {
-		funcType.returnType.accept(this, param);
-		int bytesFieldSum = 0;
+		int bytesFieldSum = 4;
 		VarDefinition vd = null;
 		for (int i = funcType.params.size() -1; i >= 0; i--) {
 			vd = funcType.params.get(i);
 			vd.setOffset(bytesFieldSum);
-			bytesFieldSum -= vd.getType().getNumberOfBytes();
+			bytesFieldSum += vd.getType().getNumberOfBytes();
 		}
 		return null;
 	}
