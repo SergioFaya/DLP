@@ -6,7 +6,7 @@ import ast.program.expressions.AbstractExpression;
 
 public abstract class AbstractDefinition extends AbstractExpression implements Definition{
 
-	public String name;
+	private String name;
 
 	public AbstractDefinition(int line, int column,Type type, String name) {
 		super(line, column);

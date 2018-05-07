@@ -19,7 +19,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(Read readStmnt, FuncDefinition param) {
 		cg.log("Read stmnt");
-		readStmnt.accept(cg.address, null);
+		readStmnt.exp.accept(cfs.getAddress(), null);
 		cg.in(readStmnt.exp.getType().getSuffix());
 		cg.store(readStmnt.exp.getType().getSuffix());
 		return null;
@@ -28,16 +28,18 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(Write writeStmnt, FuncDefinition param) {
 		cg.log("Write stmnt");
-		// push implicit
-		writeStmnt.accept(this, param);
+		writeStmnt.expression.accept(cfs.getValue(), param);
 		cg.out(writeStmnt.expression.getType().getSuffix());
 		return null;
 	}
 
 	@Override
 	public Void visit(Program program, FuncDefinition param) {
-		cg.invocationToMain();
 		cg.log("Global variables");
+		program.definitions.stream()
+			.filter(def -> def instanceof VarDefinition)
+			.map(def -> def.accept(this, param));
+		cg.invocationToMain();
 		program.definitions.stream()
 			.filter(def -> def instanceof FuncDefinition)
 			.map(def -> def.accept(this, param));
@@ -46,14 +48,17 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 
 	@Override
 	public Void visit(Assignment assign, FuncDefinition param) {
-
+		cg.log("Assignment statement");
+		assign.expLeft.accept(cfs.getAddress(), param);
+		assign.expRight.accept(cfs.getValue(), param);
+		cg.store(assign.expLeft.getType().getSuffix());
 		return null;
 	}
 
 	@Override
 	public Void visit(FuncDefinition funcDef, FuncDefinition param) {
 		cg.log("Function Definition");
-		cg.call(funcDef.name);
+		cg.call(funcDef.getName());
 		cg.log("Parameters");
 		funcDef.getType().accept(this, param);
 		cg.log("Local Variables");
@@ -100,6 +105,12 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 		cg.jmp(label);
 		cg.log("Label"+(++label));
 		cg.label(++label);
+		return null;
+	}
+	
+	@Override
+	public Void visit(VarDefinition varDef, FuncDefinition param) {
+		cg.log(varDef.getType()+" "+ varDef.getName() + " offset:"+ varDef.getOffset());
 		return null;
 	}
 }

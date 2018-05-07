@@ -41,7 +41,7 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 		funcDef.totalLocalBytes= 0;
 		funcDef.body.forEach(st ->{
 			if(st instanceof VarDefinition) {
-st.accept(this, param);
+				st.accept(this, param);
 			} 
 		});
 		if (funcDef.getType() instanceof FuncType) {

@@ -2,10 +2,6 @@ package codeGen;
 
 import java.io.PrintStream;
 
-import codeGen.codeFunctions.AddressVisitor;
-import codeGen.codeFunctions.ExecuteVisitor;
-import codeGen.codeFunctions.ValueVisitor;
-
 /**
  * 
  * @author Sergio Facade for output
@@ -14,12 +10,7 @@ public class CodeGenerator {
 
 	private PrintStream out;
 	private int labels;
-
-	// Find another place for it
-	public AddressVisitor address = new AddressVisitor();
-	public ExecuteVisitor execute = new ExecuteVisitor();
-	public ValueVisitor value = new ValueVisitor();
-
+	
 	public CodeGenerator() {
 		this.out = System.out;
 		this.labels = 1;

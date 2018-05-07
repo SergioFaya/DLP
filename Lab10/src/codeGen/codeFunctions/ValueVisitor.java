@@ -45,11 +45,15 @@ public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 	
 	@Override
 	public Void visit(Variable var, FuncDefinition param) {
+		var.accept(cfs.getAddress(), param);
+		cg.load(var.getDefinition().getType().getSuffix());
 		return null;
 	}
 	
 	@Override
 	public Void visit(Arithmetic arith, FuncDefinition param) {
+		arith.exprLeft.accept(cfs.getValue(), param);
+		arith.exprLeft.
 		return null;
 	}
 

@@ -21,7 +21,7 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 
 	@Override
 	public String toString() {
-		return "FuncDefinition [body=" + body + ", type=" + type + ", name=" + name + ", line=" + line + ", column="
+		return "FuncDefinition [body=" + body + ", type=" + type + ", name=" + getName() + ", line=" + line + ", column="
 				+ column + "]";
 	}
 

@@ -1,6 +1,5 @@
 package semantic;
 
-import ast.program.Definition;
 import ast.program.definitions.FuncDefinition;
 import ast.program.definitions.VarDefinition;
 import ast.program.expressions.Variable;
@@ -20,9 +19,9 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 	@Override
 	public Void visit(VarDefinition varDef, Void param) {
 		varDef.getType().accept(this, param);
-		if (symbolTable.findInCurrentScope(varDef.name) != null) {
+		if (symbolTable.findInCurrentScope(varDef.getName()) != null) {
 			new ErrorType(varDef.getLine(), varDef.getColumn(),
-					"Definition with name " + varDef.name + " already exists");
+					"Definition with name " + varDef.getName() + " already exists");
 		} else {
 			symbolTable.insert(varDef);
 		}
@@ -31,9 +30,9 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 
 	@Override
 	public Void visit(FuncDefinition funcDef, Void param) {
-		if (symbolTable.find(funcDef.name) != null) {
+		if (symbolTable.find(funcDef.getName()) != null) {
 			new ErrorType(funcDef.getLine(), funcDef.getColumn(),
-					"Definition with name " + funcDef.name + " already exists");
+					"Definition with name " + funcDef.getName() + " already exists");
 		} else {
 			symbolTable.insert(funcDef);
 		}
@@ -57,12 +56,12 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 	
 	@Override
 	public Void visit(Variable variable, Void param) {
-		Definition def = symbolTable.find(variable.name);
-		if(symbolTable.find(variable.name) == null) {
+		VarDefinition def = (VarDefinition) symbolTable.find(variable.name);
+		if(def == null) {
 			new ErrorType(variable.getLine(), variable.getColumn(), "Variable "+variable.name+" is not defined in scope");
 		}else {
 			//set type or set definition
-			variable.setType(def.getType());
+			variable.setDefinition(def);
 		}
 		return null;
 	}
