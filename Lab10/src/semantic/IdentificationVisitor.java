@@ -13,7 +13,6 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 	private SymbolTable symbolTable = new SymbolTable();
 	
 	public IdentificationVisitor() {
-		//System.out.println("identification visitor");
 	}
 	
 	@Override

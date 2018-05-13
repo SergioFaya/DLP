@@ -27,7 +27,7 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 		if (varDef.getScope() == 0) {
 			varDef.setOffset(globalVarOffset);
 			globalVarOffset += varDef.getType().getNumberOfBytes();
-		}   else {
+		} else {
 			localVarOffset -= varDef.getType().getNumberOfBytes();
 			varDef.setOffset(localVarOffset);
 		}
@@ -37,15 +37,12 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 	@Override
 	public Void visit(FuncDefinition funcDef, Void param) {
 		localVarOffset = 0;
-		funcDef.getType().accept(this, param);
-		funcDef.totalLocalBytes= 0;
-		funcDef.body.forEach(st ->{
-			if(st instanceof VarDefinition) {
-				st.accept(this, param);
-			} 
-		});
+		//funcDef.getType().accept(this, param);
+		funcDef.body.stream()
+			.filter(st -> st instanceof VarDefinition)
+			.forEach(st -> st.accept(this, param));
 		if (funcDef.getType() instanceof FuncType) {
-			funcDef.totalBytesParam=((FuncType)funcDef.getType()).getNumberOfBytes();
+			funcDef.setTotalBytesParam(localVarOffset);
 		}
 		return null;
 	}
@@ -54,7 +51,7 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 	public Void visit(FuncType funcType, Void param) {
 		int bytesFieldSum = 4;
 		VarDefinition vd = null;
-		for (int i = funcType.params.size() -1; i >= 0; i--) {
+		for (int i = funcType.params.size() - 1; i >= 0; i--) {
 			vd = funcType.params.get(i);
 			vd.setOffset(bytesFieldSum);
 			bytesFieldSum += vd.getType().getNumberOfBytes();

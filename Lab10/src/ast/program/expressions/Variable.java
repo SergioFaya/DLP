@@ -1,6 +1,5 @@
 package ast.program.expressions;
 
-import ast.program.Type;
 import ast.program.definitions.VarDefinition;
 import visitor.Visitor;
 
@@ -32,14 +31,4 @@ public class Variable extends AbstractExpression {
 		this.definition = definition;
 	}
 	
-	@Override
-	public Type getType() {
-		return definition.getType();
-	}
-	
-	@Override
-	public Type setType(Type type) {
-		return this.type = type;
-	}
-
 }

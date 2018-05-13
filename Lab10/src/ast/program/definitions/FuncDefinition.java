@@ -10,26 +10,25 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 
 	public List<Statement> body;
 	private int scope;
-	//Accumulate the bytes of the parameters
-	public int totalLocalBytes;
+	// Accumulate the bytes of the parameters
 	public int totalBytesParam;
 
-	public FuncDefinition(int line, int column,Type functionType,String name, List<Statement> body) {
-		super(line, column,functionType,name);
+	public FuncDefinition(int line, int column, Type functionType, String name, List<Statement> body) {
+		super(line, column, functionType, name);
 		this.body = body;
 	}
 
 	@Override
 	public String toString() {
-		return "FuncDefinition [body=" + body + ", type=" + type + ", name=" + getName() + ", line=" + line + ", column="
-				+ column + "]";
+		return "FuncDefinition [body=" + body + ", type=" + type + ", name=" + getName() + ", line=" + line
+				+ ", column=" + column + "]";
 	}
 
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
 	}
-	
+
 	@Override
 	public int getScope() {
 		return scope;
@@ -37,6 +36,14 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 
 	@Override
 	public void setScope(int scope) {
-		this.scope = scope;		
+		this.scope = scope;
+	}
+
+	public int getTotalBytesParam() {
+		return totalBytesParam;
+	}
+
+	public void setTotalBytesParam(int param) {
+		this.totalBytesParam = param;
 	}
 }

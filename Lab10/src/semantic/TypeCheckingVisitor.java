@@ -53,6 +53,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
 	@Override
 	public Void visit(Variable var, Type param) {
+		var.setType(var.getDefinition().getType());
 		var.setLvalue(true);
 		return null;
 	}

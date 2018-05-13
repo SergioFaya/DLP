@@ -38,11 +38,11 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 		cg.log("Global variables");
 		program.definitions.stream()
 			.filter(def -> def instanceof VarDefinition)
-			.map(def -> def.accept(this, param));
+			.forEach(def -> def.accept(this, param));
 		cg.invocationToMain();
 		program.definitions.stream()
 			.filter(def -> def instanceof FuncDefinition)
-			.map(def -> def.accept(this, param));
+			.forEach(def -> def.accept(this, param));
 		return null;
 	}
 
@@ -58,17 +58,18 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(FuncDefinition funcDef, FuncDefinition param) {
 		cg.log("Function Definition");
-		cg.call(funcDef.getName());
+		int label = cg.getLabels(1);
+		cg.label(label);
 		cg.log("Parameters");
 		funcDef.getType().accept(this, param);
 		cg.log("Local Variables");
 		funcDef.body.stream()
 			.filter(fd -> fd instanceof VarDefinition)
-			.map(fd -> fd.accept(this, param));
-		cg.enter(funcDef.totalLocalBytes);
+			.forEach(fd -> fd.accept(this, param));
+		cg.enter(funcDef.getTotalBytesParam());
 		funcDef.body.stream()
 			.filter(fd -> !(fd instanceof VarDefinition))
-			.map(fd -> fd.accept(this, funcDef));
+			.forEach(fd -> fd.accept(this, funcDef));
 		if(funcDef.getType() instanceof VoidType) {
 			cg.ret(0,funcDef.totalLocalBytes,funcDef.totalBytesParam);
 		}
@@ -77,6 +78,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	
 	@Override
 	public Void visit(ReturnStmnt retStmnt, FuncDefinition param) {
+		cg.log("Execution of return statement");
 		cg.ret(retStmnt.exp.getType().getNumberOfBytes(), param.totalLocalBytes, param.totalBytesParam);
 		return null;
 	}

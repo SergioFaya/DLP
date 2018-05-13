@@ -10,7 +10,7 @@ public class FuncType extends AbstractType {
 
 	public Type returnType;
 	public List<VarDefinition> params;
-	private int numberOfBytes;
+	
 	
 	public FuncType(int line, int column, Type returnType, List<VarDefinition> params) {
 		super(line, column);
@@ -39,16 +39,6 @@ public class FuncType extends AbstractType {
 			}
 		}
 		return returnType;
-	}
-
-	@Override
-	public int getNumberOfBytes() {
-		return numberOfBytes;
-	}
-	
-	@Override
-	public void setNumberOfBytes(int bytes) {
-		this.numberOfBytes = bytes;
 	}
 	
 	@Override
