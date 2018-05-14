@@ -61,7 +61,7 @@ public class CharType extends AbstractType {
 
 	@Override
 	public boolean isEquivalent(Type t) {
-		if(t instanceof CharType) {
+		if(t instanceof CharType ) {
 			return true; 
 		}
 		return false;

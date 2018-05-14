@@ -16,7 +16,7 @@ public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 
 	@Override
 	public Void visit(Variable var, FuncDefinition param) {
-		cg.log("Expression Variable");
+		cg.log("Address Variable");
 		if(var.getDefinition().getScope() >= 1) {
 			cg.pushBp();
 			cg.push("i", var.getDefinition().getOffset());
@@ -29,7 +29,7 @@ public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 	
 	@Override
 	public Void visit(Indexing indexing, FuncDefinition param) {
-		cg.log("Expression Indexing");
+		cg.log("Address Indexing");
 		indexing.exprLeft.accept(CodeFunctions.getAddress(), param);
 		indexing.expBrackets.accept(CodeFunctions.getAddress(), param);
 		cg.push(indexing.getType().getSuffix(),indexing.getType().getNumberOfBytes());
@@ -40,7 +40,7 @@ public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 	
 	@Override
 	public Void visit(FieldAccessExpr fieldExpr, FuncDefinition param) {
-		cg.log("Expression Field Accesing");
+		cg.log("Address Field Accessing");
 		fieldExpr.exprLeft.accept(CodeFunctions.getAddress(), param);
 		return null;
 	}

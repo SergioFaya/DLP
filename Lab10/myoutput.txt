@@ -1,252 +1,259 @@
 
-#source "input.txt"
-#line 1
-	'*Global variables
-	'*CharType c offset:0
-	'*IntType a offset:1
-	'*RealType r offset:3
-'*Main invocation
+#source	"input.txt"
+
+	' * char c (offset 0)
+	' * int a (offset 1)
+	' * real r (offset 3)
+
+' Invocation to the main function
 call main
 halt
-#line 5
-	'*Function Definition
-	1:
-	'*Parameters
-	'*Local Variables
-	'*IntType a offset:-2
-	'*IntType i offset:-4
-	enter 4
-#line 8
-	'*Assignment statement
-	'*Expression Variable
-	pusha 0
-	'*Value  of char literal
-	pushb 97
+
+
+#line	5
+	' * Function Definition
+	main:
+	' * Parameters
+	' * Local variables
+	' * int a (offset -2)
+	' * int i (offset -4)
+	enter	4
+#line	8
+	' * Assignment statement
+	' * Address Variable
+	pusha	0
+	' * Value  of char literal
+	pushb	97
 	storeb
-#line 9
-	'*Write stmnt
-	'*Value of variable
-	'*Expression Variable
-	pusha 0
+#line	9
+	' * Write
+	' * Value of variable
+	' * Address Variable
+	pusha	0
 	loadb
 	outb
-#line 9
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 10
+#line	9
+	' * Write
+	' * Value  of char literal
+	pushb	10
 	outb
-#line 11
-	'*Assignment statement
-	'*Expression Variable
-	push bp
-	pushi -2
+#line	11
+	' * Assignment statement
+	' * Address Variable
+	push	bp
+	pushi	-2
 	addi
-	'*Value  of int literal
-	pushi 1
+	' * Value  of int literal
+	pushi	1
 	storei
-#line 12
-	'*Assignment statement
-	'*Expression Variable
-	push bp
-	pushi -4
+#line	12
+	' * Assignment statement
+	' * Address Variable
+	push	bp
+	pushi	-4
 	addi
-	'*Value of arithmetic
-	'*Value  of Cast
+	' * Value of arithmetic
+	' * Value  of Cast
+	' * Value  of char literal
+	pushb	48
 	b2i
-	'*Value  of int literal
-	pushi 3
-	mul
-i
+	' * Value  of int literal
+	pushi	3
+	muli
 	storei
-#line 13
-	'*Write stmnt
-	'*Value of variable
-	'*Expression Variable
-	push bp
-	pushi -2
+#line	13
+	' * Write
+	' * Value of variable
+	' * Address Variable
+	push	bp
+	pushi	-2
 	addi
 	loadi
 	outi
-#line 13
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	13
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 13
-	'*Write stmnt
-	'*Value of variable
-	'*Expression Variable
-	push bp
-	pushi -4
+#line	13
+	' * Write
+	' * Value of variable
+	' * Address Variable
+	push	bp
+	pushi	-4
 	addi
 	loadi
 	outi
-#line 13
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 10
+#line	13
+	' * Write
+	' * Value  of char literal
+	pushb	10
 	outb
-#line 15
-	'*Read stmnt
-	'*Expression Variable
-	pusha 3
+#line	15
+	' * Read
+	' * Address Variable
+	pusha	3
 	inf
 	storef
-#line 16
-	'*Write stmnt
-	'*Value of arithmetic
-	'*Value  of Cast
+#line	16
+	' * Write
+	' * Value of arithmetic
+	' * Value  of Cast
+	' * Value  of int literal
+	pushi	2
 	i2f
-	'*Value of variable
-	'*Expression Variable
-	pusha 3
+	' * Value of variable
+	' * Address Variable
+	pusha	3
 	loadf
-	mul
-f
+	mulf
 	outf
-#line 16
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 10
+#line	16
+	' * Write
+	' * Value  of char literal
+	pushb	10
 	outb
-#line 18
-	'*Write stmnt
-	'*Value of arithmetic
-	'*Value  of Cast
+#line	18
+	' * Write
+	' * Value of arithmetic
+	' * Value  of Cast
+	' * Value  of int literal
+	pushi	3
 	i2f
-	'*Value  of real literal
-	pushf 4.5
+	' * Value  of real literal
+	pushf	4.5
 	subf
 	outf
-#line 18
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	18
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 18
-	'*Write stmnt
-	'*Value of arithmetic
-	'*Value  of Cast
+#line	18
+	' * Write
+	' * Value of arithmetic
+	' * Value  of Cast
+	' * Value  of char literal
+	pushb	48
 	b2i
 	i2f
-	'*Value  of real literal
-	pushf 48.0
-	div
-f
+	' * Value  of real literal
+	pushf	48.0
+	divf
 	outf
-#line 18
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	18
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 18
-	'*Write stmnt
-	'*Value of arithmetic
-	'*Value  of char literal
-	pushb 48
-	'*Value  of char literal
-	pushb 49
+#line	18
+	' * Write
+	' * Value of arithmetic
+	' * Value  of char literal
+	pushb	48
+	' * Value  of char literal
+	pushb	49
 	modb
 	outb
-#line 18
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	18
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 18
-	'*Write stmnt
-	'*Value of arithmetic
-	'*Value  of char literal
-	pushb 48
-	'*Value  of char literal
-	pushb 49
+#line	18
+	' * Write
+	' * Value of arithmetic
+	' * Value  of char literal
+	pushb	48
+	' * Value  of char literal
+	pushb	49
 	addb
 	outb
-#line 18
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 10
+#line	18
+	' * Write
+	' * Value  of char literal
+	pushb	10
 	outb
-#line 22
-	'*Write stmnt
-	'*Value  of comparison
-	'*Value  of int literal
-	pushi 1
-	'*Value  of int literal
-	pushi 2
+#line	22
+	' * Write
+	' * Value  of comparison
+	' * Value  of int literal
+	pushi	1
+	' * Value  of int literal
+	pushi	2
 	lti
 	outi
-#line 22
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	22
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 22
-	'*Write stmnt
-	'*Value  of comparison
-	'*Value  of int literal
-	pushi 4
-	'*Value  of int literal
-	pushi 3
+#line	22
+	' * Write
+	' * Value  of comparison
+	' * Value  of int literal
+	pushi	4
+	' * Value  of int literal
+	pushi	3
 	gei
 	outi
-#line 22
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	22
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 22
-	'*Write stmnt
-	'*Value  of comparison
-	'*Value  of int literal
-	pushi 5
-	'*Value  of int literal
-	pushi 5
+#line	22
+	' * Write
+	' * Value  of comparison
+	' * Value  of int literal
+	pushi	5
+	' * Value  of int literal
+	pushi	5
 	eqi
 	outi
-#line 22
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	22
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 22
-	'*Write stmnt
-	'*Value  of logical
-	'*Value  of int literal
-	pushi 1
-	'*Value  of int literal
-	pushi 2
+#line	22
+	' * Write
+	' * Value  of logical
+	' * Value  of int literal
+	pushi	1
+	' * Value  of int literal
+	pushi	2
 	and
 	outi
-#line 22
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	22
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 22
-	'*Write stmnt
-	'*Value  of logical
-	'*Value  of int literal
-	pushi 0
-	'*Value  of int literal
-	pushi 3
+#line	22
+	' * Write
+	' * Value  of logical
+	' * Value  of int literal
+	pushi	0
+	' * Value  of int literal
+	pushi	3
 	or
 	outi
-#line 22
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 32
+#line	22
+	' * Write
+	' * Value  of char literal
+	pushb	32
 	outb
-#line 22
-	'*Write stmnt
-	'*Value  of unary negation
-	'*Value  of int literal
-	pushi 0
+#line	22
+	' * Write
+	' * Value  of unary negation
+	' * Value  of int literal
+	pushi	0
 	not
 	outi
-#line 22
-	'*Write stmnt
-	'*Value  of char literal
-	pushb 10
+#line	22
+	' * Write
+	' * Value  of char literal
+	pushb	10
 	outb
-	ret 0,4,0
+	ret	0, 4, 0

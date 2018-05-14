@@ -51,8 +51,11 @@ public class RealType extends AbstractType {
 
 	@Override
 	public Type cast(Type t) {
-		//Cannot cast to int or char because of information lost
-		if (t == RealType.getInstance()) {
+		if(t instanceof IntType) {
+			return t; 
+		}else if(t instanceof CharType){
+			return t; 
+		}else if (t instanceof RealType){
 			return this;
 		}
 		return null;
@@ -60,7 +63,7 @@ public class RealType extends AbstractType {
 
 	@Override
 	public boolean isEquivalent(Type t) {
-		if(t instanceof RealType) {
+		if(t instanceof RealType ) {
 			return true; 
 		}
 		return false;

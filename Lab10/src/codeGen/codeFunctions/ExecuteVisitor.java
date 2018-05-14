@@ -24,8 +24,9 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	public Void visit(Program program, FuncDefinition param) {
 		cg.println();
 		cg.source();
-		cg.line(program.getLine());
-		cg.log("Global variables");
+		//cg.line(program.getLine());
+		//cg.log("Global variables");
+		cg.println();
 		program.definitions.stream().filter(def -> def instanceof VarDefinition)
 				.forEach(def -> def.accept(this, param));
 		cg.invocationToMain();
@@ -37,7 +38,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(Read readStmnt, FuncDefinition param) {
 		cg.line(readStmnt.getLine());
-		cg.log("Read stmnt");
+		cg.log("Read");
 		readStmnt.exp.accept(CodeFunctions.getAddress(), null);
 		cg.in(readStmnt.exp.getType().getSuffix());
 		cg.store(readStmnt.exp.getType().getSuffix());
@@ -47,7 +48,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(Write writeStmnt, FuncDefinition param) {
 		cg.line(writeStmnt.getLine());
-		cg.log("Write stmnt");
+		cg.log("Write");
 		writeStmnt.expression.accept(CodeFunctions.getValue(), param);
 		cg.out(writeStmnt.expression.getType().getSuffix());
 		return null;
@@ -67,15 +68,19 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	public Void visit(FuncDefinition funcDef, FuncDefinition param) {
 		cg.line(funcDef.getLine());
 		cg.log("Function Definition");
-		int label = cg.getLabels(1);
-		cg.label(label);
+		if(funcDef.getName().equals("main")) {
+			cg.label("main");
+		}else {
+			int label = cg.getLabels(1);
+			cg.label(label);
+		}
 		cg.log("Parameters");
 		FuncType funcType = (FuncType) funcDef.getType();
 		for (int i = funcType.params.size() - 1; i >= 0; i--) {
 			VarDefinition vd = funcType.params.get(i);
 			vd.accept(this, param);
 		}
-		cg.log("Local Variables");
+		cg.log("Local variables");
 		funcDef.body.stream().filter(fd -> fd instanceof VarDefinition).forEach(fd -> fd.accept(this, param));
 		cg.enter(funcDef.getLocalBytesSum());
 		funcDef.body.stream().filter(fd -> !(fd instanceof VarDefinition)).forEach(fd -> fd.accept(this, funcDef));
@@ -124,7 +129,23 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 
 	@Override
 	public Void visit(VarDefinition varDef, FuncDefinition param) {
-		cg.log(varDef.getType().getClass().getSimpleName() + " " + varDef.getName() + " offset:" + varDef.getOffset());
+		String type = null;
+		String simplename= varDef.getType().getClass().getSimpleName();
+		switch(simplename) {
+		case "IntType":
+			type = "int";
+			break;
+		case "CharType":
+			type = "char";
+			break;
+		case "RealType":
+			type = "real";
+			break;
+		default:
+			type = simplename;
+			break;
+		}
+		cg.log(type + " " + varDef.getName() + " (offset " + varDef.getOffset() + ")");
 		return null;
 	}
 }

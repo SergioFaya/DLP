@@ -31,9 +31,8 @@ public class ArrayType extends AbstractType {
 	public Type squareBrackets(Type t) {
 		if(t == IntType.getInstance()) {
 			return this;
-		}else {
-			return super.squareBrackets(t);
 		}
+		return null;
 	}
 	
 	@Override
@@ -49,6 +48,5 @@ public class ArrayType extends AbstractType {
 	@Override
 	public String getSuffix() {
 		throw new RuntimeException();
-		//return "a";
 	}
 }

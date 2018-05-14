@@ -38,13 +38,13 @@ public class CodeGenerator {
 		tab();
 		print("push");
 		print(suffix);
-		print(" ");
+		print("\t");
 		println(n.toString());
 	}
 
 	public void pushBp() {
 		tab();
-		println("push bp");
+		println("push\tbp");
 	}
 
 	public void load(String suffix) {
@@ -86,13 +86,13 @@ public class CodeGenerator {
 
 	public void mul(String suffix) {
 		tab();
-		println("mul");
+		print("mul");
 		println(suffix);
 	}
 
 	public void div(String suffix) {
 		tab();
-		println("div");
+		print("div");
 		println(suffix);
 	}
 
@@ -227,6 +227,12 @@ public class CodeGenerator {
 		print(label);
 		println(":");
 	}
+	
+	public void label(String label) {
+		tab();
+		print(label);
+		println(":");
+	}
 
 	public void jmp(int label) {
 		tab();
@@ -255,31 +261,34 @@ public class CodeGenerator {
 
 	public void enter(int cons) {
 		tab();
-		print("enter ");
+		print("enter\t");
 		println(cons);
 	}
 
 	public void ret(int returnValue, int localVariableBytes, int parametersBytes) {
 		tab();
-		print("ret ");
+		print("ret\t");
 		print(returnValue);
-		print(",");
+		print(", ");
 		print(localVariableBytes);
-		print(",");
+		print(", ");
 		println(parametersBytes);
 	}
 
 	public void invocationToMain() {
-		println("'*Main invocation");
+		println();
+		println("' Invocation to the main function");
 		println("call main");
 		println("halt");
+		println();
+		println();
 	}
 
 	// Loging of the mapl code
 
 	public void log(String message) {
 		tab();
-		out.print("'*");
+		out.print("' * ");
 		out.println(message);
 	}
 
@@ -370,11 +379,11 @@ public class CodeGenerator {
 	}
 	
 	public void line(int line) {
-		out.println("#line "+line);
+		out.println("#line\t"+line);
 	}
 	
 	public void source() {
-		out.print("#source ");
+		out.print("#source\t");
 		out.println("\""+filename+"\"");
 	}
 }

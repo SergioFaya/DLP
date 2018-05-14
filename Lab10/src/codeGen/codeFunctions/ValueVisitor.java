@@ -27,6 +27,7 @@ public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(Cast cast, FuncDefinition param) {
 		cg.log("Value  of Cast");
+		cast.exp.accept(CodeFunctions.getValue(), param);
 		cg.convertTo(cast.exp.getType(), cast.getType());
 		return null;
 	}

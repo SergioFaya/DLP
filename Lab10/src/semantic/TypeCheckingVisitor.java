@@ -129,11 +129,13 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 			new ErrorType(assignment.expLeft.getLine(), assignment.expLeft.getColumn(), "LValue expected on left side of assignment");
 
 		if (assignment.expLeft.getType() != null && assignment.expRight.getType() != null) {
-			if (!assignment.expRight.getType().isEquivalent(assignment.expLeft.getType())) {
+			if (!assignment.expLeft.getType().isEquivalent(assignment.expRight.getType())) {
 				new ErrorType(assignment.expLeft.getLine(), assignment.expLeft.getColumn(),
 						"Cannot assign values " + assignment.expLeft + " and " + assignment.expRight);
 			}
 
+		}else {
+			new ErrorType(assignment.expLeft.getLine(), assignment.expLeft.getColumn(),"Null types on assigment");
 		}
 		return null;
 	}
@@ -142,11 +144,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	public Void visit(Indexing indexing, Type param) {
 		indexing.exprLeft.accept(this, param);
 		indexing.expBrackets.accept(this, param);
-		if (!indexing.expBrackets.getLvalue()) {
-			new ErrorType(indexing.getLine(), indexing.getColumn(), "Lvalue expected on indexing expression");
-		} 
 		indexing.setLvalue(true);
-		Type t = indexing.setType(indexing.expBrackets.getType().squareBrackets(indexing.exprLeft.getType()));
+		Type t = indexing.setType(indexing.exprLeft.getType().squareBrackets(indexing.expBrackets.getType()));
 		if (t == null) {
 			indexing.setType(new ErrorType(indexing.getLine(), indexing.getColumn(), "Indexing operation error"));
 		}

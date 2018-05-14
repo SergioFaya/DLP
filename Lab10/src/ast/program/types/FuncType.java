@@ -44,6 +44,5 @@ public class FuncType extends AbstractType {
 	@Override
 	public String getSuffix() {
 		throw new RuntimeException();
-		//return "a";
 	}
 }

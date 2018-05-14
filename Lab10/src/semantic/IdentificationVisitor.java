@@ -1,5 +1,6 @@
 package semantic;
 
+import ast.program.Definition;
 import ast.program.definitions.FuncDefinition;
 import ast.program.definitions.VarDefinition;
 import ast.program.expressions.Variable;
@@ -11,10 +12,10 @@ import visitor.AbstractVisitor;
 public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 
 	private SymbolTable symbolTable = new SymbolTable();
-	
+
 	public IdentificationVisitor() {
 	}
-	
+
 	@Override
 	public Void visit(VarDefinition varDef, Void param) {
 		varDef.getType().accept(this, param);
@@ -52,14 +53,14 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Void visit(Variable variable, Void param) {
-		VarDefinition def = (VarDefinition) symbolTable.find(variable.name);
-		if(def == null) {
-			new ErrorType(variable.getLine(), variable.getColumn(), "Variable "+variable.name+" is not defined in scope");
-		}else {
-			//set type or set definition
+		Definition def = symbolTable.find(variable.name);
+		if (def == null) {
+			new ErrorType(variable.getLine(), variable.getColumn(),
+					"Variable " + variable.name + " is not defined in scope");
+		} else {
 			variable.setDefinition(def);
 		}
 		return null;

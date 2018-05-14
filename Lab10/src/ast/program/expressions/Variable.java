@@ -1,12 +1,13 @@
 package ast.program.expressions;
 
+import ast.program.Definition;
 import ast.program.definitions.VarDefinition;
 import visitor.Visitor;
 
 public class Variable extends AbstractExpression {
 
 	public String name;
-	private VarDefinition definition;
+	private Definition definition;
 
 	public Variable(int line, int column, String name) {
 		super(line, column);
@@ -23,12 +24,12 @@ public class Variable extends AbstractExpression {
 		return visitor.visit(this, p);
 	}
 
-	public VarDefinition getDefinition() {
+	public Definition getDefinition() {
 		return definition;
 	}
 
-	public void setDefinition(VarDefinition definition) {
-		this.definition = definition;
+	public void setDefinition(Definition def) {
+		this.definition = def;
 	}
 	
 }

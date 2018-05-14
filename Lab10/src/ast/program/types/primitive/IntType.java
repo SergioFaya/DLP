@@ -80,7 +80,7 @@ public class IntType extends AbstractType {
 	
 	@Override
 	public boolean isEquivalent(Type t) {
-		if(t instanceof IntType) {
+		if(t instanceof IntType ) {
 			return true; 
 		}
 		return false;

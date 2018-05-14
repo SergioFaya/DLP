@@ -28,7 +28,6 @@ public class VoidType extends AbstractType {
 	@Override
 	public String getSuffix() {
 		throw new RuntimeException();
-		//return "";
 	}
 	
 }
