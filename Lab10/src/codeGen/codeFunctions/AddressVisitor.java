@@ -14,11 +14,9 @@ public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 		cg.log("Expression Variable");
 		if(var.getDefinition().getScope() >= 1) {
 			cg.pushBp();
-			//bytes local sum??
 			cg.push("i", var.getDefinition().getOffset());
-			cg.add(var.getDefinition().getType().getSuffix());
+			cg.add("i");
 		}else {
-			//bytes local sum??
 			cg.push("a", var.getDefinition().getOffset());
 		}
 		return null;

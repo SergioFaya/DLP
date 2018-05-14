@@ -1,5 +1,8 @@
 package codeGen;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import ast.program.Type;
@@ -17,11 +20,19 @@ public class CodeGenerator {
 	private int labels;
 
 	public CodeGenerator() {
+		FileOutputStream stream;
+//		try {
+//			stream = new FileOutputStream(new File("myoutput.txt"));
+//			this.out = new PrintStream(stream);
+//			this.labels = 1;
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
 		this.out = System.out;
 		this.labels = 1;
 	}
 
-	public CodeGenerator(PrintStream out) {
+	public CodeGenerator(PrintStream out)  {
 		this();
 		this.out = out;
 	}
@@ -45,10 +56,12 @@ public class CodeGenerator {
 
 	public void load(String suffix) {
 		print("load");
+		println(suffix);
 	}
 
 	public void store(String suffix) {
-		println("store");
+		print("store");
+		println(suffix);
 	}
 
 	public void pop(String suffix) {
@@ -164,6 +177,12 @@ public class CodeGenerator {
 		String suffix2 = type2.getSuffix();
 		String op = suffix1 + "2" + suffix2;
 		switch (op) {
+		case "i2i":
+			break;
+		case "f2f":
+			break;
+		case "b2b":
+			break;
 		case "i2b":
 			i2b();
 			break;
@@ -175,6 +194,10 @@ public class CodeGenerator {
 			break;
 		case "f2i":
 			f2i();
+			break;
+		case "b2f":
+			b2i();
+			i2f();
 			break;
 		default:
 			throw new IllegalArgumentException("Cannot apply conversion operation " + op);
@@ -205,12 +228,12 @@ public class CodeGenerator {
 	// Functions
 	public void call(String id) {
 		print("call ");
-		print(id);
+		println(id);
 	}
 
 	public void enter(int cons) {
 		print("enter ");
-		print(cons);
+		println(cons);
 	}
 
 	public void ret(int returnValue, int localVariableBytes, int parametersBytes) {
@@ -219,7 +242,7 @@ public class CodeGenerator {
 		print(",");
 		print(localVariableBytes);
 		print(",");
-		print(parametersBytes);
+		println(parametersBytes);
 	}
 
 	public void halt() {
@@ -281,20 +304,20 @@ public class CodeGenerator {
 			ne(comp.getType().getSuffix());
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid comparison operator");
+			throw new IllegalArgumentException("Invalid comparison operator " + comp.operand);
 		}
 	}
 
 	public void logical(Logical logic) {
 		switch (logic.operand) {
-		case "and":
+		case "&&":
 			and();
 			break;
-		case "or":
+		case "||":
 			or();
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid comparison operator");
+			throw new IllegalArgumentException("Invalid logical operator "+ logic.operand);
 		}
 	}
 
@@ -312,10 +335,17 @@ public class CodeGenerator {
 		case "/":
 			div(arith.getType().getSuffix());
 			break;
+		case "%":
+			mod(arith.getType().getSuffix());
+			break;
 		default:
-			throw new IllegalArgumentException("Invalid comparison operator");
+			throw new IllegalArgumentException("Invalid comparison operator " + arith.operand);
 		}
 
+	}
+	
+	public void line(int line) {
+		println("#line "+line);
 	}
 
 }

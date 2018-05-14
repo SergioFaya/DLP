@@ -41,7 +41,7 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 		funcDef.body.stream()
 			.filter(st -> st instanceof VarDefinition)
 			.forEach(st -> st.accept(this, param));
-		funcDef.setLocalBytesSum(localVarOffset);
+		funcDef.setLocalBytesSum(localVarOffset*-1);
 
 		return null;
 	}

@@ -77,11 +77,11 @@ public class CharType extends AbstractType {
 
 	@Override
 	public int getNumberOfBytes() {
-		return 2;
+		return 1;
 	}
 
 	@Override
 	public String getSuffix() {
-		return "i";
+		return "b";
 	}
 }

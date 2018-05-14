@@ -1,0 +1,119 @@
+'*Value  of char literal
+pushi '*Expression Variable
+puloadi
+'*Expression Variable
+push bp
+push'*Value  of '*Expression Variable'*Value of arithmetic
+'*V'*Expression Variable
+push bp
+pushi -2
+addi
+'*Expression Variable
+push bp
+pushi -4
+addi
+'*Expression Variable
+pusha 4
+'*Expression Variable
+pusha 4
+ char literal
+pushi 10
+'*Value of arithmetic
+'*Value  of Cast
+i2f
+'*Value of variable
+loadf
+mul
+f
+'*Value  of char literal
+pushi 10
+'*Value of arithmetic
+'*Value  of Cast
+i2f
+'*Value  of real literal
+pushf 4.5
+subf
+'*Value  of char literal
+pushi 32
+'*Value of arithmetic
+'*Value  of Cast
+i2f
+'*Value  of real literal
+pushf 48.0
+div
+f
+'*Value  of char literal
+pushiouti'*Value of arithouti
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+'*Write stmnt
+outi
+ret 0,-4,0 literal
+pushi 2
+lti
+'*Value  of char literal
+pushi 32
+'*Value  of comparison
+'*Value  of int literal
+pushi 4
+'*Value  of int literal
+pushi 3
+gei
+'*Value  of char literal
+pushi 32
+'*Value  of comparison
+'*Value  of int literal
+pushi 5
+'*Value  of int literal
+pushi 5
+eqi
+'*Value  of char literal
+pushi 32
+'*Value  of logical
+'*Value  of int literal
+pushi 1
+'*Value  of int literal
+pushi 2
+and
+'*Value  of char literal
+pushi 32
+'*Value  of logical
+'*Value  of int literal
+pushi 0
+'*Value  of int literal
+pushi 3
+or
+'*Value  of char literal
+pushi 32
+'*Value  of unary negation
+'*Value  of int literal
+pushi 0
+not
+'*Value  of char literal
+pushi 10
