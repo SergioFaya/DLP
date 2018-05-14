@@ -1,4 +1,3 @@
-/ast/
 /codeGen/
-/semantic/
+/test/
 /visitor/

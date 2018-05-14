@@ -1,8 +1,5 @@
 package codeGen;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import ast.program.Type;
@@ -18,25 +15,19 @@ public class CodeGenerator {
 
 	private PrintStream out;
 	private int labels;
-
+	private String filename;
+	
 	public CodeGenerator() {
-		FileOutputStream stream;
-//		try {
-//			stream = new FileOutputStream(new File("myoutput.txt"));
-//			this.out = new PrintStream(stream);
-//			this.labels = 1;
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
 		this.out = System.out;
 		this.labels = 1;
 	}
 
-	public CodeGenerator(PrintStream out)  {
+	public CodeGenerator(PrintStream out, String filename)  {
 		this();
 		this.out = out;
+		this.filename = filename;
 	}
-
+	
 	public int getLabels(int howMany) {
 		int temp = this.labels;
 		this.labels += howMany;
@@ -44,6 +35,7 @@ public class CodeGenerator {
 	}
 
 	public void push(String suffix, Number n) {
+		tab();
 		print("push");
 		print(suffix);
 		print(" ");
@@ -51,124 +43,149 @@ public class CodeGenerator {
 	}
 
 	public void pushBp() {
+		tab();
 		println("push bp");
 	}
 
 	public void load(String suffix) {
+		tab();
 		print("load");
 		println(suffix);
 	}
 
 	public void store(String suffix) {
+		tab();
 		print("store");
 		println(suffix);
 	}
 
 	public void pop(String suffix) {
+		tab();
 		print("pop");
 		println(suffix);
 	}
 
 	public void dup(String suffix) {
+		tab();
 		print("dup");
 		println(suffix);
 	}
 
 	// Arithmetic operations
 	public void add(String suffix) {
+		tab();
 		print("add");
 		println(suffix);
 	}
 
 	public void sub(String suffix) {
+		tab();
 		print("sub");
 		println(suffix);
 	}
 
 	public void mul(String suffix) {
+		tab();
 		println("mul");
 		println(suffix);
 	}
 
 	public void div(String suffix) {
+		tab();
 		println("div");
 		println(suffix);
 	}
 
 	public void mod(String suffix) {
+		tab();
 		print("mod");
 		println(suffix);
 	}
 
 	// Comparison operations
 	public void gt(String suffix) {
+		tab();
 		print("gt");
 		println(suffix);
 	}
 
 	public void lt(String suffix) {
+		tab();
 		print("lt");
 		println(suffix);
 	}
 
 	public void ge(String suffix) {
+		tab();
 		print("ge");
 		println(suffix);
 	}
 
 	public void le(String suffix) {
+		tab();
 		print("le");
 		println(suffix);
 	}
 
 	public void eq(String suffix) {
+		tab();
 		print("eq");
 		println(suffix);
 	}
 
 	public void ne(String suffix) {
+		tab();
 		print("ne");
 		println(suffix);
 	}
 
 	// Logical operations
 	public void and() {
+		tab();
 		println("and");
 	}
 
 	public void or() {
+		tab();
 		println("or");
 	}
 
 	public void not() {
+		tab();
 		println("not");
 	}
 
 	// input output
 	public void out(String suffix) {
+		tab();
 		print("out");
 		println(suffix);
 	}
 
 	public void in(String suffix) {
+		tab();
 		print("in");
 		println(suffix);
 	}
 
 	// Conversions
 	private void b2i() {
+		tab();
 		println("b2i");
 	}
 
 	private void i2f() {
+		tab();
 		println("i2f");
 	}
 
 	private void f2i() {
+		tab();
 		println("f2i");
 	}
 
 	private void i2b() {
+		tab();
 		println("i2b");
 	}
 
@@ -206,47 +223,50 @@ public class CodeGenerator {
 
 	// Jumps
 	public void label(int label) {
+		tab();
 		print(label);
 		println(":");
 	}
 
 	public void jmp(int label) {
+		tab();
 		print("jmp ");
 		println(label);
 	}
 
 	public void jz(int label) {
+		tab();
 		print("jz ");
 		println(label);
 	}
 
 	public void jnz(String label) {
+		tab();
 		print("jnz ");
 		println(label);
 	}
 
 	// Functions
 	public void call(String id) {
+		tab();
 		print("call ");
 		println(id);
 	}
 
 	public void enter(int cons) {
+		tab();
 		print("enter ");
 		println(cons);
 	}
 
 	public void ret(int returnValue, int localVariableBytes, int parametersBytes) {
+		tab();
 		print("ret ");
 		print(returnValue);
 		print(",");
 		print(localVariableBytes);
 		print(",");
 		println(parametersBytes);
-	}
-
-	public void halt() {
-		println("halt");
 	}
 
 	public void invocationToMain() {
@@ -258,6 +278,7 @@ public class CodeGenerator {
 	// Loging of the mapl code
 
 	public void log(String message) {
+		tab();
 		out.print("'*");
 		out.println(message);
 	}
@@ -265,6 +286,10 @@ public class CodeGenerator {
 	// General purpose printing
 	public void println(String string) {
 		out.println(string);
+	}
+	
+	public void tab() {
+		out.print("\t");
 	}
 
 	public void println() {
@@ -345,7 +370,11 @@ public class CodeGenerator {
 	}
 	
 	public void line(int line) {
-		println("#line "+line);
+		out.println("#line "+line);
 	}
-
+	
+	public void source() {
+		out.print("#source ");
+		out.println("\""+filename+"\"");
+	}
 }

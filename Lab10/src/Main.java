@@ -1,13 +1,15 @@
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import ast.Program;
 import codeGen.OffsetVisitor;
-import codeGen.codeFunctions.ExecuteVisitor;
+import codeGen.codeFunctions.CodeFunctions;
 import errorHandler.ErrorHandler;
-import introspector.model.IntrospectorModel;
-import introspector.view.IntrospectorTree;
 import parser.CmmLexer;
 import parser.CmmParser;
 import semantic.IdentificationVisitor;
@@ -35,9 +37,14 @@ public class Main {
 		} else {
 			//generacion de codigo
 			p.accept(new OffsetVisitor(), null);
-			p.accept(new ExecuteVisitor(), null);
-			IntrospectorModel model = new IntrospectorModel("Program", p);
-			new IntrospectorTree("Introspector", model);
+			//CodeFunctions.setPrintStream(System.out);
+			FileOutputStream stream = new FileOutputStream(new File("myoutput.txt"));
+			PrintStream out = new PrintStream(stream);
+			CodeFunctions.setFileName(args[0]);
+			CodeFunctions.setPrintStream(out);
+			p.accept(CodeFunctions.getExecute(),null);
+			//IntrospectorModel model = new IntrospectorModel("Program", p);
+			//new IntrospectorTree("Introspector", model);
 		}
 	}
 }

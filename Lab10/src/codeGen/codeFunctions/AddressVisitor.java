@@ -4,11 +4,16 @@ import ast.program.definitions.FuncDefinition;
 import ast.program.expressions.FieldAccessExpr;
 import ast.program.expressions.Indexing;
 import ast.program.expressions.Variable;
+import codeGen.CodeGenerator;
 import visitor.AbstractCGVisitor;
 
 public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 
 	
+	public AddressVisitor(CodeGenerator cg) {
+		super(cg);
+	}
+
 	@Override
 	public Void visit(Variable var, FuncDefinition param) {
 		cg.log("Expression Variable");

@@ -14,15 +14,19 @@ import ast.program.expressions.unary.Cast;
 import ast.program.expressions.unary.UnaryMinus;
 import ast.program.expressions.unary.UnaryNegation;
 import ast.program.expstmnt.FunctionInvocation;
+import codeGen.CodeGenerator;
 import visitor.AbstractCGVisitor;
 
 public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 
 	
+	public ValueVisitor(CodeGenerator cg) {
+		super(cg);
+	}
+
 	@Override
 	public Void visit(Cast cast, FuncDefinition param) {
 		cg.log("Value  of Cast");
-		//Necesito el valor anterior para pasarlo a codegen
 		cg.convertTo(cast.exp.getType(), cast.getType());
 		return null;
 	}

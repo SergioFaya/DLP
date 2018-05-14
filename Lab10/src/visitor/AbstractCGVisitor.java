@@ -37,8 +37,8 @@ public abstract class AbstractCGVisitor<TP,TR> implements Visitor<TP, TR>{
 	
 	protected CodeGenerator cg;
 	
-	public AbstractCGVisitor() {
-		this.cg = new CodeGenerator();
+	public AbstractCGVisitor(CodeGenerator cg) {
+		this.cg = cg;
 	}
 	
 	@Override

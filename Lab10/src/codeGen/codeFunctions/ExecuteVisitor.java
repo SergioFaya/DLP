@@ -11,11 +11,29 @@ import ast.program.statements.WhileStmnt;
 import ast.program.statements.Write;
 import ast.program.types.FuncType;
 import ast.program.types.primitive.VoidType;
+import codeGen.CodeGenerator;
 import visitor.AbstractCGVisitor;
 
 public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 
+	public ExecuteVisitor(CodeGenerator cg) {
+		super(cg);
+	}
 
+	@Override
+	public Void visit(Program program, FuncDefinition param) {
+		cg.println();
+		cg.source();
+		cg.line(program.getLine());
+		cg.log("Global variables");
+		program.definitions.stream().filter(def -> def instanceof VarDefinition)
+				.forEach(def -> def.accept(this, param));
+		cg.invocationToMain();
+		program.definitions.stream().filter(def -> def instanceof FuncDefinition)
+				.forEach(def -> def.accept(this, param));
+		return null;
+	}
+	
 	@Override
 	public Void visit(Read readStmnt, FuncDefinition param) {
 		cg.line(readStmnt.getLine());
@@ -32,18 +50,6 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 		cg.log("Write stmnt");
 		writeStmnt.expression.accept(CodeFunctions.getValue(), param);
 		cg.out(writeStmnt.expression.getType().getSuffix());
-		return null;
-	}
-
-	@Override
-	public Void visit(Program program, FuncDefinition param) {
-		cg.line(program.getLine());
-		cg.log("Global variables");
-		program.definitions.stream().filter(def -> def instanceof VarDefinition)
-				.forEach(def -> def.accept(this, param));
-		cg.invocationToMain();
-		program.definitions.stream().filter(def -> def instanceof FuncDefinition)
-				.forEach(def -> def.accept(this, param));
 		return null;
 	}
 
