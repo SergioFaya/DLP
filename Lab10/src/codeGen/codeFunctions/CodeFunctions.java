@@ -2,28 +2,23 @@ package codeGen.codeFunctions;
 
 public class CodeFunctions {
 	
-	private ValueVisitor value = new ValueVisitor();
-	private AddressVisitor address = new AddressVisitor();
-	private ExecuteVisitor execute = new ExecuteVisitor();
-	
-	private static CodeFunctions instance = new CodeFunctions();
-	
+	private static ValueVisitor value = new ValueVisitor();
+	private static AddressVisitor address = new AddressVisitor();
+	private static ExecuteVisitor execute = new ExecuteVisitor();
+		
 	private CodeFunctions() {
+		
 	}
 	
-	public ValueVisitor getValue() {
+	public static ValueVisitor getValue() {
 		return value;
 	}
 	
-	public AddressVisitor getAddress() {
+	public static AddressVisitor getAddress() {
 		return address;
 	}
 	
-	public ExecuteVisitor getExecute() {
+	public static ExecuteVisitor getExecute() {
 		return execute;
-	}
-
-	public static CodeFunctions getInstance() {
-		return instance;
 	}
 }

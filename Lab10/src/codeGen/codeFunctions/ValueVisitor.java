@@ -18,11 +18,11 @@ import visitor.AbstractCGVisitor;
 
 public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 
-	private CodeFunctions cfs = CodeFunctions.getInstance();
-
+	
 	@Override
 	public Void visit(Cast cast, FuncDefinition param) {
 		cg.log("Value  of Cast");
+		//Necesito el valor anterior para pasarlo a codegen
 		cg.convertTo(cast.exp.getType(), cast.getType());
 		return null;
 	}
@@ -51,7 +51,7 @@ public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(Variable var, FuncDefinition param) {
 		cg.log("Value of variable");
-		var.accept(cfs.getAddress(), param);
+		var.accept(CodeFunctions.getAddress(), param);
 		cg.load(var.getDefinition().getType().getSuffix());
 		return null;
 	}
@@ -59,9 +59,9 @@ public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(Arithmetic arith, FuncDefinition param) {
 		cg.log("Value of arithmetic");
-		arith.exprLeft.accept(cfs.getValue(), param);
+		arith.exprLeft.accept(CodeFunctions.getValue(), param);
 		cg.convertTo(arith.exprLeft.getType(), arith.getType());
-		arith.exprRight.accept(cfs.getValue(), param);
+		arith.exprRight.accept(CodeFunctions.getValue(), param);
 		cg.convertTo(arith.exprRight.getType(), arith.getType());
 		cg.arithmetic(arith);
 		return null;
@@ -88,7 +88,7 @@ public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(Indexing indexing, FuncDefinition param) {
 		cg.log("Value  of indexing");
-		indexing.accept(cfs.getAddress(), param);
+		indexing.accept(CodeFunctions.getAddress(), param);
 		cg.load(indexing.getType().getSuffix());
 		return null;
 	}
@@ -97,7 +97,7 @@ public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 
 	public Void visit(FieldAccessExpr fieldExpr, FuncDefinition param) {
 		cg.log("Value  of field Access Expression");
-		fieldExpr.accept(cfs.getAddress(), param);
+		fieldExpr.accept(CodeFunctions.getAddress(), param);
 		cg.load(fieldExpr.getType().getSuffix());
 		return null;
 	}
@@ -122,7 +122,7 @@ public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(FunctionInvocation funcInvoke, FuncDefinition param) {
 		cg.log("Value  of function invocation");
-		funcInvoke.params.forEach(p -> p.accept(cfs.getValue(), param));
+		funcInvoke.params.forEach(p -> p.accept(CodeFunctions.getValue(), param));
 		cg.call(funcInvoke.variable.getDefinition().getName());
 		return null;
 	}

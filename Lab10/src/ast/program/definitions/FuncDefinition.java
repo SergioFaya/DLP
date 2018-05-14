@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.program.Statement;
 import ast.program.Type;
+import ast.program.types.FuncType;
 import visitor.Visitor;
 
 public class FuncDefinition extends AbstractDefinition implements Statement {
@@ -11,7 +12,7 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 	public List<Statement> body;
 	private int scope;
 	// Accumulate the bytes of the parameters
-	public int totalBytesParam;
+	private int localBytesSum;
 
 	public FuncDefinition(int line, int column, Type functionType, String name, List<Statement> body) {
 		super(line, column, functionType, name);
@@ -40,10 +41,16 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 	}
 
 	public int getTotalBytesParam() {
-		return totalBytesParam;
+		return ((FuncType)getType()).params.stream().mapToInt(vd -> vd.getOffset()).sum();
 	}
 
-	public void setTotalBytesParam(int param) {
-		this.totalBytesParam = param;
+	public int getLocalBytesSum() {
+		return localBytesSum;
 	}
+
+	public void setLocalBytesSum(int localBytesSum) {
+		this.localBytesSum = localBytesSum;
+	}
+	
+	
 }
