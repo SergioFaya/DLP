@@ -17,7 +17,7 @@ halt
 	' * Local variables
 	' * int a (offset -2)
 	' * int i (offset -4)
-	enter	4
+	enter	-4
 #line	8
 	' * Assignment statement
 	' * Address Variable
@@ -256,4 +256,4 @@ halt
 	' * Value  of char literal
 	pushb	10
 	outb
-	ret	0, 4, 0
+	ret	0, -4, 0

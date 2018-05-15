@@ -7,8 +7,8 @@ import visitor.Visitor;
 
 public class Assignment extends AbstractASTNode implements Statement {
 
-	public Expression expRight;
-	public Expression expLeft;
+	private Expression expRight;
+	private Expression expLeft;
 	private boolean lValue;
 
 	public Assignment(int line, int column, Expression expLeft, Expression expRight) {
@@ -27,5 +27,22 @@ public class Assignment extends AbstractASTNode implements Statement {
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
 		return visitor.visit(this, p);
 	}
+
+	public Expression getExpRight() {
+		return expRight;
+	}
+
+	public void setExpRight(Expression expRight) {
+		this.expRight = expRight;
+	}
+
+	public Expression getExpLeft() {
+		return expLeft;
+	}
+
+	public void setExpLeft(Expression expLeft) {
+		this.expLeft = expLeft;
+	}
+	
 	
 }

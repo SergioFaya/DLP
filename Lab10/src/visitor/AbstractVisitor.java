@@ -135,8 +135,8 @@ public abstract class AbstractVisitor<TP,TR> implements Visitor<TP, TR>{
 
 	@Override
 	public TR visit(Assignment assign, TP param) {
-		assign.expLeft.accept(this, param);
-		assign.expRight.accept(this, param);
+		assign.getExpLeft().accept(this, param);
+		assign.getExpRight().accept(this, param);
 		return null;
 	}
 

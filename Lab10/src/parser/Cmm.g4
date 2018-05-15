@@ -1,4 +1,4 @@
-çgrammar Cmm;	
+grammar Cmm;	
 
 @header{
 	import ast.*;

@@ -58,9 +58,9 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	public Void visit(Assignment assign, FuncDefinition param) {
 		cg.line(assign.getLine());
 		cg.log("Assignment statement");
-		assign.expLeft.accept(CodeFunctions.getAddress(), param);
-		assign.expRight.accept(CodeFunctions.getValue(), param);
-		cg.store(assign.expLeft.getType().getSuffix());
+		assign.getExpLeft().accept(CodeFunctions.getAddress(), param);
+		assign.getExpRight().accept(CodeFunctions.getValue(), param);
+		cg.store(assign.getExpLeft().getType().getSuffix());
 		return null;
 	}
 

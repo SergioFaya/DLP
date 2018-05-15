@@ -123,19 +123,21 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
 	@Override
 	public Void visit(Assignment assignment, Type param) {
-		assignment.expLeft.accept(this, param);
-		assignment.expRight.accept(this, param);
-		if (!assignment.expLeft.getLvalue())
-			new ErrorType(assignment.expLeft.getLine(), assignment.expLeft.getColumn(), "LValue expected on left side of assignment");
+		assignment.getExpLeft().accept(this, param);
+		assignment.getExpRight().accept(this, param);
+		if (!assignment.getExpLeft().getLvalue())
+			new ErrorType(assignment.getExpLeft().getLine(), assignment.getExpLeft().getColumn(),
+					"LValue expected on left side of assignment");
 
-		if (assignment.expLeft.getType() != null && assignment.expRight.getType() != null) {
-			if (!assignment.expLeft.getType().isEquivalent(assignment.expRight.getType())) {
-				new ErrorType(assignment.expLeft.getLine(), assignment.expLeft.getColumn(),
-						"Cannot assign values " + assignment.expLeft + " and " + assignment.expRight);
+		if (assignment.getExpLeft().getType() != null && assignment.getExpRight().getType() != null) {
+			if (!assignment.getExpLeft().getType().isEquivalent(assignment.getExpRight().getType())) {
+				new ErrorType(assignment.getExpLeft().getLine(), assignment.getExpLeft().getColumn(),
+						"Cannot assign values " + assignment.getExpLeft().getType() + " and " + assignment.getExpRight().getType());
+			}else {
+				assignment.getExpLeft().setType(assignment.getExpRight().getType());
 			}
-
-		}else {
-			new ErrorType(assignment.expLeft.getLine(), assignment.expLeft.getColumn(),"Null types on assigment");
+		} else {
+			new ErrorType(assignment.getExpLeft().getLine(), assignment.getExpLeft().getColumn(), "Null types on assigment");
 		}
 		return null;
 	}

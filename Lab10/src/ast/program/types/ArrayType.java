@@ -37,9 +37,8 @@ public class ArrayType extends AbstractType {
 	
 	@Override
 	public int getNumberOfBytes() {
-		return numberOfBytes;
+		return size*type.getNumberOfBytes();
 	}
-	
 	@Override
 	public void setNumberOfBytes(int bytes) {
 		this.numberOfBytes = bytes;
