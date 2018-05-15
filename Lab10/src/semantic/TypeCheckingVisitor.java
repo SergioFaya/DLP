@@ -24,6 +24,7 @@ import ast.program.statements.IfStmnt;
 import ast.program.statements.Read;
 import ast.program.statements.ReturnStmnt;
 import ast.program.statements.WhileStmnt;
+import ast.program.types.ArrayType;
 import ast.program.types.ErrorType;
 import ast.program.types.FuncType;
 import ast.program.types.primitive.CharType;
@@ -35,18 +36,21 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
 	@Override
 	public Void visit(CharLiteral charlit, Type param) {
+		charlit.setLvalue(false);
 		charlit.setType(CharType.getInstance());
 		return null;
 	}
 
 	@Override
 	public Void visit(IntLiteral intLit, Type param) {
+		intLit.setLvalue(false);
 		intLit.setType(IntType.getInstance());
 		return null;
 	}
 
 	@Override
 	public Void visit(RealLiteral realLit, Type param) {
+		realLit.setLvalue(false);
 		realLit.setType(RealType.getInstance());
 		return null;
 	}
@@ -62,6 +66,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	@Override
 	public Void visit(Cast cast, Type param) {
 		cast.exp.accept(this, param);
+		cast.exp.setLvalue(true);
 		Type previous =cast.getDynamicType();
 		cast.getDynamicType().accept(this, param);		
 		Type t = cast.setType(cast.exp.getType().cast(cast.getDynamicType()));
@@ -76,6 +81,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	public Void visit(Arithmetic arithmetic, Type param) {
 		arithmetic.exprLeft.accept(this, param);
 		arithmetic.exprRight.accept(this, param);
+		arithmetic.setLvalue(false);
 		Type t = arithmetic.setType(arithmetic.exprLeft.getType().arithmetic(arithmetic.exprRight.getType()));
 		if (t == null) {
 			arithmetic.setType(new ErrorType(arithmetic.getLine(), arithmetic.getColumn(),
@@ -88,6 +94,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	public Void visit(Comparison comp, Type param) {
 		comp.exprLeft.accept(this, param);
 		comp.exprRight.accept(this, param);
+		comp.setLvalue(false);
 		Type t = comp.setType(comp.exprLeft.getType().comparison(comp.exprRight.getType()));
 		if (t == null) {
 			comp.setType(new ErrorType(comp.getLine(), comp.getColumn(), "Error in comparison expression"));
@@ -99,6 +106,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	public Void visit(Logical logic, Type param) {
 		logic.exprLeft.accept(this, param);
 		logic.exprRight.accept(this, param);
+		logic.setLvalue(false);
 		Type t = logic.setType(logic.exprLeft.getType().logical(logic.exprRight.getType()));
 		if (t == null) {
 			logic.setType(new ErrorType(logic.getLine(), logic.getColumn(), "Error in logical expression between"
@@ -110,14 +118,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	@Override
 	public Void visit(FieldAccessExpr fieldExpr, Type param) {
 		fieldExpr.exprLeft.accept(this, param);
+		fieldExpr.setLvalue(true);
 		if (fieldExpr.exprLeft.getType() != null) {
 			Type t = fieldExpr.setType(fieldExpr.exprLeft.getType().dot(fieldExpr.field));
 			if (t == null) {
 				fieldExpr.setType(new ErrorType(fieldExpr.getLine(), fieldExpr.getColumn(), "Cannot get access to that field"));
 			}
-		}
-		if (fieldExpr.exprLeft.getLvalue()) {
-			fieldExpr.setLvalue(true);
 		}
 		return null;
 	}
@@ -148,7 +154,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		indexing.exprLeft.accept(this, param);
 		indexing.expBrackets.accept(this, param);
 		indexing.setLvalue(true);
-		
 		Type t = indexing.setType(indexing.exprLeft.getType().squareBrackets(indexing.expBrackets.getType()));
 		if (t == null) {
 			indexing.setType(new ErrorType(indexing.getLine(), indexing.getColumn(), "Indexing operation error"));
@@ -160,7 +165,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	public Void visit(Read read, Type param) {
 		read.exp.accept(this, param);
 		if (!read.exp.getLvalue())
-			new ErrorType(read.exp.getLine(), read.exp.getColumn(), "Lvalue expected on read statement");
+			read.exp.setType(new ErrorType(read.exp.getLine(), read.exp.getColumn(), "Lvalue expected on read statement"));
 		return null;
 	}
 
@@ -206,8 +211,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		whileStmnt.exp.accept(this, param);
 		whileStmnt.stmnts.forEach(s -> s.accept(this, param));
 			if (!whileStmnt.exp.getType().isLogical()) {
-				new ErrorType(whileStmnt.getLine(), whileStmnt.getColumn(),
-						"Not valid logical expression in while stmnt condition");
+				whileStmnt.exp.setType(new ErrorType(whileStmnt.getLine(), whileStmnt.getColumn(),
+						"Not valid logical expression in while stmnt condition"));
 			}
 		return null;
 	}
@@ -218,14 +223,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		ifStmnt.elseStmnts.forEach(st -> st.accept(this, param));
 		ifStmnt.ifStmnts.forEach(st -> st.accept(this, param));
 		if (!ifStmnt.exp.getType().isLogical()) {
-			new ErrorType(ifStmnt.getLine(), ifStmnt.getColumn(), "Not valid logical expression in ifstmnt condition");
+			ifStmnt.exp.setType(new ErrorType(ifStmnt.getLine(), ifStmnt.getColumn(), "Not valid logical expression in ifstmnt condition"));
 		}
 		return null;
 	}
 
 	@Override
 	public Void visit(FuncDefinition funcDef, Type param) {
-		super.visit(funcDef, ((FuncType)funcDef.getType()).returnType);
+		funcDef.getType().accept(this, param);
+		funcDef.body.forEach(st -> st.accept(this, ((FuncType)funcDef.getType()).returnType));
 		return null;
 	}
 	
@@ -233,7 +239,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	public Void visit(ReturnStmnt retStmnt, Type param) {
 		retStmnt.exp.accept(this, param);
 		if( retStmnt.exp.getType() != null && !retStmnt.exp.getType().isEquivalent(param)) {
-			new ErrorType(retStmnt.getLine(), retStmnt.getColumn(), "The return type is "+retStmnt.exp.getType().getClass().getSimpleName()+ ", but should be "+ param.getClass().getSimpleName());
+			retStmnt.exp.setType(new ErrorType(retStmnt.getLine(), retStmnt.getColumn(), "The return type is "+retStmnt.exp.getType().getClass().getSimpleName()+ ", but should be "+ param.getClass().getSimpleName()));
 		}
 		return null;
 	}

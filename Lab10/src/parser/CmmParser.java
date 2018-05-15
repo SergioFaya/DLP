@@ -458,7 +458,7 @@ public class CmmParser extends Parser {
 				((ArrayTypeContext)_localctx).dim = match(INT_CONSTANT);
 				setState(94);
 				match(T__5);
-				((ArrayTypeContext)_localctx).ast =  ArrayType.createArray((((ArrayTypeContext)_localctx).r!=null?(((ArrayTypeContext)_localctx).r.start):null).getLine(), (((ArrayTypeContext)_localctx).r!=null?(((ArrayTypeContext)_localctx).r.start):null).getCharPositionInLine() + 1, ((ArrayTypeContext)_localctx).r.ast,Integer.parseInt((((ArrayTypeContext)_localctx).dim!=null?((ArrayTypeContext)_localctx).dim.getText():null)));
+				((ArrayTypeContext)_localctx).ast =  ArrayType.insertArrayType((((ArrayTypeContext)_localctx).r!=null?(((ArrayTypeContext)_localctx).r.start):null).getLine(), (((ArrayTypeContext)_localctx).r!=null?(((ArrayTypeContext)_localctx).r.start):null).getCharPositionInLine() + 1, ((ArrayTypeContext)_localctx).r.ast,Integer.parseInt((((ArrayTypeContext)_localctx).dim!=null?((ArrayTypeContext)_localctx).dim.getText():null)));
 				}
 				break;
 			case T__1:
@@ -473,7 +473,7 @@ public class CmmParser extends Parser {
 				((ArrayTypeContext)_localctx).dim = match(INT_CONSTANT);
 				setState(100);
 				match(T__5);
-				((ArrayTypeContext)_localctx).ast =  ArrayType.createArray((((ArrayTypeContext)_localctx).p!=null?(((ArrayTypeContext)_localctx).p.start):null).getLine(), (((ArrayTypeContext)_localctx).p!=null?(((ArrayTypeContext)_localctx).p.start):null).getCharPositionInLine() + 1, ((ArrayTypeContext)_localctx).p.ast,Integer.parseInt((((ArrayTypeContext)_localctx).dim!=null?((ArrayTypeContext)_localctx).dim.getText():null)));
+				((ArrayTypeContext)_localctx).ast =  ArrayType.insertArrayType((((ArrayTypeContext)_localctx).p!=null?(((ArrayTypeContext)_localctx).p.start):null).getLine(), (((ArrayTypeContext)_localctx).p!=null?(((ArrayTypeContext)_localctx).p.start):null).getCharPositionInLine() + 1, ((ArrayTypeContext)_localctx).p.ast,Integer.parseInt((((ArrayTypeContext)_localctx).dim!=null?((ArrayTypeContext)_localctx).dim.getText():null)));
 				}
 				break;
 			default:
@@ -501,7 +501,7 @@ public class CmmParser extends Parser {
 					((ArrayTypeContext)_localctx).dim = match(INT_CONSTANT);
 					setState(108);
 					match(T__5);
-					((ArrayTypeContext)_localctx).ast =  ArrayType.createArray((((ArrayTypeContext)_localctx).t!=null?(((ArrayTypeContext)_localctx).t.start):null).getLine(), (((ArrayTypeContext)_localctx).t!=null?(((ArrayTypeContext)_localctx).t.start):null).getCharPositionInLine() + 1, ((ArrayTypeContext)_localctx).t.ast,Integer.parseInt((((ArrayTypeContext)_localctx).dim!=null?((ArrayTypeContext)_localctx).dim.getText():null)));
+					((ArrayTypeContext)_localctx).ast =  ArrayType.insertArrayType((((ArrayTypeContext)_localctx).t!=null?(((ArrayTypeContext)_localctx).t.start):null).getLine(), (((ArrayTypeContext)_localctx).t!=null?(((ArrayTypeContext)_localctx).t.start):null).getCharPositionInLine() + 1, ((ArrayTypeContext)_localctx).t.ast,Integer.parseInt((((ArrayTypeContext)_localctx).dim!=null?((ArrayTypeContext)_localctx).dim.getText():null)));
 					}
 					} 
 				}

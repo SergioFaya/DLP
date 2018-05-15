@@ -66,10 +66,10 @@ primitiveType returns [Type ast ]:
 
 arrayType returns [ArrayType ast]:
 			// Mutual exclusion error
-			//t=type '['dim=INT_CONSTANT']' {$ast = ArrayType.createArray($t.start.getLine(), t.start.getCharPositionInLine() + 1, $t.ast,Integer.parseInt($dim.text));} 
-		 	t=arrayType '['dim=INT_CONSTANT']' {$ast = ArrayType.createArray($t.start.getLine(), $t.start.getCharPositionInLine() + 1, $t.ast,Integer.parseInt($dim.text));} 
-		 |	r=recordType '['dim=INT_CONSTANT']' {$ast = ArrayType.createArray($r.start.getLine(), $r.start.getCharPositionInLine() + 1, $r.ast,Integer.parseInt($dim.text));}
-		 |	p=primitiveType '['dim=INT_CONSTANT']' {$ast = ArrayType.createArray($p.start.getLine(), $p.start.getCharPositionInLine() + 1, $p.ast,Integer.parseInt($dim.text));}
+			//t=type '['dim=INT_CONSTANT']' {$ast = ArrayType.insertArrayType($t.start.getLine(), t.start.getCharPositionInLine() + 1, $t.ast,Integer.parseInt($dim.text));} 
+		 	t=arrayType '['dim=INT_CONSTANT']' {$ast = ArrayType.insertArrayType($t.start.getLine(), $t.start.getCharPositionInLine() + 1, $t.ast,Integer.parseInt($dim.text));} 
+		 |	r=recordType '['dim=INT_CONSTANT']' {$ast = ArrayType.insertArrayType($r.start.getLine(), $r.start.getCharPositionInLine() + 1, $r.ast,Integer.parseInt($dim.text));}
+		 |	p=primitiveType '['dim=INT_CONSTANT']' {$ast = ArrayType.insertArrayType($p.start.getLine(), $p.start.getCharPositionInLine() + 1, $p.ast,Integer.parseInt($dim.text));}
 		;
 	
 recordType returns [Type ast]
