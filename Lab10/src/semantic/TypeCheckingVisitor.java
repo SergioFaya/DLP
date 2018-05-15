@@ -53,8 +53,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
 	@Override
 	public Void visit(Variable var, Type param) {
-		var.setType(var.getDefinition().getType());
 		var.setLvalue(true);
+		//Aqui pilla arraytype como tipo
+		var.setType(var.getDefinition().getType());
 		return null;
 	}
 
@@ -125,10 +126,10 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 	public Void visit(Assignment assignment, Type param) {
 		assignment.getExpLeft().accept(this, param);
 		assignment.getExpRight().accept(this, param);
-		if (!assignment.getExpLeft().getLvalue())
+		if (!assignment.getExpLeft().getLvalue()) {
 			new ErrorType(assignment.getExpLeft().getLine(), assignment.getExpLeft().getColumn(),
 					"LValue expected on left side of assignment");
-
+		}
 		if (assignment.getExpLeft().getType() != null && assignment.getExpRight().getType() != null) {
 			if (!assignment.getExpLeft().getType().isEquivalent(assignment.getExpRight().getType())) {
 				new ErrorType(assignment.getExpLeft().getLine(), assignment.getExpLeft().getColumn(),
@@ -147,6 +148,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 		indexing.exprLeft.accept(this, param);
 		indexing.expBrackets.accept(this, param);
 		indexing.setLvalue(true);
+		
 		Type t = indexing.setType(indexing.exprLeft.getType().squareBrackets(indexing.expBrackets.getType()));
 		if (t == null) {
 			indexing.setType(new ErrorType(indexing.getLine(), indexing.getColumn(), "Indexing operation error"));

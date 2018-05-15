@@ -16,8 +16,8 @@ public class Indexing extends AbstractExpression {
 
 	@Override
 	public String toString() {
-		return "Indexing [exprLeft=" + exprLeft + ", expBrackets=" + expBrackets + ", lValue=" + lValue + ", line="
-				+ line + ", column=" + column + "]";
+		return "Indexing [exprLeft=" + exprLeft + ", expBrackets=" + expBrackets + ", lValue=" + lValue + ", type="
+				+ type + ", line=" + line + ", column=" + column + "]";
 	}
 	
 	@Override

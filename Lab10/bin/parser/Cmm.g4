@@ -54,9 +54,7 @@ varDef returns [List<VarDefinition> ast = new ArrayList<>()]:
 
 type returns [Type ast]:
 		  primitiveType {$ast = $primitiveType.ast;}
-		| t=type arrayDim {
-			$ast = ArrayTypeSorter.sort($start.getLine(),$start.getCharPositionInLine()+1,$t.ast,$arrayDim.ast);
-		}
+		| arrayType {$ast = $arrayType.ast;}
 		| recordType	{$ast = $recordType.ast;}
 		;	
 
@@ -66,8 +64,12 @@ primitiveType returns [Type ast ]:
 			| 'char'	{$ast = CharType.getInstance();}
 			;
 
-arrayDim returns [List<Integer> ast  = new ArrayList<Integer>()]:
-		 ('['INT_CONSTANT']'{$ast.add(Integer.parseInt($INT_CONSTANT.getText()));})+
+arrayType returns [ArrayType ast]:
+			// Mutual exclusion error
+			//t=type '['dim=INT_CONSTANT']' {$ast = ArrayType.createArray($t.start.getLine(), t.start.getCharPositionInLine() + 1, $t.ast,Integer.parseInt($dim.text));} 
+		 	t=arrayType '['dim=INT_CONSTANT']' {$ast = ArrayType.createArray($t.start.getLine(), $t.start.getCharPositionInLine() + 1, $t.ast,Integer.parseInt($dim.text));} 
+		 |	r=recordType '['dim=INT_CONSTANT']' {$ast = ArrayType.createArray($r.start.getLine(), $r.start.getCharPositionInLine() + 1, $r.ast,Integer.parseInt($dim.text));}
+		 |	p=primitiveType '['dim=INT_CONSTANT']' {$ast = ArrayType.createArray($p.start.getLine(), $p.start.getCharPositionInLine() + 1, $p.ast,Integer.parseInt($dim.text));}
 		;
 	
 recordType returns [Type ast]

@@ -20,7 +20,19 @@ public class ArrayType extends AbstractType {
 	public String toString() {
 		return "ArrayType [type=" + type + ", size=" + size + "]";
 	}
-
+	
+	public static ArrayType createArray(int l, int c, Type type, int size){
+        if(type instanceof ArrayType){
+            ArrayType original = (ArrayType) type;
+            ArrayType root = (ArrayType) type;
+            while(root.type instanceof ArrayType)
+                root = (ArrayType) root.type;
+            root.type = new ArrayType(l,c,root.type,size);
+            return original;
+        }
+        else
+            return new ArrayType(l, c, type, size);
+	}
 	
 	@Override
 	public <TP, TR> TR accept(Visitor<TP, TR> visitor, TP p) {
