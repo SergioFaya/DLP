@@ -1,0 +1,48 @@
+
+#source	"myinput.txt"
+
+	' * int a (offset 0)
+	' * char c (offset 2)
+
+' Invocation to the main function
+call main
+halt
+
+
+#line	4
+	' * Function Definition
+	main:
+	' * Parameters
+	' * Local variables
+	enter	0
+	' * If statement
+#line	5
+	' * Value  of comparison
+	' * Address Variable
+	pusha	0
+	' * Value of variable
+	' * Address Variable
+	pusha	0
+	loadi
+	pushi	1
+	addi
+	storei
+	' * Value of variable
+	' * Address Variable
+	pusha	0
+	loadi
+	' * Value  of int literal
+	pushi	1
+	eqi
+	jz	label0
+	' * Body of the if branch
+#line	6
+	' * Write
+	' * Value  of char literal
+	pushb	111
+	outb
+	jmp	label1
+	label0:
+	' * Body of the else branch
+	label1:
+	ret	0, 0, 0
