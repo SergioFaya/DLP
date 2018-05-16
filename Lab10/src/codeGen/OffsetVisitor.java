@@ -24,6 +24,7 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 
 	@Override
 	public Void visit(VarDefinition varDef, Void param) {
+		super.visit(varDef, param);
 		if (varDef.getScope() == 0) {
 			varDef.setOffset(globalVarOffset);
 			globalVarOffset += varDef.getType().getNumberOfBytes();
@@ -36,8 +37,8 @@ public class OffsetVisitor extends AbstractVisitor<Void, Void> {
 
 	@Override
 	public Void visit(FuncDefinition funcDef, Void param) {
+		super.visit(funcDef, param);
 		localVarOffset = 0;
-		// funcDef.getType().accept(this, param);
 		funcDef.body.stream()
 			.filter(st -> st instanceof VarDefinition)
 			.forEach(st -> st.accept(this, param));

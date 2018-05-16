@@ -2,6 +2,7 @@ package ast.program.types.primitive;
 
 import ast.program.Type;
 import ast.program.types.AbstractType;
+import ast.program.types.ErrorType;
 import visitor.Visitor;
 
 public class IntType extends AbstractType {
@@ -80,7 +81,7 @@ public class IntType extends AbstractType {
 	
 	@Override
 	public boolean isEquivalent(Type t) {
-		if(t instanceof IntType ) {
+		if(t instanceof IntType || t instanceof ErrorType) {
 			return true; 
 		}
 		return false;

@@ -126,7 +126,7 @@ public class ValueVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	
 	@Override
 	public Void visit(FunctionInvocation funcInvoke, FuncDefinition param) {
-		cg.log("Value  of function invocation");
+		cg.log("Value  of function invocation expr");
 		funcInvoke.params.forEach(p -> p.accept(CodeFunctions.getValue(), param));
 		cg.call(funcInvoke.variable.getDefinition().getName());
 		return null;

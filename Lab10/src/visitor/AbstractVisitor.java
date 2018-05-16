@@ -132,7 +132,7 @@ public abstract class AbstractVisitor<TP,TR> implements Visitor<TP, TR>{
 		functType.params.forEach(p -> p.accept(this, param));
 		return null;
 	}
-
+	
 	@Override
 	public TR visit(Assignment assign, TP param) {
 		assign.getExpLeft().accept(this, param);

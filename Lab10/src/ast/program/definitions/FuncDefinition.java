@@ -41,7 +41,7 @@ public class FuncDefinition extends AbstractDefinition implements Statement {
 	}
 
 	public int getTotalBytesParam() {
-		return ((FuncType)getType()).params.stream().mapToInt(vd -> vd.getOffset()).sum();
+		return ((FuncType)getType()).params.stream().mapToInt(vd -> vd.getType().getNumberOfBytes()).sum();
 	}
 
 	public int getLocalBytesSum() {

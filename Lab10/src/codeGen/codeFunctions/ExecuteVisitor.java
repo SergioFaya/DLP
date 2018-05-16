@@ -1,8 +1,10 @@
 package codeGen.codeFunctions;
 
 import ast.Program;
+import ast.program.Expression;
 import ast.program.definitions.FuncDefinition;
 import ast.program.definitions.VarDefinition;
+import ast.program.expstmnt.FunctionInvocation;
 import ast.program.statements.Assignment;
 import ast.program.statements.IfStmnt;
 import ast.program.statements.Read;
@@ -83,7 +85,9 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 		cg.log("Local variables");
 		funcDef.body.stream().filter(fd -> fd instanceof VarDefinition).forEach(fd -> fd.accept(this, param));
 		cg.enter(funcDef.getLocalBytesSum());
-		funcDef.body.stream().filter(fd -> !(fd instanceof VarDefinition)).forEach(fd -> fd.accept(this, funcDef));
+		funcDef.body.stream()
+		.filter(fd -> !(fd instanceof VarDefinition))
+		.forEach(fd -> fd.accept(this, funcDef));
 		if (( (FuncType) funcDef.getType()).returnType instanceof VoidType) {
 			cg.ret(0, funcDef.getLocalBytesSum(), funcDef.getTotalBytesParam());
 		}
@@ -94,6 +98,7 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	public Void visit(ReturnStmnt retStmnt, FuncDefinition param) {
 		cg.line(retStmnt.getLine());
 		cg.log("Execution of return statement");
+		retStmnt.exp.accept(CodeFunctions.getValue(), param);
 		cg.ret(retStmnt.exp.getType().getNumberOfBytes(), param.getLocalBytesSum(), param.getTotalBytesParam());
 		return null;
 	}
@@ -101,24 +106,26 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 	@Override
 	public Void visit(IfStmnt ifStmnt, FuncDefinition param) {
 		cg.line(ifStmnt.getLine());
+		cg.log("Execution of if");
 		int label = cg.getLabels(2);
-		ifStmnt.accept(CodeFunctions.getValue(), param);
+		ifStmnt.exp.accept(CodeFunctions.getValue(), param);
 		cg.jz(label);
 		ifStmnt.ifStmnts.forEach(s -> s.accept(CodeFunctions.getExecute(), param));
-		cg.jmp(++label);
+		cg.jmp(label+1);
 		cg.label(label);
 		ifStmnt.elseStmnts.forEach(s -> s.accept(CodeFunctions.getExecute(), param));
-		cg.label(++label);
+		cg.label(label+1);
 		return null;
 	}
 
 	@Override
 	public Void visit(WhileStmnt whileStmnt, FuncDefinition param) {
 		cg.line(whileStmnt.getLine());
+		cg.log("Execution of while");
 		int label = cg.getLabels(2);
 		cg.log("Label" + label);
 		cg.label(label);
-		whileStmnt.accept(CodeFunctions.getValue(), param);
+		whileStmnt.exp.accept(CodeFunctions.getValue(), param);
 		cg.jz(++label);
 		whileStmnt.stmnts.forEach(s -> s.accept(CodeFunctions.getExecute(), param));
 		cg.jmp(label);
@@ -146,6 +153,19 @@ public class ExecuteVisitor extends AbstractCGVisitor<FuncDefinition, Void> {
 			break;
 		}
 		cg.log(type + " " + varDef.getName() + " (offset " + varDef.getOffset() + ")");
+		return null;
+	}
+	
+	@Override
+	public Void visit(FunctionInvocation functType, FuncDefinition param) {
+		cg.line(functType.getLine());
+		cg.log("Execute functinvocation");
+		functType.params.forEach(p -> p.accept(CodeFunctions.getValue(), param));
+		cg.call(functType.variable.name);
+		Expression fexpr = (Expression) functType;
+		if(!(fexpr.getType() instanceof VoidType)) {
+			cg.pop(fexpr.getType().getSuffix());
+		}
 		return null;
 	}
 }

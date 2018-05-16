@@ -1,6 +1,9 @@
-/codeGen/
-/test/
-/visitor/
-/semantic/
 /ast/
+/codeGen/
+/errorHandler/
 /parser/
+/semantic/
+/symboltable/
+/test/
+/util/
+/visitor/

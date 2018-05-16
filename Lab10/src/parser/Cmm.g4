@@ -192,7 +192,7 @@ whileStmnt returns [WhileStmnt ast]:
 exp returns [Expression ast]:
 	  '('exp')' {$ast = $exp.ast;}
 	| exp1 = exp '['exp2 = exp']' {$ast = new Indexing($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$exp2.ast);}
-	| exp1 = exp '.' exp2 = exp {$ast = new FieldAccessExpr($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$exp2.text);}
+	| exp1 = exp '.' id = ID {$ast = new FieldAccessExpr($start.getLine(),$start.getCharPositionInLine()+1,$exp1.ast,$id.text);}
 	| cast exp { $ast = new Cast($start.getLine(),$start.getCharPositionInLine()+1,$cast.ast, $exp.ast);}
 	| '-' exp {$ast = new UnaryMinus($start.getLine(),$start.getCharPositionInLine()+1,$exp.ast);}
 	| '!' exp {$ast = new UnaryNegation($start.getLine(),$start.getCharPositionInLine()+1,$exp.ast);}
@@ -212,8 +212,8 @@ cast returns [Type ast]: '('primitiveType')'
 	;
 
 functInvocation returns [FunctionInvocation ast]:
-				  ID '(' expList ')' {$ast = new FunctionInvocation($start.getLine(),$start.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.getText()),$expList.ast);}
-				| ID '('')' {$ast = new FunctionInvocation($start.getLine(),$start.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.getText()),new ArrayList<Expression>());}
+				  ID '(' expList ')' {$ast = new FunctionInvocationStmnt($start.getLine(),$start.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.getText()),$expList.ast);}
+				| ID '('')' {$ast = new FunctionInvocationStmnt($start.getLine(),$start.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.getText()),new ArrayList<Expression>());}
 				;
 
 expList returns [List<Expression> ast = new ArrayList<>()]:

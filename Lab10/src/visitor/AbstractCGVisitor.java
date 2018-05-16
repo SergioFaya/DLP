@@ -39,7 +39,7 @@ public abstract class AbstractCGVisitor<TP,TR> implements Visitor<TP, TR>{
 	
 	public AbstractCGVisitor(CodeGenerator cg) {
 		this.cg = cg;
-	}
+	}	
 	
 	@Override
 	public TR visit(Field field, TP param) {
@@ -118,7 +118,7 @@ public abstract class AbstractCGVisitor<TP,TR> implements Visitor<TP, TR>{
 
 	@Override
 	public TR visit(FunctionInvocation functType, TP param) {
-		throw new RuntimeException("Code function for FuncType is not defined");
+		throw new RuntimeException("Code function for FuncInvocation is not defined");
 	}
 
 	@Override

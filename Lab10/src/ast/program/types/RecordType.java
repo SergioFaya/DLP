@@ -33,12 +33,12 @@ public class RecordType extends AbstractType {
 				return field.getType();
 			}
 		}
-			return super.dot(str);
+			return null;
 	}
 
 	@Override
 	public int getNumberOfBytes() {
-		return numberOfBytes;
+		return fields.stream().mapToInt(b-> b.getType().getNumberOfBytes()).sum();
 	}
 
 	@Override
@@ -48,6 +48,7 @@ public class RecordType extends AbstractType {
 
 	@Override
 	public String getSuffix() {
+		System.out.println(line);
 		throw new RuntimeException();
 		//return "a";
 	}

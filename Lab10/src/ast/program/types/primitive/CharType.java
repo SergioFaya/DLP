@@ -2,6 +2,7 @@ package ast.program.types.primitive;
 
 import ast.program.Type;
 import ast.program.types.AbstractType;
+import ast.program.types.ErrorType;
 import visitor.Visitor;
 
 public class CharType extends AbstractType {
@@ -61,7 +62,7 @@ public class CharType extends AbstractType {
 
 	@Override
 	public boolean isEquivalent(Type t) {
-		if(t instanceof CharType ) {
+		if(t instanceof CharType || t instanceof ErrorType ) {
 			return true; 
 		}
 		return false;

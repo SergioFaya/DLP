@@ -8,7 +8,7 @@ import ast.program.expressions.AbstractExpression;
 import ast.program.expressions.Variable;
 import visitor.Visitor;
 
-public class FunctionInvocation extends AbstractExpression implements Statement {
+public class FunctionInvocation extends AbstractExpression implements Statement, Expression {
 
 	public Variable variable;
 	public List<Expression> params;

@@ -24,6 +24,7 @@ public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 		}else {
 			cg.push("a", var.getDefinition().getOffset());
 		}
+		cg.log("end adres variable");
 		return null;
 	}
 	
@@ -31,10 +32,10 @@ public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 	public Void visit(Indexing indexing, FuncDefinition param) {
 		cg.log("Address Indexing");
 		indexing.exprLeft.accept(CodeFunctions.getAddress(), param);
-		indexing.expBrackets.accept(CodeFunctions.getAddress(), param);
-		cg.push(indexing.getType().getSuffix(),indexing.getType().getNumberOfBytes());
-		cg.mul(indexing.getType().getSuffix());
-		cg.add(indexing.getType().getSuffix());
+		indexing.expBrackets.accept(CodeFunctions.getValue(), param);
+		cg.push("i",indexing.getType().getNumberOfBytes());
+		cg.mul("i");
+		cg.add("i");
 		return null;
 	}
 	

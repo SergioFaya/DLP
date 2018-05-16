@@ -40,18 +40,19 @@ public class ArrayType extends AbstractType {
 	@Override
 	public Type squareBrackets(Type t) {
 		if (t == IntType.getInstance()) {
-			return this;
+			return type;
 		}
 		return null;
 	}
 
 	@Override
 	public int getNumberOfBytes() {
+		System.out.println();
 		return size * type.getNumberOfBytes();
 	}
 
 	@Override
 	public String getSuffix() {
-		throw new RuntimeException();
+		return type.getSuffix();
 	}
 }
