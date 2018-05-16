@@ -24,7 +24,6 @@ import ast.program.statements.IfStmnt;
 import ast.program.statements.Read;
 import ast.program.statements.ReturnStmnt;
 import ast.program.statements.WhileStmnt;
-import ast.program.types.ArrayType;
 import ast.program.types.ErrorType;
 import ast.program.types.FuncType;
 import ast.program.types.primitive.CharType;

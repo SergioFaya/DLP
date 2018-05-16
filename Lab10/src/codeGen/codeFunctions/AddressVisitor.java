@@ -1,9 +1,12 @@
 package codeGen.codeFunctions;
 
+import java.sql.Struct;
+
 import ast.program.definitions.FuncDefinition;
 import ast.program.expressions.FieldAccessExpr;
 import ast.program.expressions.Indexing;
 import ast.program.expressions.Variable;
+import ast.program.types.RecordType;
 import codeGen.CodeGenerator;
 import visitor.AbstractCGVisitor;
 
@@ -24,14 +27,13 @@ public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 		}else {
 			cg.push("a", var.getDefinition().getOffset());
 		}
-		cg.log("end adres variable");
 		return null;
 	}
 	
 	@Override
 	public Void visit(Indexing indexing, FuncDefinition param) {
 		cg.log("Address Indexing");
-		indexing.exprLeft.accept(CodeFunctions.getAddress(), param);
+		indexing.exprLeft.accept(this, param);
 		indexing.expBrackets.accept(CodeFunctions.getValue(), param);
 		cg.push("i",indexing.getType().getNumberOfBytes());
 		cg.mul("i");
@@ -42,7 +44,9 @@ public class AddressVisitor extends AbstractCGVisitor<FuncDefinition, Void>{
 	@Override
 	public Void visit(FieldAccessExpr fieldExpr, FuncDefinition param) {
 		cg.log("Address Field Accessing");
-		fieldExpr.exprLeft.accept(CodeFunctions.getAddress(), param);
+		fieldExpr.exprLeft.accept(this, param);
+		cg.push("i", ((RecordType)fieldExpr.exprLeft.getType()).fields.stream().filter(f->f.name.equals(fieldExpr.field)).findFirst().get().getOffset());
+		cg.add("i");
 		return null;
 	}
 }

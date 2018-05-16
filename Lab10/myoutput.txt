@@ -12,17 +12,17 @@ halt
 
 #line	14
 	' * Function Definition
-	1:
+	p:
 	' * Parameters
 	' * Local variables
 	enter	0
 	ret	0, 0, 0
 #line	16
 	' * Function Definition
-	2:
+	f:
 	' * Parameters
-	' * int e (offset 4)
 	' * real r (offset 6)
+	' * int e (offset 4)
 	' * Local variables
 	' * real real (offset -4)
 	' * char c (offset -5)
@@ -34,14 +34,12 @@ halt
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	6
 	addi
-	' * end adres variable
 	loadf
 	' * Value  of real literal
 	pushf	10.0
@@ -53,38 +51,35 @@ halt
 	push	bp
 	pushi	-5
 	addi
-	' * end adres variable
 	' * Value  of char literal
 	pushb	48
 	storeb
+	' * If statement
 #line	22
-	' * Execution of if
 	' * Value  of comparison
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	4
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	256
 	lti
-	jz 3
+	jz	label0
+	' * Body of the if branch
 #line	23
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-5
 	addi
-	' * end adres variable
 	' * Value  of Cast
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	4
 	addi
-	' * end adres variable
 	loadi
 	i2b
 	storeb
@@ -94,50 +89,47 @@ halt
 	push	bp
 	pushi	-7
 	addi
-	' * end adres variable
 	' * Value  of Cast
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-5
 	addi
-	' * end adres variable
 	loadb
 	b2i
 	storei
-	jmp 4
-	3:
+	jmp	label1
+	label0:
+	' * Body of the else branch
 #line	27
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-7
 	addi
-	' * end adres variable
 	' * Value  of Cast
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	loadf
 	f2i
 	storei
+	' * LOG:Assignment [expRight=Cast [exp=Variable [name=real, line=27, column=19], lValue=false, type=IntType [line=-1, column=-1], line=27, column=14], expLeft=Variable [name=result, line=27, column=5], lValue=false, line=27, column=5]
+	label1:
 #line	28
-	' * Execution of return statement
+	' * Return
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-7
 	addi
-	' * end adres variable
 	loadi
 	ret	2, 7, 6
-	4:
 #line	31
 	' * Function Definition
-	5:
+	initialize:
 	' * Parameters
 	' * Local variables
 	' * int i (offset -2)
@@ -148,7 +140,6 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	pushi	6
@@ -168,7 +159,6 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	pushi	6
@@ -188,7 +178,6 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	pushi	6
@@ -208,39 +197,35 @@ halt
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value  of int literal
 	pushi	1
 	storei
+	' * While
 #line	37
-	' * Execution of while
-	' * Label6
-	6:
+	label2:
 	' * Value  of comparison
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	8
 	lti
-	jz 7
+	jz	label3
+	' * Body of the while statement
 #line	38
 	' * Assignment statement
 	' * Address Indexing
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	6
 	muli
@@ -255,14 +240,12 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
@@ -283,13 +266,11 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	6
 	muli
@@ -304,14 +285,12 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
@@ -332,13 +311,11 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	6
 	muli
@@ -354,13 +331,11 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	6
 	muli
@@ -376,13 +351,11 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	6
 	muli
@@ -401,22 +374,19 @@ halt
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
 	addi
 	storei
-	jmp 7
-	' * Label8
-	9:
+	jmp	label2
+	label3:
 	ret	0, 2, 0
 #line	47
 	' * Function Definition
@@ -428,14 +398,13 @@ halt
 	enter	4
 #line	49
 	' * Execute functinvocation
-	call p
+	call	p
 #line	50
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	storei
@@ -444,7 +413,8 @@ halt
 	' * Address Field Accessing
 	' * Address Variable
 	pusha	0
-	' * end adres variable
+	pushi	2
+	addi
 	' * Value  of char literal
 	pushb	48
 	storeb
@@ -453,7 +423,8 @@ halt
 	' * Address Field Accessing
 	' * Address Variable
 	pusha	0
-	' * end adres variable
+	pushi	0
+	addi
 	' * Value  of Cast
 	' * Value  of char literal
 	pushb	48
@@ -468,7 +439,6 @@ halt
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	i2f
 	' * Value  of Cast
@@ -476,10 +446,11 @@ halt
 	' * Address Field Accessing
 	' * Address Variable
 	pusha	0
-	' * end adres variable
+	pushi	2
+	addi
 	loadb
 	b2i
-	call f
+	call	f
 	outi
 #line	55
 	' * Write
@@ -492,37 +463,35 @@ halt
 	pushf	1.3
 	' * Value  of int literal
 	pushi	2
-	call f
+	call	f
 	popi
 #line	58
 	' * Execute functinvocation
-	call initialize
+	call	initialize
 #line	59
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	storei
+	' * While
 #line	60
-	' * Execution of while
-	' * Label8
-	8:
+	label4:
 	' * Value  of comparison
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	8
 	lti
-	jz 9
+	jz	label5
+	' * Body of the while statement
 #line	62
 	' * Write
 	' * Value  of char literal
@@ -536,7 +505,6 @@ halt
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
@@ -554,13 +522,11 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	6
 	muli
@@ -584,13 +550,11 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	6
 	muli
@@ -614,13 +578,11 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	11
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	6
 	muli
@@ -643,22 +605,19 @@ halt
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
 	addi
 	storei
-	jmp 9
-	' * Label10
-	11:
+	jmp	label4
+	label5:
 #line	68
 	' * Assignment statement
 	' * Address Field Accessing
@@ -667,16 +626,19 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	3
-	' * end adres variable
 	' * Value  of int literal
 	pushi	1
 	pushi	4
 	muli
 	addi
+	pushi	0
+	addi
 	' * Value  of int literal
 	pushi	1
 	pushi	2
 	muli
+	addi
+	pushi	0
 	addi
 	' * Value  of int literal
 	pushi	56
@@ -690,16 +652,19 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	3
-	' * end adres variable
 	' * Value  of int literal
 	pushi	1
 	pushi	4
 	muli
 	addi
+	pushi	0
+	addi
 	' * Value  of int literal
 	pushi	1
 	pushi	2
 	muli
+	addi
+	pushi	0
 	addi
 	loadi
 	outi
@@ -714,52 +679,48 @@ halt
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	storei
+	' * While
 #line	72
-	' * Execution of while
-	' * Label10
-	10:
+	label6:
 	' * Value  of comparison
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	2
 	lti
-	jz 11
+	jz	label7
+	' * Body of the while statement
 #line	73
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	storei
+	' * While
 #line	74
-	' * Execution of while
-	' * Label12
-	12:
+	label8:
 	' * Value  of comparison
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	2
 	lti
-	jz 13
+	jz	label9
+	' * Body of the while statement
 #line	75
 	' * Assignment statement
 	' * Address Field Accessing
@@ -768,26 +729,27 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	3
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	4
 	muli
+	addi
+	pushi	0
 	addi
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	loadi
 	pushi	2
 	muli
+	addi
+	pushi	0
 	addi
 	' * Value of arithmetic
 	' * Value of variable
@@ -795,14 +757,12 @@ halt
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	loadi
 	addi
 	storei
@@ -812,96 +772,86 @@ halt
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
 	addi
 	storei
-	jmp 13
-	' * Label14
-	15:
+	jmp	label8
+	label9:
 #line	78
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
 	addi
 	storei
-	jmp 11
-	' * Label12
-	13:
+	jmp	label6
+	label7:
 #line	82
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	storei
+	' * While
 #line	83
-	' * Execution of while
-	' * Label14
-	14:
+	label10:
 	' * Value  of comparison
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	2
 	lti
-	jz 15
+	jz	label11
+	' * Body of the while statement
 #line	84
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	' * Value  of int literal
 	pushi	0
 	storei
+	' * While
 #line	85
-	' * Execution of while
-	' * Label16
-	16:
+	label12:
 	' * Value  of comparison
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	2
 	lti
-	jz 17
+	jz	label13
+	' * Body of the while statement
 #line	87
 	' * Write
 	' * Value  of field Access Expression
@@ -911,26 +861,27 @@ halt
 	' * Address Indexing
 	' * Address Variable
 	pusha	3
-	' * end adres variable
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	pushi	4
 	muli
+	addi
+	pushi	0
 	addi
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	loadi
 	pushi	2
 	muli
+	addi
+	pushi	0
 	addi
 	loadi
 	outi
@@ -945,42 +896,36 @@ halt
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-4
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
 	addi
 	storei
-	jmp 17
-	' * Label18
-	19:
+	jmp	label12
+	label13:
 #line	90
 	' * Assignment statement
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	' * Value of arithmetic
 	' * Value of variable
 	' * Address Variable
 	push	bp
 	pushi	-2
 	addi
-	' * end adres variable
 	loadi
 	' * Value  of int literal
 	pushi	1
 	addi
 	storei
-	jmp 15
-	' * Label16
-	17:
+	jmp	label10
+	label11:
 	ret	0, 4, 0

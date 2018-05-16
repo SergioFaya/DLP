@@ -19,7 +19,7 @@ public class CodeGenerator {
 	
 	public CodeGenerator() {
 		this.out = System.out;
-		this.labels = 1;
+		this.labels = 0;
 	}
 
 	public CodeGenerator(PrintStream out, String filename)  {
@@ -224,6 +224,7 @@ public class CodeGenerator {
 	// Jumps
 	public void label(int label) {
 		tab();
+		print("label");
 		print(label);
 		println(":");
 	}
@@ -236,28 +237,39 @@ public class CodeGenerator {
 
 	public void jmp(int label) {
 		tab();
-		print("jmp ");
+		print("jmp\t");
+		print("label");
 		println(label);
 	}
 
 	public void jz(int label) {
 		tab();
-		print("jz ");
+		print("jz\t");
+		print("label");
 		println(label);
 	}
 
 	public void jnz(String label) {
 		tab();
-		print("jnz ");
+		print("jnz\t");
+		print("label");
 		println(label);
 	}
 
 	// Functions
-	public void call(String id) {
+	public void call(int id) {
 		tab();
-		print("call ");
+		print("call\t");
+		print("label");
 		println(id);
 	}
+	
+	public void call(String id) {
+		tab();
+		print("call\t");
+		println(id);
+	}
+
 
 	public void enter(int cons) {
 		tab();

@@ -122,25 +122,8 @@ param returns [VarDefinition ast]:
 		;
 		
 block returns [List<Statement> ast = new ArrayList<>();]:
-		'{' (varDef{
-			for(Statement st: $varDef.ast){
-					$ast.add(st);
-			}
-			})* (stmnt{
-			for(Statement st: $stmnt.ast){
-					$ast.add(st);
-			}
-			})* 
-		'}' 
-		| (varDef{
-			for(Statement st: $varDef.ast){
-					$ast.add(st);
-			}
-			})* (stmnt{
-			for(Statement st: $stmnt.ast){
-					$ast.add(st);
-			}
-			})* 
+		'{' (varDef{$ast.addAll($varDef.ast);})* (stmnt{$ast.addAll($stmnt.ast);})* '}' 
+		| (stmnt{$ast.addAll($stmnt.ast);}) 
 		;
 			
 stmnt returns [List<Statement> ast = new ArrayList<>();]:
@@ -212,8 +195,8 @@ cast returns [Type ast]: '('primitiveType')'
 	;
 
 functInvocation returns [FunctionInvocation ast]:
-				  ID '(' expList ')' {$ast = new FunctionInvocationStmnt($start.getLine(),$start.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.getText()),$expList.ast);}
-				| ID '('')' {$ast = new FunctionInvocationStmnt($start.getLine(),$start.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.getText()),new ArrayList<Expression>());}
+				  ID '(' expList ')' {$ast = new FunctionInvocation($start.getLine(),$start.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.getText()),$expList.ast);}
+				| ID '('')' {$ast = new FunctionInvocation($start.getLine(),$start.getCharPositionInLine()+1,new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.getText()),new ArrayList<Expression>());}
 				;
 
 expList returns [List<Expression> ast = new ArrayList<>()]:
